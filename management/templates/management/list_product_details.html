@@ -1,0 +1,76 @@
+{% extends "management/layout.html" %}
+
+
+{% block content %}
+    
+    <form action="" method="POST">
+        {% csrf_token %}
+        Date:<input type="date" name="date">
+        <input type="submit" value="submit"> <br><br>
+
+     <table>
+        <tr>
+          <th>Productname</th>
+          <th>Product id</th>
+          <th>Product quantity</th>
+          <th>Product price</th>
+          <th>Expiry date</th>
+          <th>Created at</th>
+        </tr>
+        {% for i in x %} 
+        <tr>
+          <td>{{i.product_name}}</td>
+          <td>{{i.product_id}}</td>         
+          <td>{{i.product_quantity}}</td>
+          <td>{{i.product_price}}</td>
+          <td>{{i.expiry_date}}</td>
+          <td>{{i.created_at}}</td> 
+
+        {% comment %} {% if user.is_admin %}  {% endcomment %}
+        <td><a href="{% url 'view_product_details' i.id  %}">view</a>
+        <a href="{% url 'edit_product_details' i.id  %}">edit</a> 
+        <a href="{% url 'delete_product' i.id  %}">delete</a>       
+           <a href="{% url 'sale' %}">sales</a>
+           {% if i.is_active %}
+           <a href="{% url 'disable_product_details' i.id %}" style="color: red">disable</a>
+                  
+            {% else %}
+             <a href="{% url 'enable_product_details' i.id %}" style="color: green">enable</a></td>
+             {% endif %}  
+             {% comment %} {% endif %}  {% endcomment %}
+
+      
+
+
+
+           
+
+        </tr>
+        {% endfor %}
+        
+        
+      </table>
+          
+          </form>
+
+          
+         
+
+{% if messages %}  
+        <ul>   
+            {% for message in messages %}  
+                <li>{{ message }}</li>  
+                {% endfor %}  
+        </ul>   
+    {% endif %}
+
+
+   <style>
+            table, th, td {
+              border:1px solid black;
+              border-collapse: collapse;
+            }
+            </style>
+
+
+{% endblock %}

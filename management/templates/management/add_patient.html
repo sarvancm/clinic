@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+    
+    <div class="card">
+
+        <div class="card-body text_size">
+            <h3 class="card-title">Today Patient Details&nbsp;&nbsp;:</h3><br>
+            <table id="example" class="table table-striped table-bordered text-center" style="width:100%">
+                <thead>
+                    <tr>
+                        <th class="text-center">S.No</th>
+                        <th class="text-center">Patient ID</th>
+                        <th class="text-center">Patient Name</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in context %} 
+                    <tr>
+                        <td>{{i.id}}</td>
+                        <td>{{i.patient_id}}</td>
+                        <td>{{i.patient_name}}</td>
+                        <td><a href="" data-toggle="modal" data-target="#exampleModal"> <i
+                         ob_id="{{i.id}}"       patient="{{i.patient_id}}" patient_name="{{i.patient_name}}" patient_age="{{i.Age}}" patient_gender="{{i.Gender}}" patient_address="{{i.Address}}" patient_phone_number="{{i.Phone_number}}" patient_date_of_birth="{{i.Date_of_birth}}" onclick="view('{{i.id}}')"  id="hi{{i.id}}"  class="fa-regular fa-pen-to-square"></i></a> 
+                        
+                        
+                        
+                        </td>
+
+                    </tr>                        
+
+                  
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </form>
+
+
+</body>
+</html>

@@ -1,0 +1,174 @@
+{% extends "management/navbar.html" %}
+{% load static %}
+
+ {% block content %} 
+    
+    <style>
+        textarea{
+            resize: none;
+        }
+        .reg__card{
+            transition: 0.5s;
+        }
+        .reg__card:hover{
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+        }
+    </style>
+
+
+
+
+  
+        <div class="container">
+            <div class="card reg__card p-md-5 p-3">
+                <h3 class="text-center"><strong><u>New&nbsp;User</u></strong></h3>
+                <form action="{% url 'register' %}" method="POST">
+                    {% csrf_token %}
+                    
+                    <div class="row mt-3">
+
+                        <div class="col-lg-6 mt-2">
+                            <div class="form-group">
+                               
+                                <label for="first_name">First&nbsp;Name*</label>
+                                <input type="text" class="form-control" name="first_name" id="first_name" value="{{form.first_name.value}}" required>
+                                <span class="text-danger">{{form.first_name.errors}} </span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-6 mt-2">
+                            <div class="form-group">
+                                
+                                <label for="last_name">Last&nbsp;Name*</label>
+                                <input type="text" class="form-control" name="last_name" value="{{form.last_name.value}}" id="last_name" required>
+                                <span class="text-danger">{{form.last_name.errors}}</span>
+                            </div>
+                        </div>
+                        {% if form.non_field_errors %}
+                                <div class="non-field-errors">
+                                  {% for err in form.non_field_errors %}
+                                    <p class="form-error" style="color:red">{{ err }}</p>
+                                  {% endfor %}
+                                </div>
+                                {% endif %}
+
+                        <div class="col-lg-6 mt-2">
+                            <div class="form-group">
+                                
+                                <label for="last_name">Username*</label>
+                                <input type="text" class="form-control" name="username" value="{{form.username.value}}" id="password" required>
+                                <span class="text-danger">{{form.username.errors}}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-6 mt-2">
+                            <div class="form-group">
+                                <label for="phone_number"><span><i
+                                            class="fa-solid fa-phone"></i></span>&nbsp;Phone&nbsp;Number*</label>
+                                <input type="text" class="form-control" name="phone_number" value="{{form.phone_number.value}}" id="phone_number" maxlength="10">
+                                <span class="text-danger">{{form.phone_number.errors}}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-6 mt-2">
+                            <div class="form-group">
+                                <label for="aadhar_number"><span><i
+                                            class="fa-solid fa-address-card"></i></span>&nbsp;Aadhar&nbsp;Number</label>
+                                <input type="text" class="form-control" name="aadhar_number" value="{{form.aadhar_number.value}}" id="aadhar_number" maxlength="12">
+                                <span class="text-danger">{{form.aadhar_number.errors}}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-12 mt-2">
+                            <div class="form-group">
+                                <label for="email_id"><span><i
+                                            class="fa-solid fa-envelope"></i></span>&nbsp;Email&nbsp;Id</label>
+                                <input type="email" class="form-control" name="email" value="{{form.email.value}}" id="email_id">
+                                <span class="text-danger">{{form.email.errors}}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-12 mt-2">
+                            <label for="address"><span><i
+                                        class="fa-solid fa-location-dot"></i></span>&nbsp;Address*</label>
+                            <textarea class="form-control" name="address" id="address" rows="5" value="" >{{form.address.value}}</textarea required>
+                                <span class="text-danger">{{form.address.errors}}</span>
+                        </div>
+                        <div class="col-lg-12 mt-2">
+                            <div class="row mt-2 text-center">
+                                <div class="col-sm-4 text-left">
+                                    <label for="user_select"><span><i
+                                                class="fa-solid fa-user"></i></span>&nbsp;Select&nbsp;User&nbsp;Type*</label>
+                                </div>
+                            {% if form.user_select == 'admin' %}
+                                <div class="col-sm-4">
+                                    <input class="form-check-input" type="radio" name="user_select"  id="user"
+                                        value="user" >
+                                    <label class="form-check-label" for="user">
+                                        User
+                                    </label>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input class="form-check-input" type="radio" name="user_select" id="admin"
+                                        value="admin" checked>
+                                    <label class="form-check-label" for="admin">
+                                        Admin
+                                    </label>
+                                </div>
+                                {% else %}
+                                <div class="col-sm-4">
+                                    <input class="form-check-input" type="radio" name="user_select"  id="user"
+                                        value="user" checked>
+                                    <label class="form-check-label" for="user">
+                                        User
+                                    </label>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input class="form-check-input" type="radio" name="user_select" id="admin"
+                                        value="admin" >
+                                    <label class="form-check-label" for="admin">
+                                        Admin
+                                    </label>
+                                </div>
+
+
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 mt-2">
+                            <div class="form-group">
+                                
+                                <label for="last_name">Password*</label>
+                                <input type="password" class="form-control" name="password1" id="password1">
+                                <span class="text-danger">{{form.password1.errors}}</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 mt-2">
+                            <div class="form-group">
+                                
+                                <label for="last_name">Confirm Password*</label>
+                                <input type="password" class="form-control" name="password2" id="password2">
+                                <span class="text-danger">{{form.password2.errors}}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                  
+                    <hr class="hr-center">
+                    <div class=" d-flex justify-content-center mt-3">
+                        <button type="submit" class="btn btn-outline-success mx-2">Register</button>
+                        <button type="reset" class="btn btn-outline-danger mx-2">Cancel</button>
+                    </div>
+                   
+                </form>
+               
+            </div>
+
+        </div>
+   
+
+
+
+    
+{% endblock %} 

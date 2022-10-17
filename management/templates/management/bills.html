@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  <!-- font awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+  <!-- internal css link -->
+  <link rel="stylesheet" href="{% static 'css/registrationstyle.css' %}">
+</head>
+<body>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+
+
+     
+    
+    <div class="card">
+
+        <div class="card-body text_size">
+            <h3 class="card-title">View Patient Details&nbsp;&nbsp;:</h3><br>
+            <table id="example" class="table table-striped table-bordered text-center" style="width:100%">
+                <thead>
+
+  <thead>
+     <tr>
+                <th>{{bill_detail.patient_id}}</td>
+                
+                        
+                        <th>{{bill_detail.patient_name}}</td>
+
+                
+                          </tr>
+                           </thead>
+                             </table>
+
+
+                <table> 
+                <thead>
+                    <tr>
+                        
+                        
+                        <th class="text-center">Visit date</th>
+                        <th class="text-center">Medicine name</th>
+                        <th class="text-center">Quantity</th>
+                         <th>Bill No</td>
+ {% comment %} <th class="text-center">Price</th>
+  <th class="text-center">Total Amount</th>  {% endcomment %}
+
+                   
+
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                
+                    {% comment %} {% for i in bill_detail %}  {% endcomment %}
+                    <tr>
+                         
+                        
+                        
+                      
+                 
+                        {% comment %} {% for a in past_detail %}   {% endcomment %}
+                          
+                      <td>{{past_detail.created_at.date}}</td> 
+                       {% comment %} {% endfor %}    {% endcomment %}
+                        <td>{{x.medicine_name}}</td>
+                         <td>{{x.quantity}}</td>
+                         <td>{{bill_no}}</td>
+                          {{form}} 
+                         {% comment %} <td><input type="text" name="price" ></td>
+                         <td><input type="text" name="total_amount"></td> {% endcomment %}
+                         <td><button type="submit">Submit</button></td>
+                        
+
+                          
+                    </tr>                        
+
+               
+                </tbody>
+               
+            </table>
+        </div>
+    </form>
+        <style>
+            table, th, td {
+              border:1px solid black;
+              border-collapse: collapse;
+            }
+            </style>
+
+</body>
+</html>
