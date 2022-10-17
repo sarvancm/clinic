@@ -34,8 +34,7 @@
                             <td>{% if i.is_active %}
                                 <strong>In-Active</strong>
                                 {% else %}
-                                <strong>Active</strong>
-                                {% endif %}
+                                <strong>Active</strong>{% endif %}
                             </td>
 
                             <td> {% if i.is_active %}
@@ -67,11 +66,10 @@
                             <td>{% if i.is_active %}
                                 <strong>In-Active</strong>
                                 {% else %}
-                                <strong>Active</strong>
-                                {% endif %}
+                                <strong>Active</strong>{% endif %}
                             </td>
 
-                            <!-- <td> {% if i.is_active %}
+                            <td> {% if i.is_active %}
                                 <a href="{% url 'disable_view' i.id %}"><button type="submit"
                                         class="btn btn-outline-dark"><i
                                             class="fa-solid fa-play"></i></button></a>&nbsp;&nbsp;
@@ -83,11 +81,10 @@
                                 <button type="button" class="btn btn-outline-dark" onclick="view('{{i.id}}')"
                                     data-toggle="modal" data-target="#exampleModal">
                                     <i object_id="{{i.id}}" id="general_vitals{{i.id}}"
-                                        class="fa-solid fa-temperature-three-quarters"></i> -->
-                                <td>    
-                                </button>&nbsp;&nbsp;<button type="button"
-                                    class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button>
-                               
+                                        class="fa-solid fa-temperature-three-quarters"></i>
+                                    {% if i.admin %}</button>&nbsp;&nbsp;<button type="button"
+                                    class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button>{%
+                                endif %}
                             </td>
                         </tr>
                         {% endif %}

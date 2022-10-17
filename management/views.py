@@ -6,7 +6,7 @@ from django.contrib.auth import login as log
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate,logout
 from django.contrib import messages
-
+from datetime import date
 
 import datetime
 from django.contrib.auth.decorators import login_required
@@ -62,7 +62,7 @@ def login_view(request):
             if user:    
                 if user.is_admin :
                     log(request,user)
-                    return redirect('doctor_view')
+                    return redirect('user_view')
                 elif user.is_customer:
                     log(request,user)
                     return redirect('patient_register')
@@ -231,6 +231,12 @@ def patients_register(request):
      return render(request,'management/patient_register.html',{'patient_id':increment_patient_id(),'form':form})  
 
 
+
+def calculate_age(born):
+    today = date.today()
+    return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+
+
 def increment_patient_id():
     last = PatientDetails.objects.last()
     if last == None:
@@ -298,6 +304,10 @@ def add_patient(request):
         TodayPatients.objects.create(patient=add_patient)
         return redirect('search_patient')
 
+def user_view(request):
+    x=  TodayPatients.objects.filter(created_at__contains=datetime.datetime.today().date())
+    return render(request,"management/user_view.html",{'x':x})
+
 def doctor_view(request):
     x=  TodayPatients.objects.filter(created_at__contains=datetime.datetime.today().date())
     return render(request,"management/doctor_view.html",{'x':x})
@@ -308,13 +318,15 @@ def disable_view(request,id):
      disable.is_active=False
      disable.save()    
 
-     return redirect('doctor_view')
+     return redirect('user_view')
+
+
 
 def enable_view(request,id):
      enable=TodayPatients.objects.get(id=id)    
      enable.is_active=True
      enable.save()
-     return redirect('doctor_view')
+     return redirect('user_view')
 
 def general_vitals(request):    
     if request.method=="POST":
@@ -328,16 +340,16 @@ def general_vitals(request):
         print(form.errors)
         if form.is_valid():
             form.save()
-            return redirect('doctor_view')
+            return redirect('user_view')
         else:
             x=  TodayPatients.objects.filter(created_at__contains=datetime.datetime.today().date())
             
-            return render(request,"management/doctor_view.html",{'form':form,'x':x}) 
+            return render(request,"management/user_view.html",{'form':form,'x':x}) 
 
     else:
         form=GeneralVitalsForm()
         print(form.errors)
-        return render(request,"management/doctor_view.html",{'form':form})
+        return render(request,"management/user_view.html",{'form':form})
     
 
 
@@ -346,7 +358,7 @@ def add_new_history(request,id):
         form=HistoryForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('doctor_view')
+            return redirect('user_view')
         else:
              return render(request,"management/add_new_history.html",{'form':form})       
     else:
@@ -363,10 +375,10 @@ def medicine_details(request,id):
         form=MedicineDetailForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('doctor_view')
+            return redirect('user_view')
         else:
             print(form.errors)
-            return redirect('doctor_view')
+            return redirect('user_view')
     else:
         form=MedicineDetailForm()
         return render(request,"management/medicine_details.html",{'medicine_detail':medicine_detail})
