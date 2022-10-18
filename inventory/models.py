@@ -9,12 +9,12 @@ class Medicine(models.Model):
     quantity= models.IntegerField()
     medicine_mg= models.DecimalField(max_digits = 16, decimal_places = 2)
     medicine_price= models.DecimalField(max_digits = 16, decimal_places = 2)
-    stocked_date=models.DateField(null=True, blank=True)
-    purchase_date=models.DateField(null=True, blank=True)
-    expiry_date=models.DateField(null=True, blank=True)
+    stocked_date=models.DateField()
+    purchase_date=models.DateField()
+    expiry_date=models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    is_active=   models.BooleanField('Is active', default=False)  
+    is_active=models.BooleanField('Is active', default=False)  
 
     def __str__(self):
         return f" {self.medicine_brand} brand {self.medicine_name}  details"
