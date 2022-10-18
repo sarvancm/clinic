@@ -31,7 +31,7 @@ urlpatterns = [
     path('user_view/', views.user_view, name='user_view'),
     path('disable_view/<int:id>/', views.disable_view, name='disable_view'),
     path('enable_view/<int:id>/', views.enable_view, name='enable_view'),
-    path('calculate_age/', views.calculate_age, name='calculate_age'),
+   
    
     path('past_history/<int:id>/', views.past_history, name='past_history'),
     path('medicine_details/<int:id>/',views.medicine_details, name='medicine_details'),
@@ -39,7 +39,7 @@ urlpatterns = [
     path('edit_bills/<int:id>/',views.edit_bills, name='edit_bills'),
     path('click_patient/<int:id>/',views.click_patient, name='click_patient'),
     path('general_vitals/',views.general_vitals, name='general_vitals'),
-    path('doctor_view/',views.general_vitals, name='doctor_view'),
+    path('doctor_view/',views.doctor_view, name='doctor_view'),
 
 
 

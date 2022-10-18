@@ -50,9 +50,11 @@
                                     data-toggle="modal" data-target="#exampleModal">
                                     <i object_id="{{i.id}}" id="general_vitals{{i.id}}"
                                         class="fa-solid fa-temperature-three-quarters"></i>
-                                    {% if i.admin %}</button>&nbsp;&nbsp;<button type="button"
+                                    {% if user.is_admin %}
+                                    </button>&nbsp;&nbsp;<button type="button"
                                     class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button>
                                     {% endif %}
+                                    
                             </td>
                         </tr>
                         {% else %}
@@ -82,13 +84,14 @@
                                     data-toggle="modal" data-target="#exampleModal">
                                     <i object_id="{{i.id}}" id="general_vitals{{i.id}}"
                                         class="fa-solid fa-temperature-three-quarters"></i>
-                                    {% if i.admin %}</button>&nbsp;&nbsp;<button type="button"
-                                    class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button>{%
-                                endif %}
+                                    {% if i.admin %}
+                                </button>&nbsp;&nbsp;<button type="button"
+                                    class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button>
+                                    {% endif %}
                             </td>
                         </tr>
                         {% endif %}
-                        {% endif %}
+                       
                         {% endfor %}
 
                     </tbody>

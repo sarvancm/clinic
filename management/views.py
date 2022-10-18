@@ -6,19 +6,20 @@ from django.contrib.auth import login as log
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate,logout
 from django.contrib import messages
+from datetime import datetime
 from datetime import date
-
-import datetime
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
 
 
+
+
+#navbar
+def navbar(request):
+    user=request.user
+  
+    return render(request,"management/navbar.html",{'user':user})
 
 #user views
-def navbar(request):
-    return render(request,"management/navbar.html")
-
-
 def register(request):
     if request.method=="POST":
         form = RegisterForm(request.POST)
@@ -38,9 +39,8 @@ def register(request):
                 x.save()
             else:
                 x.is_user=1
-                x.save()
-            
-            
+                x.save()       
+        
             
             messages.success(request, 'Account created successfully') 
             return redirect('login_view')
@@ -62,10 +62,10 @@ def login_view(request):
             if user:    
                 if user.is_admin :
                     log(request,user)
-                    return redirect('user_view')
-                elif user.is_customer:
+                    return redirect('doctor_view')
+                elif user.is_user:
                     log(request,user)
-                    return redirect('patient_register')
+                    return redirect('patients_register')
                 else:
                     return HttpResponse("invalid")                  
             else:
@@ -81,7 +81,7 @@ def login_view(request):
 
 def user_logout(request):
     logout(request)
-    return redirect('register')
+    return redirect('login_view')
 
 
 
@@ -216,9 +216,30 @@ def patients_register(request):
     if request.method=="POST":
         patient_id=request.POST.get("patient_id")
         print(patient_id)
-        form = PatientDetailsForm(request.POST)        
+        form = PatientDetailsForm(request.POST)
+        date_of_birth=request.POST.get("date_of_birth")
+        today = date.today()
+        
+        dt = datetime.strptime(date_of_birth, '%Y-%m-%d')
+        
+        if dt.month<today.month:
+            age=today.year-dt.year
+            print(age)
+        elif dt.month>today.month:
+                age=today.year-dt.year+1
+                print(age)
+        elif dt.month==today.month & dt.day<today.day:
+                    age=today.year-dt.year
+                    print(age)
+        else: 
+                        age=today.year-dt.year-1
+                        print(age)      
+
+              
         if form.is_valid(): 
-            form.save()             
+            z=form.save() 
+            z.age=age
+            z.save()            
             messages.success(request, 'Details created successfully') 
             return redirect('search_patient')
         else:
@@ -232,9 +253,12 @@ def patients_register(request):
 
 
 
-def calculate_age(born):
-    today = date.today()
-    return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+# def calculateAge(birthDate):
+#     today = date.today()
+#     age = today.year - birthDate.year -((today.month, today.day) <
+#          (birthDate.month, birthDate.day))
+ 
+#     return age
 
 
 def increment_patient_id():
@@ -251,19 +275,29 @@ def search_patient(request):
     x=  PatientDetails.objects.all()
     if request.method=="POST": 
         patient_id=request.POST.get("patient_id") 
-        patient_name=request.POST.get("patient_name") 
-        phone_number=request.POST.get("phone_number")
-        try:
-            result=PatientDetails.objects.filter(phone_number=phone_number)
-            return render(request,'management/search_patient.html',{'x':result,'phone_number':phone_number}) 
-        except:
-               result= PatientDetails.objects.filter(Q(patient_name=patient_name)|Q(patient_id=patient_id))
+         
+        # phone_number=request.POST.get("phone_number")
+        # try:
+        # result=PatientDetails.objects.filter(Q(phone_number=patient_id)|Q(patient_id=patient_id))
+        
+        result1 = PatientDetails.objects.filter(phone_number__iexact = patient_id)
+        result2 = PatientDetails.objects.filter(patient_id__iexact = patient_id)
+        if result1:
+            result=result1
+        elif result2:
+            result=result2
+        else:
+            result=[]
+
+        return render(request,'management/search_patient.html',{'x':result,'phone_number':patient_id}) 
+        # except:
+        #        result= PatientDetails.objects.filter(Q(phone_number=phone_number)|Q(patient_id=patient_id))
                
                 
-        return render(request,'management/search_patient.html',{'x':result,'patient_name':patient_name,'patient_id':patient_id})             
+        # return render(request,'management/search_patient.html',{'x':result,'patient_id':patient_id})             
         
     else:   
-        y=  TodayPatients.objects.filter(created_at__contains=datetime.datetime.today().date())  
+        y=  TodayPatients.objects.filter(created_at__contains=datetime.today().date())  
         y =[i.patient.patient_id for i in y]   
         print(y)
         return render(request,'management/search_patient.html',{'x':x})  
@@ -304,16 +338,30 @@ def add_patient(request):
         TodayPatients.objects.create(patient=add_patient)
         return redirect('search_patient')
 
+
+
 def user_view(request):
-    x=  TodayPatients.objects.filter(created_at__contains=datetime.datetime.today().date())
+    x=  TodayPatients.objects.filter(created_at__contains=datetime.today().date())
     return render(request,"management/user_view.html",{'x':x})
 
+
+
+
 def doctor_view(request):
-    x=  TodayPatients.objects.filter(created_at__contains=datetime.datetime.today().date())
-    return render(request,"management/doctor_view.html",{'x':x})
+    user=request.user
+    if user.is_admin:
+        x=  TodayPatients.objects.filter(created_at__contains=datetime.today().date())
+        return render(request,"management/doctor_view.html",{'x':x,'user':user})
+    else:
+        messages.success(request,"Not admin")
+        return redirect('login_view')
+
+    
+    
 
 def disable_view(request,id):
      disable=TodayPatients.objects.get(id=id)
+     
      print(disable)
      disable.is_active=False
      disable.save()    
@@ -328,7 +376,7 @@ def enable_view(request,id):
      enable.save()
      return redirect('user_view')
 
-def general_vitals(request):    
+def general_vitals(request):     
     if request.method=="POST":
         id=request.POST.get("object_id")        
 
@@ -415,13 +463,12 @@ def bills(request,id):
 def edit_bills(request,id):
     edit_bills=BillsModel.objects.get(id=id)
     form=BillsModelForm(instance=edit_bills)
-    
     if request.method=="POST":
         form=BillsModelForm(request.POST,instance=edit_bills)
         if form.is_valid():
             edit=form.save()
             edit.save()
-            return redirect('search_patient')
+            return redirect('search_patient')  
         else:
             print(form.errors)
             return render(request,"management/edit_bills.html",{'edit_bills':edit_bills,'form':form})
@@ -438,8 +485,7 @@ def increment_bill_no():
     last+=1
     return ( "BBILL001" "%03d" % last)
 
-# def update(request,id):
-#     return render("management/update.html")
+
     
 
 

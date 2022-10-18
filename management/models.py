@@ -1,12 +1,13 @@
 from sqlite3 import Date
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+import datetime
 
 
 class User(AbstractUser):
     address=models.TextField()
     aadhar_number=models.IntegerField()
+    pan_number=models.CharField(max_length=10)
     phone_number=models.IntegerField()
     is_admin = models.BooleanField('Is admin', default=False)
     is_user = models.BooleanField('Is_customer', default=False)
@@ -35,13 +36,20 @@ class PatientDetails(models.Model):
     patient_id= models.CharField(max_length=30)
     patient_name= models.CharField(max_length=30)
     fathers_name= models.CharField(max_length=30)
-    age= models.IntegerField()
+    age= models.IntegerField(null=True,blank=True)
     date_of_birth= models.DateField()
     gender= models.CharField(max_length=30)
     address= models.TextField(max_length=30)
     phone_number = models.IntegerField(null=True,blank=True)
    
-     
+   
+    @property
+    def age(self):
+            
+            dob = self.date_of_birth
+            tod = datetime.date.today()
+            my_age = (tod.year - dob.year) - int((tod.month, tod.day) < (dob.month, dob.day))
+            return my_age 
 
 
 class TodayPatients(models.Model):

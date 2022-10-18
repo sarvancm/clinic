@@ -108,7 +108,7 @@
                 </a>
             </li>
             <li class="log_out">
-                <a href="#">
+                <a href="{% url 'user_logout' %}">
                     <i class='bx bx-log-out'></i>
                     <button type="button" class="btn btn-light">Log out</button>
                 </a>
@@ -123,8 +123,8 @@
             </div>
 
             <div>
-
-                <span class="links_name">ADMIN</span>
+            
+                <span class="links_name">{{user.username}}</span>
 
             </div>
         </nav>
@@ -209,6 +209,14 @@
             } else
                 sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
         }
+
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !=46)
+                return false;
+            return true;
+        } 
+
     </script>
     </body>
 </html>

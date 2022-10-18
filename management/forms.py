@@ -13,7 +13,7 @@ class RegisterForm(UserCreationForm):
    
    class Meta:
         model=User
-        fields=['first_name','last_name','username','phone_number','aadhar_number','email','address','password1','password2']
+        fields=['first_name','last_name','username','phone_number','aadhar_number','pan_number','email','address','password1','password2']
         labels={'email':'Email'}
 
 
