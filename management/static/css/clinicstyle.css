@@ -6,12 +6,12 @@ body {
     width: 100%;
     font-family: 'poppins';
     font-style: normal;
-    /* /* background-color: rgb(224, 224, 147); * */
+    
 }
 .text_size{
     font-size: larger;
-     /* text-align: center;  */
-    margin-top: 25px; 
+     
+   /* margin-top: 25px; */
   
 }
 .col-form-label{
@@ -20,14 +20,12 @@ body {
 
 }
 .form_center{
-    /* margin-right: 170px; */
+   
     padding: 25px;
     margin-top: 10px;
    
 }
-/* .nav_font{
-    font-size: 40px;
-} */
+
 textarea{
     resize: none;
 }
@@ -39,12 +37,18 @@ h1{
     text-align:center;
     
 }
-/* regitered out patient */
-
-
-tr.active {
-    background-color: lightgray;
+.height_card{
+    height: 300px;
+    overflow: auto;
 }
+h4{
+    font-size: large;
+    font-weight: 500;
+
+}
+
+
+
 
   
 

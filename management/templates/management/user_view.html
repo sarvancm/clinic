@@ -5,8 +5,8 @@
 
 
 <section id="out_patient">
-    <div class="container">
-        <div class="card mt-4">
+    {% comment %} <div class="container"> {% endcomment %}
+        <div class="card mt-4 mx-5">
             <div class="card-body">
                 <h1 class="card-title text-center mt-4">REGISTERED OUT_PATIENT</h1><br>
                 <hr><br><br>
@@ -22,7 +22,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for i in x %}
+                        {% for j,i in z %}
                         {% if i.is_active %}
                         <tr class="active">
                             <td>{{forloop.counter}}</td>
@@ -48,7 +48,7 @@
                                 {% endif %}
                                 <button type="button" class="btn btn-outline-dark" onclick="view('{{i.id}}')"
                                     data-toggle="modal" data-target="#exampleModal">
-                                    <i object_id="{{i.id}}" id="general_vitals{{i.id}}"
+                                    <i object_id="{{i.id}}" vitals_id="{{j.id}}" id="general_vitals{{i.id}}" temp="{{j.temperature}}" pulserate="{{j.pulse_rate}}" bloodstart="{{j.blood_pressure_start}}" bloodend="{{j.blood_pressure_end}}" heig="{{j.height}}" weig="{{j.weight}}" other="{{j.others}}"
                                         class="fa-solid fa-temperature-three-quarters"></i>
                                     {% if user.is_admin %}
                                     </button>&nbsp;&nbsp;<button type="button"
@@ -82,7 +82,7 @@
                                 {% endif %}
                                 <button type="button" class="btn btn-outline-dark" onclick="view('{{i.id}}')"
                                     data-toggle="modal" data-target="#exampleModal">
-                                    <i object_id="{{i.id}}" id="general_vitals{{i.id}}"
+                                    <i object_id="{{i.id}}" id="general_vitals{{i.id}}" vitals_id="{{j.id}}" temp="{{j.temperature}}" pulserate="{{j.pulse_rate}}" bloodstart="{{j.blood_pressure_start}}" bloodend="{{j.blood_pressure_end}}" heig="{{j.height}}" weig="{{j.weight}}" other="{{j.others}}"
                                         class="fa-solid fa-temperature-three-quarters"></i>
                                     {% if i.admin %}
                                 </button>&nbsp;&nbsp;<button type="button"
@@ -98,7 +98,7 @@
                 </table>
             </div>
         </div>
-    </div>
+    {% comment %} </div> {% endcomment %}
 </section>
 
 <!-- Modal -->
@@ -116,15 +116,17 @@
                 <div class="modal-body">
                     <form action="{% url 'general_vitals' %}" method="POST">
                         {% csrf_token %}
+                        {% comment %} <!-- {% if z %}
+                        {% for i,j in z %} --> {% endcomment %}
                         <div class="form-group row">
                             <div class="col-lg-6">
                                 <label for="temperature" class="col-form-label">Temperature&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-lg-6">
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder=""
-                                        aria-label="Recipient's username" name="temperature"
-                                        aria-describedby="basic-addon2">
+                                    <input type="text" class="form-control" placeholder="" 
+                                        aria-label="Recipient's username" name="temperature" id="temp"
+                                        aria-describedby="basic-addon2" >
                                     <div class="input-group-append">
                                         <span class="input-group-text" id="basic-addon2"> &#8457;</span>
                                     </div>
@@ -137,13 +139,15 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder=""
+                                    <input type="text" class="form-control" placeholder="" id="pulserate"
                                         aria-label="Recipient's username" name="pulse_rate"
-                                        aria-describedby="basic-addon2">
+                                        aria-describedby="basic-addon2" >
                                     <div class="input-group-append">
                                         <span class="input-group-text" id="basic-addon2">/min</span>
                                     </div>
-                                    <input type="hidden" name="object_id" id="object_id">
+                                    <input type="text" name="object" id="object_id">
+                                    <input type="text" name="vitals" id="vitals_id">
+
                                 </div>
                             </div>
                         </div>
@@ -153,14 +157,14 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="row">
-                                    <div class="col-lg-3">
-                                        <input type="text" class="form-control" name="blood_pressure" id="inputname">
+                                    <div class="col-lg-4">
+                                        <input type="text" class="form-control" name="blood_pressure_start"  id="bloodstart" >
                                     </div>
                                     <div class="col-lg-1 text-center">
                                         <label for="inputname" class="col-form-label">-</label>
                                     </div>
-                                    <div class="col-lg-3">
-                                        <input type="text" class="form-control" name="blood_pressure" id="inputname">
+                                    <div class="col-lg-4">
+                                        <input type="text" class="form-control" name="blood_pressure_end" id="bloodend" >
                                     </div>
                                     <div class="col-lg-2">
                                         <label for="inputname" class="col-form-label">mm/Hg</label>
@@ -173,7 +177,7 @@
                                 <label for="temperature" class="col-form-label">Height&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="height" id="inputname1">
+                                <input type="text" class="form-control" name="height"  id="heig" >
                             </div>
                         </div>
                         <div class="form-group row">
@@ -181,7 +185,7 @@
                                 <label for="temperature" class="col-form-label">Weight&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="weight" id="inputname2">
+                                <input type="text" class="form-control" name="weight"   id="weig" >
                             </div>
                         </div>
                         <div class="form-group row">
@@ -189,7 +193,7 @@
                                 <label for="temperature" class="col-form-label">Others&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-lg-6">
-                                <textarea class="form-control mb-4" id="validationTextarea" name="others" placeholder=""
+                                <textarea class="form-control mb-4" id="validationTextarea" name="others" id="other"  placeholder=""
                                     required></textarea>
                             </div>
                         </div>
@@ -200,7 +204,11 @@
                     <button type="submit" class="btn btn-success">Save</button>
                     <button type="reset" class="btn btn-danger ml-3">Cancel</button>
                 </div>
+                {% comment %} <!-- {% endfor %}
 
+{% else %} -->
+               
+                <!-- {% endif %} --> {% endcomment %}
                 </form>
             </div>
 
@@ -209,9 +217,10 @@
     </div>
 </div>
 
+{% endblock %}
 
+{% block script %}
 
-<script>
     $(document).ready(function () {
         $('#example').DataTable();
         $('#example1').DataTable();
@@ -219,11 +228,34 @@
     function view(event) {
 
         var newid = $('#general_vitals' + event).attr("object_id")
+        var newvitalid = $('#general_vitals' + event).attr("vitals_id")
+
+        var newtemp = $('#general_vitals'+event).attr("temp")
+        var newpulse = $('#general_vitals'+event).attr("pulserate")
+        var newbloodstart = $('#general_vitals'+event).attr("bloodstart")
+        var newheight = $('#general_vitals'+event).attr("heig")
+
+        var newbloodend = $('#general_vitals'+event).attr("bloodend")
+
+        var newweight = $('#general_vitals'+event).attr("weig")
+        var newothers = $('#general_vitals'+event).attr("other")
+
+
 
 
         $('#object_id').val(newid)
+        $('#vitals_id').val(newvitalid)
+
+        $('#temp').val(newtemp)
+
+        $('#pulserate').val(newpulse)
+         $('#bloodstart').val(newbloodstart)
+          $('#bloodend').val(newbloodend)
+           $('#heig').val(newheight)
+            $('#weig').val(newweight)
+            $('#other').val(newothers)
+
 
     }
 
-</script>
-{% endblock %}
+{% endblock script %}

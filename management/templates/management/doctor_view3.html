@@ -1,0 +1,316 @@
+{% extends "management/navbar.html" %}
+{% load static %}
+
+{% block content %}
+    <section id="Doctor-view">
+        <div class="container">
+            <h1 class="mt-4">Doctor-view</h1>
+            <hr>
+
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <form action="" class="mt-4" method="POST">
+                        {% csrf_token %}
+                       
+                        <div class="form-group row">
+                            
+                            <div class="col-lg-4 text-lg-center text-md-left text-sm-left">
+                                <label for="name" class="col-form-label">Patient&nbsp;ID&nbsp;&nbsp;:</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" name="patient_id" value={{x.patient_id}} id="name" placeholder="" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-4 text-lg-center text-md-left text-sm-left">
+                                <label for="name1" class="col-form-label">Patient&nbsp;Name&nbsp;&nbsp;:</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" id="name1" placeholder="" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-4 text-lg-center text-md-left text-sm-left">
+                                <label for="age1" class="col-form-label">Age&nbsp;&nbsp;:</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="number" class="form-control" id="age1" placeholder="" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+
+                            <div class="col-lg-4 text-lg-center text-md-left text-sm-left">
+                                <label for="name3" class="col-form-label">Blood&nbsp;Group&nbsp;&nbsp;:</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" id="name3" placeholder="" disabled>
+                            </div>
+
+                        </div>
+                    
+                        
+                    </form>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card p-2 height_card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4>FEES</h4>
+                                </div>
+                                <div class="col-lg-6 text-right">
+                                    <button type="text" class="btn btn-outline-dark btn-sm"><i
+                                            class="fa-regular fa-eye"></i></button>
+                                </div>
+
+                            </div>
+                            <hr>
+                            <form>
+
+                                <div class="form-row">
+                                    <div class="col-lg-4">
+                                        <input type="text" class="form-control" placeholder="">
+                                    </div>
+                                    <div class="col-lg-4">
+
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" placeholder=""
+                                                aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2">Rs</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-lg-4 text-right">
+                                        <button type="text" class="btn btn-outline-dark"><i
+                                                class="fa-solid fa-check"></i></button>&nbsp;&nbsp;&nbsp;
+                                        <button type="text" class="btn btn-outline-dark"><i
+                                                class="fa-solid fa-xmark"></i></button>
+                                    </div>
+                                </div>
+                            </form><br>
+                            <div class="table-responsive">
+                                <table id="example" class="table table-bordered table-striped text-center"
+                                    style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">S.No</th>
+                                            <th class="text-center">Patient&nbsp;ID</th>
+
+                                            <th class="text-center">Amount</th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+
+                                            <td>1</td>
+                                            <td>Consulting</td>
+                                            <td>50</td>
+                                            <td><i class="fa-solid fa-pen-to-square"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i
+                                                    class="fa-solid fa-trash"></i>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Billing</td>
+                                            <td>350</td>
+
+                                            <td></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card mt-4 p-2 height_card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4>Allergy Medicine</h4>
+                                </div>
+                                <div class="col-lg-6 text-right">
+                                    <button type="text" class="btn btn-outline-dark btn-sm"><i
+                                            class="fa-regular fa-eye"></i></button>
+                                </div>
+                            </div>
+                            <hr>
+                            <form>
+                                <div class="form-row">
+                                    <div class="col-lg-4">
+                                        <input type="text" class="form-control" placeholder="">
+                                    </div>
+                                    <div class="col-lg-4">
+
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" placeholder=""
+                                                aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2">Rs</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-lg-4 text-right">
+                                        <button type="text" class="btn btn-outline-dark"><i
+                                                class="fa-solid fa-check"></i></button>&nbsp;&nbsp;&nbsp;
+                                        <button type="text" class="btn btn-outline-dark"><i
+                                                class="fa-solid fa-xmark"></i></button>
+                                    </div>
+                                </div>
+                            </form><br>
+                            <div class="table-responsive">
+                                <table id="example" class="table table-bordered table-striped text-center"
+                                    style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">S.No</th>
+                                            <th class="text-center">Medicine</th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+
+                                            <td>1</td>
+                                            <td>asdfg</td>
+
+                                            <td><i class="fa-solid fa-pen-to-square"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i
+                                                    class="fa-solid fa-trash"></i>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>fghtry</td>
+
+
+                                            <td></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card mt-4 p-2 height_card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4>LAB&nbsp;TESTING</h4>
+                                </div>
+                                <div class="col-lg-6 text-right">
+                                    <button type="text" class="btn btn-outline-dark btn-sm"><i
+                                            class="fa-regular fa-eye"></i></button>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-2 mt-3">
+                <div class="card-body">
+                    <div class="card pt-3 px-3">
+                        <div class="row">
+                            <div class="col-lg-6 mt-2">
+                                <p>01/05/2021&nbsp;
+                                    7.30&nbsp;PM</p>
+                            </div>
+                            <div class="col-lg-6 text-right mt-2">
+                                <p>Today&nbsp;
+                                    <button type="text" class="btn btn-outline-dark btn-sm"><i
+                                            class="fa-solid fa-arrow-up"></i></button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card mt-4 p-2 height_card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <h4>VITALS</h4>
+                                    </div>
+                                    <div class="col-lg-6 text-right">
+                                        <button type="text" class="btn btn-outline-dark btn-sm"><i
+                                                class="fa-regular fa-eye"></i></button>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card mt-4 p-2 height_card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <h4>PATIENT&nbsp;SYMPTOM</h4>
+                                    </div>
+                                    <div class="col-lg-6 text-right">
+                                        <button type="text" class="btn btn-outline-dark btn-sm"><i
+                                                class="fa-regular fa-eye"></i></button>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card mt-4 p-2 height_card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <h4>DIAGNOSE</h4>
+                                    </div>
+                                    <div class="col-lg-6 text-right">
+                                        <button type="text" class="btn btn-outline-dark btn-sm"><i
+                                                class="fa-regular fa-eye"></i></button>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card mt-4 p-2 height_card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <h4>PRESCRIPTION</h4>
+                                    </div>
+                                    <div class="col-lg-6 text-right">
+                                        <button type="text" class="btn btn-outline-dark btn-sm"><i
+                                                class="fa-regular fa-eye"></i></button>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center mt-4 mb-3">
+                <button type="submit" class="btn btn-success">save</button>
+                <button type="reset" class="btn btn-danger ml-4">Cancel</button>
+            </div>
+        </div>
+    </section>
+    {% endblock %}

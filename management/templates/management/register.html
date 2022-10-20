@@ -65,7 +65,7 @@
                             <div class="form-group">
                                 <label for="phone_number"><span><i
                                             class="fa-solid fa-phone"></i></span>&nbsp;Phone&nbsp;Number*</label>
-                                <input type="text" class="form-control" name="phone_number" value="{{form.phone_number.value}}" id="phone_number" maxlength="10">
+                                <input type="text" class="form-control" name="phone_number" value="{{form.phone_number.value}}" id="phone_number" minlength="10" maxlength="10">
                                 <span class="text-danger">{{form.phone_number.errors}}</span>
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                             <div class="form-group">
                                 <label for="aadhar_number"><span><i
                                             class="fa-solid fa-address-card"></i></span>&nbsp;Aadhar&nbsp;Number</label>
-                                <input type="text" class="form-control" name="aadhar_number" value="{{form.aadhar_number.value}}" id="aadhar_number" maxlength="12">
+                                <input type="text" class="form-control" name="aadhar_number" value="{{form.aadhar_number.value}}" id="aadhar_number" minlength="12" maxlength="12">
                                 <span class="text-danger">{{form.aadhar_number.errors}}</span>
                             </div>
                         </div>
@@ -82,8 +82,8 @@
                             <div class="form-group">
                                
                                 <label for="first_name">PAN Card&nbsp;Number*</label>
-                                <input type="text" class="form-control" name="first_name" id="first_name" value="{{form.first_name.value}}" required>
-                                <span class="text-danger">{{form.first_name.errors}} </span>
+                                <input type="text" class="form-control" name="pan_number" id="pan_number" value="{{form.pan_number.value}}" required minlength="10" maxlength="10">
+                                <span class="text-danger">{{form.pan_number.errors}} </span>
                             </div>
                         </div>
                         

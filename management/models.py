@@ -1,7 +1,10 @@
 from sqlite3 import Date
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-import datetime
+from datetime import datetime
+from dateutil import relativedelta
+from datetime import date
+
 
 
 class User(AbstractUser):
@@ -39,17 +42,51 @@ class PatientDetails(models.Model):
     age= models.IntegerField(null=True,blank=True)
     date_of_birth= models.DateField()
     gender= models.CharField(max_length=30)
+    blood_group=models.CharField(max_length=30,null=True,blank=True)
     address= models.TextField(max_length=30)
     phone_number = models.IntegerField(null=True,blank=True)
    
    
     @property
-    def age(self):
+    def age_patient(self):
             
-            dob = self.date_of_birth
-            tod = datetime.date.today()
-            my_age = (tod.year - dob.year) - int((tod.month, tod.day) < (dob.month, dob.day))
-            return my_age 
+            date_of_birth = self.date_of_birth
+            birth=datetime.strptime(str(date_of_birth), '%Y-%m-%d')
+            
+            current = date.today() # July 27th, 2020 at the time of writing
+            diff=relativedelta.relativedelta(current, birth)
+            if diff.years > 0:
+                return f'{diff.years} years'
+            elif diff.months >0:
+                return f'{diff.months} months'
+            elif diff.days >0:
+                return f'{diff.days} days'
+            elif diff.hours >0:
+                return f'{diff.hours} hours'
+            
+           
+
+            # my_age = (today.year - dt.year) - int((today, today.day) < (dt.month, dt.day))
+            # if dt.month<today.month:
+            #     age=today.year-dt.year
+            #     print(age)
+            # elif dt.month>today.month:
+            #         age=today.year-dt.year+1
+            #         print(age)
+            # elif dt.month==today.month & dt.day<today.day:
+            #             age=today.year-dt.year
+            #             print(age)
+
+            # elif dt.year==today.year & dt.month==today.month:
+            #     age=dt.day-today.day
+
+
+
+            # else: 
+            #         age=today.year-dt.year-1
+            #         print(age)      
+
+            # return my_age 
 
 
 class TodayPatients(models.Model):
@@ -66,7 +103,7 @@ class HealthHistory(models.Model):
     treatment_details = models.TextField()
 
     def __str__(self):
-        return f'{self.patient.patient_name}'
+        return f'{self.patient.patient_name }'
 
 
 
@@ -91,7 +128,8 @@ class GeneralVitals(models.Model):
     patient=models.ForeignKey(PatientDetails,on_delete=models.CASCADE,null=True,blank=True)
     temperature=models.IntegerField()
     pulse_rate=models.IntegerField()
-    blood_pressure=models.IntegerField()
+    blood_pressure_start=models.IntegerField()
+    blood_pressure_end=models.IntegerField()
     height=models.FloatField()
     weight=models.FloatField()
     others=models.TextField()

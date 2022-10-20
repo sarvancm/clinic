@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
-from .models import BillsModel, ProductDetails,PatientDetails,TodayPatients,PrescribedMedicine,HealthHistory,BillsModel
+from .models import BillsModel, GeneralVitals, ProductDetails,PatientDetails,TodayPatients,PrescribedMedicine,HealthHistory,BillsModel
 from .forms import RegisterForm, InputForm,ProductDetailsForm,PatientDetailsForm,HistoryForm,MedicineDetailForm,BillsModelForm,GeneralVitalsForm
 from django.contrib.auth import login as log
 from django.contrib.auth.forms import AuthenticationForm
@@ -45,7 +45,7 @@ def register(request):
             messages.success(request, 'Account created successfully') 
             return redirect('login_view')
         else:
-            print(form.errors)
+            
             return render(request,'management/register.html', {'form':form})             
     else:        
         
@@ -110,11 +110,11 @@ def list_product_details(request):
    
     if request.method=="POST": 
         selected_date=request.POST.get("date") 
-        print(selected_date)
+        # print(selected_date)
         date_time_obj = datetime.datetime.strptime( selected_date, '%Y-%m-%d').date()
-        print( date_time_obj)
+        # print( date_time_obj)
         result= ProductDetails.objects.filter(created_at__date__gte= date_time_obj)
-        print(result)        
+        # print(result)        
         return render(request,'management/list_product_details.html',{'x':result})
     else:
         
@@ -215,31 +215,36 @@ def disable_product_details(request,id):
 def patients_register(request):
     if request.method=="POST":
         patient_id=request.POST.get("patient_id")
-        print(patient_id)
+        # print(patient_id)
         form = PatientDetailsForm(request.POST)
-        date_of_birth=request.POST.get("date_of_birth")
-        today = date.today()
+        # date_of_birth=request.POST.get("date_of_birth")
+        # today = date.today()
         
-        dt = datetime.strptime(date_of_birth, '%Y-%m-%d')
+        # dt = datetime.strptime(date_of_birth, '%Y-%m-%d')
         
-        if dt.month<today.month:
-            age=today.year-dt.year
-            print(age)
-        elif dt.month>today.month:
-                age=today.year-dt.year+1
-                print(age)
-        elif dt.month==today.month & dt.day<today.day:
-                    age=today.year-dt.year
-                    print(age)
-        else: 
-                        age=today.year-dt.year-1
-                        print(age)      
+        # if dt.month<today.month:
+        #     age=today.year-dt.year
+        #     print(age)
+        # elif dt.month>today.month:
+        #         age=today.year-dt.year+1
+        #         print(age)
+        # elif dt.month==today.month & dt.day<today.day:
+        #             age=today.year-dt.year
+        #             print(age)
+
+        # elif dt.year==today.year & dt.month==today.month
+
+
+
+        # else: 
+        #         age=today.year-dt.year-1
+        #         print(age)      
 
               
         if form.is_valid(): 
-            z=form.save() 
-            z.age=age
-            z.save()            
+            form.save() 
+            # z.age=age
+            # z.save()            
             messages.success(request, 'Details created successfully') 
             return redirect('search_patient')
         else:
@@ -253,12 +258,7 @@ def patients_register(request):
 
 
 
-# def calculateAge(birthDate):
-#     today = date.today()
-#     age = today.year - birthDate.year -((today.month, today.day) <
-#          (birthDate.month, birthDate.day))
- 
-#     return age
+
 
 
 def increment_patient_id():
@@ -320,9 +320,7 @@ def update_patient_details(request):
          update.Phone_number=request.POST.get("phone_number")
          update.save()         
          return redirect('search_patient')        
-    
-    else:
-   
+    else:   
         return render(request,"management/search_patient.html")
 
 
@@ -332,9 +330,8 @@ def add_patient(request):
     if request.method=="POST": 
         id=request.POST.get("patient_id")
         print(id)
-        add_patient = PatientDetails.objects.get(patient_id=id)
-        print(add_patient)    
-
+        add_patient = PatientDetails.objects.filter(patient_id=id).last()
+        print(add_patient) 
         TodayPatients.objects.create(patient=add_patient)
         return redirect('search_patient')
 
@@ -342,22 +339,44 @@ def add_patient(request):
 
 def user_view(request):
     x=  TodayPatients.objects.filter(created_at__contains=datetime.today().date())
-    return render(request,"management/user_view.html",{'x':x})
+    print(x)
+    list=[]
+    for i in x:
+        try:
+            y=GeneralVitals.objects.get(patient_id=i.patient_id)   
+        except:
+            y=None
+        list.append(y)
+    
+    z=zip(list,x)    
+   
+    return render(request,"management/user_view.html",{'x':x,'z':z})
+    
+    
+    
 
 
 
 
 def doctor_view(request):
-    user=request.user
-    if user.is_admin:
+    # user=request.user
+    # if user.is_admin:
         x=  TodayPatients.objects.filter(created_at__contains=datetime.today().date())
-        return render(request,"management/doctor_view.html",{'x':x,'user':user})
-    else:
-        messages.success(request,"Not admin")
-        return redirect('login_view')
+        return render(request,"management/doctor_view.html",{'x':x})
+    # else:
+    #     messages.success(request,"Not admin")
+    #     return redirect('login_view')
 
     
-    
+def doctor_vie(request,id):  
+    x=  TodayPatients.objects.get(id=id)
+    view=x.patient_id 
+    y=PatientDetails.objects.filter(id=x.patient_id).first()
+    z=GeneralVitals.objects.get(patient_id=view)
+
+
+    return render(request,"management/doctor_vie.html",{'x':y,'z':z})
+
 
 def disable_view(request,id):
      disable=TodayPatients.objects.get(id=id)
@@ -376,28 +395,54 @@ def enable_view(request,id):
      enable.save()
      return redirect('user_view')
 
-def general_vitals(request):     
+def general_vitals(request):    
+   
     if request.method=="POST":
-        id=request.POST.get("object_id")        
+        id=request.POST.get("object")
+        vitalsid=request.POST.get("vitals")  
+        print(id)  
+        general=TodayPatients.objects.get(id=id)
+        try:
+           vital=GeneralVitals.objects.get(id=vitalsid)
+        except:
+            vital=[]
 
-        general=TodayPatients.objects.get(patient=id)
-        patient_id=general.patient_id
-        print(patient_id)   
-        
-        form=GeneralVitalsForm(request.POST)
-        print(form.errors)
-        if form.is_valid():
-            form.save()
+        if vital:
+           
+            vital.temperature=request.POST.get("temperature")
+            vital.pulse_rate=request.POST.get("pulse_rate")
+            vital.blood_pressure_start=request.POST.get("blood_pressure_start")
+            vital.blood_pressure_end=request.POST.get("blood_pressure_end")
+            vital.height=request.POST.get("height")
+            vital.weight=request.POST.get("weight")
+            vital.others=request.POST.get("others")
+            vital.save()
             return redirect('user_view')
+
         else:
-            x=  TodayPatients.objects.filter(created_at__contains=datetime.datetime.today().date())
+            print(general)
+            patient_id=general.patient_id
+            print(patient_id)           
+            form=GeneralVitalsForm(request.POST)
+        
+
+            print(form.errors)
+            if form.is_valid():
+                x=form.save()
+                x.patient_id=patient_id
+                x.save()
+           
+        
+                return redirect('user_view')
+            else:
+                x=  TodayPatients.objects.filter(created_at__contains=datetime.today().date())
             
-            return render(request,"management/user_view.html",{'form':form,'x':x}) 
+                return render(request,"management/user_view.html",{'form':form}) 
 
     else:
         form=GeneralVitalsForm()
         print(form.errors)
-        return render(request,"management/user_view.html",{'form':form})
+        return render(request,"management/user_view.html",{'form':form,'patient_id':patient_id})
     
 
 
