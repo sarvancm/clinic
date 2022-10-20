@@ -1,0 +1,77 @@
+{% extends "management/navbar.html" %}
+{% block content %}
+
+    <div class="container">
+
+        <div class="card p-2 p-lg-5 ">
+            <form method="POST">
+                {% csrf_token %}
+                <div class=" row  justify-content-center ">
+                    <div class="col-lg-4 text-lg-right">
+                        <label for="search">Enter&nbsp;Medicine&nbsp;Name&nbsp;Or&nbsp;Unique&nbsp;Id&nbsp;:</label>
+                    </div>
+                    <div class=" col-lg-4">
+                        <input type="text" name="search" value="{{name_id}}" class="form-control mb-2" id="search">
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label for="from">From</label>
+                        <input type="date" name="start_date" value="{{start_date}}" class="form-control mb-2" id="from">
+                    </div>
+                    <div class=" col-lg-6">
+                        <label for="to">To</label>
+                        <input type="date" name="end_date" value="{{end_date}}" class="form-control mb-2" id="to">
+                    </div>
+                </div>
+
+
+                <div class=" text-center mt-3">
+                    <button type="submit" class="btn btn-outline-primary"><i
+                            class="fa-solid fa-search"></i>&nbsp;Search</button>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="card p-2 p-lg-5  mt-5">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Unique&nbsp;Id</th>
+                            <th>Brand&nbsp;Name</th>
+                            <th>Medicine&nbsp;Name</th>
+                            <th>Mg</th>
+                            <th>Quantity</th>
+                            <th>Expiry&nbsp;Date</th>
+                            <th>Purchase&nbsp;Date</th>
+                            <th>Stocked&nbsp;Date</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in medicines %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{i.medicine_id}}</td>
+                            <td>{{i.medicine_brand}}</td>
+                            <td>{{i.medicine_name}}</td>
+                            <td>{{i.medicine_mg}}</td>
+                            <td>{{i.quantity}}</td>
+                            <td>{{i.expiry_date}}</td>
+                            <td>{{i.purchase_date}}</td>
+                            <td>{{i.stocked_date}}</td>
+                            <td>{{i.medicine_price}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}
+     
