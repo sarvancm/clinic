@@ -49,6 +49,7 @@ class PatientDetails(models.Model):
    
     @property
     def age_patient(self):
+        
             
             date_of_birth = self.date_of_birth
             birth=datetime.strptime(str(date_of_birth), '%Y-%m-%d')
@@ -56,13 +57,15 @@ class PatientDetails(models.Model):
             current = date.today() # July 27th, 2020 at the time of writing
             diff=relativedelta.relativedelta(current, birth)
             if diff.years > 0:
-                return f'{diff.years} years'
+                age=f'{diff.years} years'
             elif diff.months >0:
-                return f'{diff.months} months'
+                age=f'{diff.months} months'
             elif diff.days >0:
-                return f'{diff.days} days'
+                age=f'{diff.days} days'
             elif diff.hours >0:
-                return f'{diff.hours} hours'
+                age=f'{diff.hours} hours'
+
+            return age
             
            
 

@@ -9,6 +9,7 @@ from django.contrib import messages
 from datetime import datetime
 from datetime import date
 from django.contrib.auth.decorators import login_required
+from dateutil import relativedelta
 
 
 
@@ -218,9 +219,20 @@ def patients_register(request):
         # print(patient_id)
         form = PatientDetailsForm(request.POST)
         # date_of_birth=request.POST.get("date_of_birth")
-        # today = date.today()
+        # current = date.today()
         
-        # dt = datetime.strptime(date_of_birth, '%Y-%m-%d')
+        # birth=datetime.strptime(str(date_of_birth), '%Y-%m-%d')
+        # diff=relativedelta.relativedelta(current, birth)
+        # if diff.years > 0:
+        #         age={f'{diff.years} years'}
+        # elif diff.months >0:
+        #         age={f'{diff.months} months'}
+        # elif diff.days >0:
+        #         age={f'{diff.days} days'}
+        # elif diff.hours >0:
+        #         age={f'{diff.hours} hours'}
+
+          
         
         # if dt.month<today.month:
         #     age=today.year-dt.year
@@ -284,10 +296,13 @@ def search_patient(request):
         result2 = PatientDetails.objects.filter(patient_id__iexact = patient_id)
         if result1:
             result=result1
+            
         elif result2:
             result=result2
+            
         else:
             result=[]
+          
 
         return render(request,'management/search_patient.html',{'x':result,'phone_number':patient_id}) 
         # except:
@@ -307,7 +322,7 @@ def click_patient(request,id):
     x=  PatientDetails.objects.filter(id=patient.id)
     
     
-    return render(request,"management/search_patient.html",{'patient':patient,'x':x,})
+    return render(request,"management/search_patient.html",{'patient':patient,'x':x})
 
 
 def update_patient_details(request):
@@ -395,20 +410,22 @@ def enable_view(request,id):
      enable.save()
      return redirect('user_view')
 
-def general_vitals(request):    
+def general_vitals(request):   
+  
    
     if request.method=="POST":
         id=request.POST.get("object")
         vitalsid=request.POST.get("vitals")  
         print(id)  
         general=TodayPatients.objects.get(id=id)
+        print(general)
         try:
            vital=GeneralVitals.objects.get(id=vitalsid)
         except:
             vital=[]
 
         if vital:
-           
+            form=GeneralVitalsForm(request.POST)
             vital.temperature=request.POST.get("temperature")
             vital.pulse_rate=request.POST.get("pulse_rate")
             vital.blood_pressure_start=request.POST.get("blood_pressure_start")
@@ -416,17 +433,34 @@ def general_vitals(request):
             vital.height=request.POST.get("height")
             vital.weight=request.POST.get("weight")
             vital.others=request.POST.get("others")
-            vital.save()
-            return redirect('user_view')
+            if form.is_valid():
+                vital.save()           
+                return redirect('user_view')
+            else:
+               
+                x=  TodayPatients.objects.filter(created_at__contains=datetime.today().date())
+                print(x)
+                list=[]
+                for i in x:
+                    try:
+                        y=GeneralVitals.objects.get(patient_id=i.patient_id)   
+                    except:
+                        y=None
+                    list.append(y)
+                
+                z=zip(list,x)              
+                return render(request,"management/user_view.html",{'form':form,'err':True,'x':x,'z':z}) 
+
+            
 
         else:
-            print(general)
+            
             patient_id=general.patient_id
-            print(patient_id)           
+                    
             form=GeneralVitalsForm(request.POST)
         
 
-            print(form.errors)
+            # form_error = False
             if form.is_valid():
                 x=form.save()
                 x.patient_id=patient_id
@@ -435,14 +469,24 @@ def general_vitals(request):
         
                 return redirect('user_view')
             else:
+               
                 x=  TodayPatients.objects.filter(created_at__contains=datetime.today().date())
-            
-                return render(request,"management/user_view.html",{'form':form}) 
+                print(x)
+                list=[]
+                for i in x:
+                    try:
+                        y=GeneralVitals.objects.get(patient_id=i.patient_id)   
+                    except:
+                        y=None
+                    list.append(y)
+                
+                z=zip(list,x)              
+                return render(request,"management/user_view.html",{'form':form,'err':True,'x':x,'z':z}) 
 
     else:
         form=GeneralVitalsForm()
-        print(form.errors)
-        return render(request,"management/user_view.html",{'form':form,'patient_id':patient_id})
+        x=  TodayPatients.objects.filter(created_at__contains=datetime.today().date())
+        return render(request,"management/user_view.html",{'form':form,'patient_id':patient_id,'x':x})
     
 
 

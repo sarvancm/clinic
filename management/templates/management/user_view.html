@@ -22,8 +22,15 @@
                         </tr>
                     </thead>
                     <tbody>
+
+                     
+
+
+
+                      
                         {% for j,i in z %}
                         {% if i.is_active %}
+                       
                         <tr class="active">
                             <td>{{forloop.counter}}</td>
                             <td>{{i.patient.patient_id}}</td>
@@ -54,6 +61,7 @@
                                     </button>&nbsp;&nbsp;<button type="button"
                                     class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button>
                                     {% endif %}
+                                 
                                     
                             </td>
                         </tr>
@@ -92,6 +100,7 @@
                         </tr>
                         {% endif %}
                        
+                       
                         {% endfor %}
 
                     </tbody>
@@ -102,6 +111,8 @@
 </section>
 
 <!-- Modal -->
+
+
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -127,6 +138,9 @@
                                     <input type="text" class="form-control" placeholder="" 
                                         aria-label="Recipient's username" name="temperature" id="temp"
                                         aria-describedby="basic-addon2" >
+                                        <!-- {% if form_error %}
+                                        $(#offerModalForm).modal("show");
+                                    {% endif %} -->
                                     <div class="input-group-append">
                                         <span class="input-group-text" id="basic-addon2"> &#8457;</span>
                                     </div>
@@ -193,7 +207,7 @@
                                 <label for="temperature" class="col-form-label">Others&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-lg-6">
-                                <textarea class="form-control mb-4" id="validationTextarea" name="others" id="other"  placeholder=""
+                                <textarea class="form-control mb-4" name="others" id="other"  placeholder=""
                                     required></textarea>
                             </div>
                         </div>
@@ -217,9 +231,156 @@
     </div>
 </div>
 
+
+<!-- --------------error modal------------------- -->
+
+
+
+
+
+<div class="modal fade" id="errormodal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h2 class="modal-title w-100 text-center" id="errormodal">General Vitals </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+          
+                <div class="modal-body">
+                    <form action="{% url 'general_vitals' %}" method="POST">
+                        {% csrf_token %}
+                        {% comment %} <!-- {% if z %}
+                        {% for i,j in z %} --> {% endcomment %}
+                        <div class="form-group row">
+                            <div class="col-lg-6">
+                                <label for="temperature" class="col-form-label">Temperature&nbsp;&nbsp;:</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="" 
+                                        aria-label="Recipient's username" name="temperature" id="temp" value="{{form.temperature.value}}"
+                                        aria-describedby="basic-addon2" >
+                                        
+
+                                        <!-- {% if form_error %}
+                                        $(#offerModalForm).modal("show");
+                                    {% endif %} -->
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"> &#8457;</span>
+                                        
+                                    </div>
+                                    <span class="text-danger">{{form.temperature.errors}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-6">
+                                <label for="temperature" class="col-form-label">Pulse&nbsp;Rate&nbsp;&nbsp;:</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="" id="pulserate"
+                                        aria-label="Recipient's username" name="pulse_rate" value="{{form.pulse_rate.value}}"
+                                        aria-describedby="basic-addon2" >
+
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">/min</span>
+                                    </div>
+                                    <span class="text-danger">{{form.pulse_rate.errors}}</span>
+                                    <input type="text" name="object" id="object_id">
+                                    <input type="text" name="vitals" id="vitals_id">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-6">
+                                <label for="inputname" class="col-form-label">Blood&nbsp;Pressure&nbsp;&nbsp;:</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <input type="text" class="form-control" name="blood_pressure_start"  id="bloodstart"  value="{{form.blood_pressure_start.value}}">
+                                    </div>
+                                 
+                                    <div class="col-lg-1 text-center">
+                                        <label for="inputname" class="col-form-label">-</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <input type="text" class="form-control" name="blood_pressure_end" id="bloodend"  value="{{form.blood_pressure_end.value}}">
+                                    </div>
+                                    
+                                    <div class="col-lg-2">
+                                        <label for="inputname" class="col-form-label">mm/Hg</label>
+                                    </div>
+                                    <span class="text-danger">{{form.blood_pressure_end.errors}}</span>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-6">
+                                <label for="temperature" class="col-form-label">Height&nbsp;&nbsp;:</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" name="height"  id="heig"  value="{{form.height.value}}" >
+                            </div>
+                            <span class="text-danger">{{form.height.errors}}</span>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-6">
+                                <label for="temperature" class="col-form-label">Weight&nbsp;&nbsp;:</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" name="weight"   id="weig"  value="{{form.weight.value}}">
+                            </div>
+                            <span class="text-danger">{{form.weight.errors}}</span>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-6">
+                                <label for="temperature" class="col-form-label">Others&nbsp;&nbsp;:</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <textarea class="form-control mb-4" name="others" id="other"  value="" placeholder=""
+                                    required>{{form.others.value}}</textarea>
+                            </div>
+                            <span class="text-danger">{{form.others.errors}}</span>
+                        </div>
+                
+
+
+                <div class="modal-footer justify-content-center">
+                    <button type="submit" class="btn btn-success">Save</button>
+                    <button type="reset" class="btn btn-danger ml-3">Cancel</button>
+                </div>
+                {% comment %} <!-- {% endfor %}
+
+{% else %} -->
+               
+                <!-- {% endif %} --> {% endcomment %}
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
+
 {% block script %}
+{% if err %}
+    $(document).ready(function () {
+
+        $('#errormodal').modal({backdrop:'static',keyboard:false});
+
+    });
+{% endif %} 
+
+
 
     $(document).ready(function () {
         $('#example').DataTable();

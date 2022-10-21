@@ -3,8 +3,8 @@
 
 {% block content %}
 
-    <section id="Doctor-view">
-        <div class="container">
+    {% comment %} <section id="Doctor-view">
+        <div class="container"> {% endcomment %}
             <h1 class="mt-4">Doctor-view</h1>
             <hr>
 
@@ -35,7 +35,7 @@
                                 <label for="age1" class="col-form-label">Age&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="number" class="form-control" id="age1" placeholder="" disabled>
+                                <input type="text" class="form-control"  value="{{x.age_patient}}" placeholder="" disabled>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -244,8 +244,8 @@
                                         <h4>VITALS</h4>
                                     </div>
                                     <div class="col-lg-6 text-right">
-                                        <button type="text" class="btn btn-outline-dark btn-sm" data-toggle="modal"
-                                            data-target="#exampleModal"><i class="fa-regular fa-eye" ob_id="{{z.id}}" temperature="{{z.temperature}}" onclick="view('{{z.id}}')" id="vitals{{z.id}}"></i></button>
+                                        <button type="text" class="btn btn-outline-dark btn-sm"  data-toggle="modal"
+                                            data-target="#exampleModal"><i class="fa-regular fa-eye"  ></i></button>
                                     </div>
                                 </div>
                                 <hr>
@@ -259,7 +259,7 @@
                                         <div class="col-lg-6">
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" placeholder=""
-                                                    aria-label="Recipient's username" name="temperature" value="{{z.temperature}}" aria-describedby="basic-addon2" disabled>
+                                                    aria-label="Recipient's username" name="temperature" value="{{z.temperature}}"  aria-describedby="basic-addon2" disabled>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text" id="basic-addon2"> &#8457;</span>
                                                 </div>
@@ -409,8 +409,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder="" value="{{list.temperature}}"
-                                            aria-label="Recipient's username" name="temperature" aria-describedby="basic-addon2">
+                                        <input type="text" class="form-control" placeholder="" name="temperature" value="{{z.temperature}}" 
+                                            aria-label="Recipient's username" aria-describedby="basic-addon2"  readonly>
                                         <div class="input-group-append">
                                             <span class="input-group-text" id="basic-addon2"> &#8457;</span>
                                         </div>
@@ -424,7 +424,7 @@
                                 <div class="col-lg-6">
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" placeholder=""
-                                            aria-label="Recipient's username" name="pulse_rate" aria-describedby="basic-addon2">
+                                            aria-label="Recipient's username" name="pulse_rate" value="{{z.pulse_rate}}" aria-describedby="basic-addon2"  readonly>
                                         <div class="input-group-append">
                                             <span class="input-group-text" id="basic-addon2">/min</span>
                                         </div>
@@ -438,14 +438,14 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="row">
-                                        <div class="col-lg-2">
-                                            <input type="text" class="form-control" name="blood_pressure_start" id="inputname">
+                                        <div class="col-lg-4">
+                                            <input type="text" class="form-control" name="blood_pressure_start" value="{{z.blood_pressure_start}}" id="inputname"  readonly>
                                         </div>
                                         <div class="col-lg-1 text-center">
                                             <label for="inputname" class="col-form-label">-</label>
                                         </div>
-                                        <div class="col-lg-2">
-                                            <input type="text" class="form-control" name="blood_pressure_end" id="inputname">
+                                        <div class="col-lg-4">
+                                            <input type="text" class="form-control" name="blood_pressure_end" value="{{z.blood_pressure_end}}" id="inputname"  readonly>
                                         </div>
                                         <div class="col-lg-1">
                                             <label for="inputname" class="col-form-label">mm/Hg</label>
@@ -458,8 +458,8 @@
                                     <label for="temperature" class="col-form-label">Height&nbsp;&nbsp;:</label>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" name="height" id="inputname1">
-                                    <input type="text" name="ob_id" id="ob_id">
+                                    <input type="text" class="form-control" name="height" value="{{z.height}}" id="inputname1"  readonly> 
+                                    {% comment %} <input type="text" name="ob_id" id="ob_id"> {% endcomment %}
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -467,7 +467,7 @@
                                     <label for="temperature" class="col-form-label">Weight&nbsp;&nbsp;:</label>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" name="weight" id="inputname2">
+                                    <input type="text" class="form-control" value="{{z.weight}}" name="weight" id="inputname2" readonly>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -476,7 +476,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <textarea class="form-control mb-4" name="others" id="validationTextarea" placeholder=""
-                                        required></textarea>
+                                         readonly>{{z.others}}</textarea >
                                 </div>
                             </div>
 
@@ -486,18 +486,18 @@
 
 
                     
-                    <div class="modal-footer justify-content-center">
+                    {% comment %} <div class="modal-footer justify-content-center">
                         <button type="submit" class="btn btn-success" data-dismiss="modal">Save</button>
                         <button type="reset" class="btn btn-danger ml-3">Cancel</button>
-                    </div>
+                    </div> {% endcomment %}
                 </form>
                 </div>
             </div>
         </div>
-        </div>
-    </section>
+        {% comment %} </div>
+    </section> {% endcomment %}
     {% endblock %}
-<script>
+{% comment %} <script>
 {% block script %}
 
     $(document).ready(function () {
@@ -507,11 +507,13 @@
     function view(event) {
 
         var newid = $('#vitals' + event).attr("ob_id")
+        var newtemp = $('#vitals'+event).attr("temp")
 
 
         $('#ob_id').val(newid)
+        $('#temp').val(newtemp)
 
     }
     {% endblock script %}
-</script>
+</script> {% endcomment %}
 
