@@ -53,6 +53,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% if medicines%}
                         {% for i in medicines %}
                         <tr>
                             <td>{{forloop.counter}}</td>
@@ -67,6 +68,11 @@
                             <td>{{i.medicine_price}}</td>
                         </tr>
                         {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="10" class="text-center">No Data Available</td>
+                        </tr>
+                        {% endif %}
                     </tbody>
                 </table>
             </div>
