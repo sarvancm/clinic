@@ -5,53 +5,102 @@
 
     {% comment %} <section id="Doctor-view">
         <div class="container"> {% endcomment %}
-            <h1 class="mt-4">Doctor-view</h1>
+            <h1 class="mt-2">Doctor-view</h1>
             <hr>
 
 
             <div class="row">
                 <div class="col-lg-6">
-                    <form action="" class="mt-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form action="" class="mt-4">
 
-                        <div class="form-group row">
-
-                            <div class="col-lg-4 text-lg-center text-md-left text-sm-left">
-                                <label for="name" class="col-form-label">Patient&nbsp;ID&nbsp;&nbsp;:</label>
-                            </div>
-                            <div class="col-lg-6">
-                                <input type="text" class="form-control" name="patient_id" value="{{x.patient_id}}" id="name" placeholder="" disabled>
+                                <div class="form-group row">
+        
+                                    <div class="col-lg-4 text-lg-center text-md-left text-sm-left">
+                                        <label for="name" class="col-form-label">Patient&nbsp;ID&nbsp;&nbsp;:</label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" name="patient_id" value="{{x.patient_id}}" id="name" placeholder="" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-4 text-lg-center text-md-left text-sm-left">
+                                        <label for="name1" class="col-form-label">Patient&nbsp;Name&nbsp;&nbsp;:</label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" name="patient_name" value="{{x.patient_name}}" id="name1" placeholder="" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-4 text-lg-center text-md-left text-sm-left">
+                                        <label for="age1" class="col-form-label">Age&nbsp;&nbsp;:</label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control"  value="{{x.age_patient}}" placeholder="" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+        
+                                    <div class="col-lg-4 text-lg-center text-md-left text-sm-left">
+                                        <label for="name3" class="col-form-label">Blood&nbsp;Group&nbsp;&nbsp;:</label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" id="name3" name="blood_group" value="{{x.blood_group}}" placeholder="" disabled>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card mt-4 mb-2 p-2 ">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <h4>Allergy Medicine</h4>
+                                        </div>
+                                        <div class="col-lg-6 text-right">
+                                            <button type="text" class="btn btn-outline-dark btn-sm"><i
+                                                    class="fa-regular fa-eye" ></i></button>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                        <form>
+                                            <div class="form-row ">
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" placeholder="Allergy Medicine" id="allergy-medicine">
+                                                </div>
+            
+                                                <div class="col-lg-4 text-right">
+                                                    <button type="button" id="allergy-add" class="btn btn-outline-dark"><i
+                                                            class="fa-solid fa-check"></i></button>&nbsp;&nbsp;&nbsp;
+                                                    <button type="button" id="allergy-clear" class="btn btn-outline-dark"><i
+                                                            class="fa-solid fa-xmark"></i></button>
+                                                </div>
+                                            </div>
+                                        </form><br>
+                                        <div class="table-responsive p-2 height_card">
+                                            <table id="allergy-medicine-table" class="table table-bordered table-striped text-center"
+                                                style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">S.No</th>
+                                                        <th class="text-center">Allergy&nbsp;Medicine</th>
+                                                        <th class="text-center">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="allergy-table">
+            
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <div class="col-lg-4 text-lg-center text-md-left text-sm-left">
-                                <label for="name1" class="col-form-label">Patient&nbsp;Name&nbsp;&nbsp;:</label>
-                            </div>
-                            <div class="col-lg-6">
-                                <input type="text" class="form-control" name="patient_name" value="{{x.patient_name}}" id="name1" placeholder="" disabled>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-lg-4 text-lg-center text-md-left text-sm-left">
-                                <label for="age1" class="col-form-label">Age&nbsp;&nbsp;:</label>
-                            </div>
-                            <div class="col-lg-6">
-                                <input type="text" class="form-control"  value="{{x.age_patient}}" placeholder="" disabled>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-
-                            <div class="col-lg-4 text-lg-center text-md-left text-sm-left">
-                                <label for="name3" class="col-form-label">Blood&nbsp;Group&nbsp;&nbsp;:</label>
-                            </div>
-                            <div class="col-lg-6">
-                                <input type="text" class="form-control" id="name3" name="blood_group" value="{{x.blood_group}}" placeholder="" disabled>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
 
                 <div class="col-lg-6">
-                    <div class="card p-2 height_card">
+                    <div class="card p-2 ">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-lg-6">
@@ -68,13 +117,13 @@
 
                                 <div class="form-row">
                                     <div class="col-lg-4">
-                                        <input type="text" class="form-control" placeholder="">
+                                        <input type="text" class="form-control" name="consulting" id="consulting" placeholder="Consulting" required>
                                     </div>
                                     <div class="col-lg-4">
 
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" placeholder=""
-                                                aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                            <input type="text" class="form-control" placeholder="Amount"
+                                                aria-label="Recipient's username" onkeypress="return validateFloatKeyPress(this,event);" name="consulting-fees" id="consulting-fees" required aria-describedby="basic-addon2">
                                             <div class="input-group-append">
                                                 <span class="input-group-text" id="basic-addon2">Rs</span>
                                             </div>
@@ -83,134 +132,30 @@
                                     </div>
 
                                     <div class="col-lg-4 text-right">
-                                        <button type="text" class="btn btn-outline-dark"><i
+                                        <button type="button" class="btn btn-outline-dark" id="con-add"><i
                                                 class="fa-solid fa-check"></i></button>&nbsp;&nbsp;&nbsp;
-                                        <button type="text" class="btn btn-outline-dark"><i
+                                        <button type="button" class="btn btn-outline-dark" id="con-clear"><i
                                                 class="fa-solid fa-xmark"></i></button>
                                     </div>
                                 </div>
                             </form><br>
-                            <div class="table-responsive">
-                                <table id="example" class="table table-bordered table-striped text-center"
+                            <div class="table-responsive p-2 height_card">
+                                <table id="consulting-fees-table" class="table table-bordered table-striped text-center auto-index "
                                     style="width:100%">
                                     <thead>
                                         <tr>
                                             <th class="text-center">S.No</th>
-                                            <th class="text-center">Patient&nbsp;ID</th>
+                                            <th class="text-center">Consulting</th>
 
                                             <th class="text-center">Amount</th>
                                             <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-
-                                            <td>1</td>
-                                            <td>Consulting</td>
-                                            <td>50</td>
-                                            <td><i class="fa-solid fa-pen-to-square"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i
-                                                    class="fa-solid fa-trash"></i>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Billing</td>
-                                            <td>350</td>
-
-                                            <td></td>
-                                        </tr>
+                                    <tbody id="consulting-table">
 
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="card mt-4 p-2 height_card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <h4>Allergy Medicine</h4>
-                                </div>
-                                <div class="col-lg-6 text-right">
-                                    <button type="text" class="btn btn-outline-dark btn-sm"><i
-                                            class="fa-regular fa-eye"></i></button>
-                                </div>
-                            </div>
-                            <hr>
-                            <form>
-                                <div class="form-row">
-                                    <div class="col-lg-4">
-                                        <input type="text" class="form-control" placeholder="">
-                                    </div>
-                                    <div class="col-lg-4">
-
-                                        <div class="input-group mb-3">
-                                            <input type="text" class="form-control" placeholder=""
-                                                aria-label="Recipient's username" aria-describedby="basic-addon2">
-                                            <div class="input-group-append">
-                                                <span class="input-group-text" id="basic-addon2">Rs</span>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="col-lg-4 text-right">
-                                        <button type="text" class="btn btn-outline-dark"><i
-                                                class="fa-solid fa-check"></i></button>&nbsp;&nbsp;&nbsp;
-                                        <button type="text" class="btn btn-outline-dark"><i
-                                                class="fa-solid fa-xmark"></i></button>
-                                    </div>
-                                </div>
-                            </form><br>
-                            <div class="table-responsive">
-                                <table id="example" class="table table-bordered table-striped text-center"
-                                    style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center">S.No</th>
-                                            <th class="text-center">Medicine</th>
-                                            <th class="text-center">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-
-                                            <td>1</td>
-                                            <td>asdfg</td>
-
-                                            <td><i class="fa-solid fa-pen-to-square"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i
-                                                    class="fa-solid fa-trash"></i>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>fghtry</td>
-
-
-                                            <td></td>
-                                        </tr>
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="card mt-4 p-2 height_card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <h4>LAB&nbsp;TESTING</h4>
-                                </div>
-                                <div class="col-lg-6 text-right">
-                                    <button type="text" class="btn btn-outline-dark btn-sm"><i
-                                            class="fa-regular fa-eye"  ></i></button>
-                                </div>
-                            </div>
-                            <hr>
                         </div>
                     </div>
                 </div>
@@ -343,8 +288,12 @@
                                         <button type="text" class="btn btn-outline-dark btn-sm"><i
                                                 class="fa-regular fa-eye"></i></button>
                                     </div>
+                                    
                                 </div>
                                 <hr>
+                                <div class="col-md-12 mt-5">
+                                    <textarea name="patient-symptom" id="patient-symptom" cols="30" rows="10" class="form-control"></textarea>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -364,6 +313,9 @@
                                     </div>
                                 </div>
                                 <hr>
+                                <div class="col-md-12 mt-5">
+                                    <textarea name="patient-diagnose" id="patient-diagnose" cols="30" rows="10" class="form-control"></textarea>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -372,11 +324,129 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-6">
+                                        <h4>LAB&nbsp;TESTING</h4>
+                                    </div>
+                                    <div class="col-lg-6 text-right">
+                                        <button type="text" class="btn btn-outline-dark btn-sm"><i
+                                                class="fa-regular fa-eye"  ></i></button>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="card mt-2 ">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
                                         <h4>PRESCRIPTION</h4>
                                     </div>
                                     <div class="col-lg-6 text-right">
                                         <button type="text" class="btn btn-outline-dark btn-sm"><i
                                                 class="fa-regular fa-eye"></i></button>
+                                    </div>
+
+                                    <div class="col-md-12 mt-3">
+                                        <form action="" id="formSubmission">
+                                            <div class="row text-center">
+                                                <div class="col-md-6 col-lg-4 col-sm-4 mt-2">
+                                                    <label for="medicine_name">Medicine Name</label>
+                                                    <input list="medicine_names" class="form-control"
+                                                        name="medicine_name"
+                                                        id="medicine_name">
+                                                    <datalist id="medicine_names">
+                                                        <option value="Paracetamol 500"></option>
+                                                        <option value="Paracetamol 600"></option>
+                                    
+                                                    </datalist>
+                                                </div>
+                                                <div class="col-md-3 col-lg-1 col-sm-4 mt-2">
+                                                    <label for="morning">Morning</label>
+                                                    <select name="" id="morning"
+                                                        class="form-control">
+                                                        <option value="0">0</option>
+                                                        <option value="0.5">0.5</option>
+                                                        <option value="1">1</option>
+                                                        <option value="1.5">1.5</option>
+                                                        <option value="2">2</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3 col-lg-1 col-sm-4 mt-2">
+                                                    <label for="after_noon">Noon</label>
+                                                    <select name="" id="after_noon"
+                                                        class="form-control">
+                                                        <option value="0">0</option>
+                                                        <option value="0.5">0.5</option>
+                                                        <option value="1">1</option>
+                                                        <option value="1.5">1.5</option>
+                                                        <option value="2">2</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3 col-lg-1 col-sm-4 mt-2">
+                                                    <label for="evening">Evening</label>
+                                                    <select name="" id="evening"
+                                                        class="form-control">
+                                                        <option value="0">0</option>
+                                                        <option value="0.5">0.5</option>
+                                                        <option value="1">1</option>
+                                                        <option value="1.5">1.5</option>
+                                                        <option value="2">2</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3 col-lg-1 col-sm-4 mt-2">
+                                                    <label for="night">Night</label>
+                                                    <select name="" id="night"
+                                                        class="form-control">
+                                                        <option value="0">0</option>
+                                                        <option value="0.5">0.5</option>
+                                                        <option value="1">1</option>
+                                                        <option value="1.5">1.5</option>
+                                                        <option value="2">2</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3 col-lg-2 col-sm-4 mt-2">
+                                                    <label for="days">Days</label>
+                                                    <input type="text" class="form-control" name=""
+                                                        id="days">
+                                                </div>
+                                                <div class="col-md-3 col-lg-2 col-sm-4 mt-2">
+                                                    <label for="total_tablets">Total&nbsp;Tablets</label>
+                                                    <input type="text" class="form-control" name=""
+                                                        id="total_tablets">
+                                                </div>
+                                            </div>
+                                            <hr class="hr-center">
+                                            <div class="text-center my-3">
+                                                <button type="button" id="Precreption-add" class="btn btn-outline-success">Add</button>
+                                                <button type="reset" id="Precreption-clear" class="btn btn-outline-danger">cancel</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-12 mt-3">
+                                        <div class="table-responsive ">
+                                            <table class="table table-striped table-bordered text-center w-100" id="prescription-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th rowspan="2">S.No</th>
+                                                        <th rowspan="2">Medicine&nbsp;Name</th>
+                                                        <th colspan="4">Timing</th>
+                                                        <th rowspan="2">Days</th>
+                                                        <th rowspan="2">Total</th>
+                                                        <th rowspan="2">Action</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Morning</th>
+                                                        <th>After&nbsp;Noon</th>
+                                                        <th>Evening</th>
+                                                        <th>Night</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="prescription-body">
+                                                   
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                                 <hr>
@@ -497,13 +567,10 @@
         {% comment %} </div>
     </section> {% endcomment %}
     {% endblock %}
-{% comment %} <script>
+
 {% block script %}
 
-    $(document).ready(function () {
-        $('#example').DataTable();
-        $('#example1').DataTable();
-    });
+   
     function view(event) {
 
         var newid = $('#vitals' + event).attr("ob_id")
@@ -514,6 +581,314 @@
         $('#temp').val(newtemp)
 
     }
+
+   // ======  FEES TABLE ======
+
+   var counter = 0;
+   var current_row = null;
+
+   $("#con-add").on('click', function() {
+    var consulting = $("#consulting").val();
+    var consultingFees = $("#consulting-fees").val();
+
+    var count = $('#consulting-fees-table tr').length;
+     if(consulting != '' && consultingFees != ''){
+        if (current_row == null) {
+            if ( $("#consulting").val().length && $("#consulting-fees").val().length ) {
+              let row = '<tr data-row="'+counter+'"> <td> '+ count+'</td> <td>' + $("#consulting").val() + '</td> <td>' + $("#consulting-fees").val() + '</td> <td><button type="button" class="btn" id="con-update"><i class="fa-solid fa-file-pen"></i></button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn" id="con-delete" onclick="productDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
+              $('#consulting-table').append(row);
+              counter++;
+              }
+            } else {
+       
+              var select_row = $('tr[data-row='+current_row+']');
+              let cells = $(select_row).find('td');
+              $(cells[1]).text($("#consulting").val());
+              $(cells[2]).text($("#consulting-fees").val());
+       
+            }
+     clear_input();
+     }
+     else{
+        alert("Plz Fill the counsultings form");
+     }
+   
+   $("#consulting-table #con-update").on('click', function() {
+       let cells = $(this).parents('tr').find('td');
+       $("#consulting").val($(cells[1]).text());
+       $("#consulting-fees").val($(cells[2]).text());
+
+       current_row = $(this).parents('tr').data('row');
+       $('#consulting-fees-table tbody tr').each(function(i){            
+        $($(this).find('td')[0]).html(i+1);          
+       });
+     });
+   });
+   
+
+   // Delete current Row
+   function productDelete(ctl) {
+  
+    $(ctl).parents("tr").remove();
+
+    $('#consulting-fees-table tbody tr').each(function(i){            
+        $($(this).find('td')[0]).html(i+1);          
+       });
+}
+
+
+   $('#con-clear').on("click", () => clear_input());
+   
+   function clear_input() {
+       current_row = null;
+       $("#consulting-fees").val('');
+       $("#consulting").val('');
+       
+   }
+
+
+   // ======  ALLERGY TABLE ======
+
+   var counter1 = 0;
+   var current_row1 = null;
+
+   $("#allergy-add").on('click', function() {
+    var allergyMedicine = $("#allergy-medicine").val();
+
+    var count1 = $('#allergy-medicine-table tr').length;
+     if(allergyMedicine != ''){
+        if (current_row1 == null) {
+            if ( $("#allergy-medicine").val().length ) {
+              let row = '<tr data-row="'+counter1+'"> <td> '+ count1+'</td><td>' + $("#allergy-medicine").val() + '</td> <td><button type="button" class="btn" id="allergy-delete" onclick="allergyDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
+              $('#allergy-table').append(row);
+              counter1++;
+              }
+            } else {
+       
+              var select_row = $('tr[data-row='+current_row1+']');
+              let cells = $(select_row).find('td');
+              $(cells[1]).text($("#allergy-medicine").val());
+       
+            }
+     clear_input1();
+     }
+     else{
+        alert("Plz Fill the Allergy form");
+     }
+    });
+
+   // Delete current Row
+   function allergyDelete(ctl) {
+  
+    $(ctl).parents("tr").remove();
+
+    $('#allergy-medicine-table tbody tr').each(function(i){            
+        $($(this).find('td')[0]).html(i+1);          
+       });
+}
+
+
+   $('#allergy-clear').on("click", () => clear_input1());
+   
+   function clear_input1() {
+       current_row1 = null;
+       $("#allergy-medicine").val('');
+       
+   }
+
+
+
+
+   // Precreption Calculation
+
+   $(document).ready(function () {
+
+    var morning = parseFloat($('#morning').val() || 0);
+    var after_noon = parseFloat($('#after_noon').val() || 0);
+    var evening = parseFloat( $('#evening').val() || 0);
+    var night = parseFloat($('#night').val() || 0);
+    var days = parseFloat($('#days').val() || 1);
+    var total = (morning + after_noon + evening + night) * days;
+    
+    
+    $('#total_tablets').val(total);
+    
+    $('#evening').change(function () {
+        
+        var morning = parseFloat($('#morning').val() || 0);
+        var after_noon = parseFloat($('#after_noon').val() || 0);
+        var evening = parseFloat( $('#evening').val() || 0);
+        var night = parseFloat($('#night').val() || 0);
+        var days = parseFloat($('#days').val() || 1);
+        var total = (morning + after_noon + evening + night) * days;
+    
+    
+        $('#total_tablets').val(total);
+    });
+    
+    $('#morning').change(function () {
+        
+        var morning = parseFloat($('#morning').val() || 0);
+        var after_noon = parseFloat($('#after_noon').val() || 0);
+        var evening = parseFloat( $('#evening').val() || 0);
+        var night = parseFloat($('#night').val() || 0);
+        var days = parseFloat($('#days').val() || 1);
+        var total = (morning + after_noon + evening + night) * days;
+    
+        $('#total_tablets').val(total);
+    });
+    $('#after_noon').change(function () {
+        
+        var morning = parseFloat($('#morning').val() || 0);
+        var after_noon = parseFloat($('#after_noon').val() || 0);
+        var evening = parseFloat( $('#evening').val() || 0);
+        var night = parseFloat($('#night').val() || 0); 
+        var days = parseFloat($('#days').val() || 1);
+        var total = (morning + after_noon + evening + night) * days;
+    
+    
+        $('#total_tablets').val(total);
+    });
+    $('#night').change(function () {
+        
+        var morning = parseFloat($('#morning').val() || 0);
+        var after_noon = parseFloat($('#after_noon').val() || 0);
+        var evening = parseFloat( $('#evening').val() || 0);
+        var night = parseFloat($('#night').val() || 0);
+        var days = parseFloat($('#days').val() || 1);
+        var total = (morning + after_noon + evening + night) * days;
+    
+    
+        $('#total_tablets').val(total);
+    });
+    $('#days').keyup(function () {
+        
+        var morning = parseFloat($('#morning').val() || 0);
+        var after_noon = parseFloat($('#after_noon').val() || 0);
+        var evening = parseFloat( $('#evening').val() || 0);    
+        var night = parseFloat($('#night').val() || 0);
+        var days = parseFloat($('#days').val() || 1);
+        var total = (morning + after_noon + evening + night) * days;
+    
+        $('#total_tablets').val(total);
+    });
+    });
+
+
+
+// ======  Prescription Table ======
+
+   var counter2 = 0;
+   var current_row2 = null;
+
+   $("#Precreption-add").on('click', function() {
+    var medicineName = $("#medicine_name").val();
+    var morning = $("#morning").val();
+    var afterNoon = $("#after_noon").val();
+    var evening = $("#evening").val();
+    var night = $("#night").val();
+    var days = $("#days").val();
+    var totalTablets = $("#total_tablets").val();
+
+    var count2 = $('#prescription-table tbody tr').length +1;
+     if(medicineName != ''){
+        if (current_row2 == null) {
+            if ( $("#medicine_name").val().length ) {
+              let row = '<tr data-row="'+counter2+'"> <td> '+ count2+'</td> <td>' + $("#medicine_name").val() + '</td> <td>' + $("#morning").val() + '</td> <td>' + $("#after_noon").val() + '</td> <td>' + $("#evening").val() + '</td> <td>' + $("#night").val() + '</td> <td>' + $("#days").val() + '</td><td>' + $("#total_tablets").val() + '</td> <td><button type="button" class="btn" id="Pres_update"><i class="fa-solid fa-file-pen"></i></button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn" id="pres-delete" onclick="prescriptionDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
+              $('#prescription-body').append(row);
+              counter2++;
+              }
+            } else {
+       
+              var select_row = $('tr[data-row='+current_row2+']');
+              let cells = $(select_row).find('td');
+              $(cells[1]).text($("#medicine_name").val());
+              $(cells[2]).text($("#morning").val());
+              $(cells[3]).text($("#after_noon").val());
+              $(cells[4]).text($("#evening").val());
+              $(cells[5]).text($("#night").val());
+              $(cells[6]).text($("#days").val());
+              $(cells[7]).text($("#total_tablets").val());
+       
+            }
+     clear_input2();
+     }
+     else{
+        alert("Plz Fill the counsultings form");
+     }
+   
+    $("#prescription-body #Pres_update").on('click', function() {
+       let cells = $(this).parents('tr').find('td');
+       $("#medicine_name").val($(cells[1]).text());
+       $("#morning").val($(cells[2]).text());
+        $("#after_noon").val($(cells[3]).text());
+        $("#evening").val($(cells[4]).text());
+        $("#night").val($(cells[5]).text());
+        $("#days").val($(cells[6]).text());
+        $("#total_tablets").val($(cells[7]).text());
+
+       current_row2 = $(this).parents('tr').data('row');
+       $('#prescription-table tbody tr').each(function(i){            
+        $($(this).find('td')[0]).html(i+1);          
+       });
+     });
+   });
+
+   // Delete current Row
+   function prescriptionDelete(ctl) {
+  
+    $(ctl).parents("tr").remove();
+
+    $('#prescription-table tbody tr').each(function(i){            
+        $($(this).find('td')[0]).html(i+1);          
+       });
+}
+
+   
+   function clear_input2() {
+       current_row2 = null;
+       $("#medicine_name").val('');
+       $("#morning").val('0');
+        $("#after_noon").val('0');
+        $("#evening").val('0');
+        $("#night").val('0');
+        $("#days").val('');
+        $("#total_tablets").val('');
+       
+   }
+
+
+
+
+
+    // Main JS
+      function validateFloatKeyPress(el, evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        var number = el.value.split('.');
+        if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        //just one dot
+        if(number.length>1 && charCode == 46){
+             return false;
+        }
+        //get the carat position
+        var caratPos = getSelectionStart(el);
+        var dotPos = el.value.indexOf(".");
+        if( caratPos > dotPos && dotPos>-1 && (number[1].length > 1)){
+            return false;
+        }
+        return true;
+    }
+     
+    function getSelectionStart(o) {
+        if (o.createTextRange) {
+            var r = document.selection.createRange().duplicate()
+            r.moveEnd('character', o.value.length)
+            if (r.text == '') return o.value.length
+            return o.value.lastIndexOf(r.text)
+        } else return o.selectionStart
+    }
+    
     {% endblock script %}
-</script> {% endcomment %}
 
