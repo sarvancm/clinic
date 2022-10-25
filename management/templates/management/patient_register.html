@@ -44,15 +44,32 @@
               </div>
             </div>
 
-             <div id="main_container">
-        <div id="birth_date_input">Birth Date*: <input type="date" id="birth_date"></div>
-        <br />
-        
-     
-       <input type="text" class="form-control" id="exact_age">
-        <div id="age_container"><span id="exact_age">Age</span>
-       
-      </div>
+
+            <div class="form-group row d-flex justify-content-center">
+             
+              <div class="col-lg-4 text-md-left text-lg-center">
+                <label for="birth_date_input" class="text-center">Birth Date  : </label>
+                
+              </div>
+              <div class="col-lg-5">
+                <input type="date" class="form-control" name=date_of_birth id="birth_date">
+                <span class="text-danger">{{form.date_of_birth.errors}} </span>
+              </div>
+            </div>
+
+            <div class="form-group row d-flex justify-content-center">
+             
+              <div class="col-lg-4 text-md-left text-lg-center">
+                <label for="exact_age" class="text-center">Age  :</label>
+                
+              </div>
+              <div class="col-lg-5">
+                <input type="text" class="form-control" name="age" id="exact_age">
+                <span class="text-danger">{{form.age.errors}} </span>
+              </div>
+            </div>
+
+
       
         
         
@@ -60,11 +77,8 @@
         {% comment %} <p><em>* The year here is 365 days and the month here is 30 days, that means your birthday may not mean you will
                 be 0 days old.</br>
                 **Don't worry I will not share your input.</em></p> {% endcomment %}
-        {% comment %} </p> {% endcomment %}
-    </div>
-             
-            
-            
+        {% comment %} </p> {% endcomment %}        
+              
             
              
               

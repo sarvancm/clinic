@@ -44,7 +44,8 @@
                                 <strong>Active</strong>{% endif %}
                             </td>
 
-                            <td> {% if i.is_active %}
+                            <td> {% if user.is_admin %}
+                                {% if i.is_active %}
                                 <a href="{% url 'disable_view' i.id %}"><button type="submit"
                                         class="btn btn-outline-dark"><i
                                             class="fa-solid fa-play"></i></button></a>&nbsp;&nbsp;
@@ -57,10 +58,10 @@
                                     data-toggle="modal" data-target="#exampleModal">
                                     <i object_id="{{i.id}}" vitals_id="{{j.id}}" id="general_vitals{{i.id}}" temp="{{j.temperature}}" pulserate="{{j.pulse_rate}}" bloodstart="{{j.blood_pressure_start}}" bloodend="{{j.blood_pressure_end}}" heig="{{j.height}}" weig="{{j.weight}}" other="{{j.others}}"
                                         class="fa-solid fa-temperature-three-quarters"></i>
-                                    {% if user.is_admin %}
-                                    </button>&nbsp;&nbsp;<button type="button"
-                                    class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button>
-                                    {% endif %}
+                                        {% endif %}
+                                    {% comment %} </button>&nbsp;&nbsp;<button type="button"
+                                    class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button> {% endcomment %}
+                                   
                                  
                                     
                             </td>
@@ -79,7 +80,8 @@
                                 <strong>Active</strong>{% endif %}
                             </td>
 
-                            <td> {% if i.is_active %}
+                            <td> {% if user.is_admin %}
+                                {% if i.is_active %}
                                 <a href="{% url 'disable_view' i.id %}"><button type="submit"
                                         class="btn btn-outline-dark"><i
                                             class="fa-solid fa-play"></i></button></a>&nbsp;&nbsp;
@@ -92,10 +94,11 @@
                                     data-toggle="modal" data-target="#exampleModal">
                                     <i object_id="{{i.id}}" id="general_vitals{{i.id}}" vitals_id="{{j.id}}" temp="{{j.temperature}}" pulserate="{{j.pulse_rate}}" bloodstart="{{j.blood_pressure_start}}" bloodend="{{j.blood_pressure_end}}" heig="{{j.height}}" weig="{{j.weight}}" other="{{j.others}}"
                                         class="fa-solid fa-temperature-three-quarters"></i>
-                                    {% if i.admin %}
-                                </button>&nbsp;&nbsp;<button type="button"
-                                    class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button>
-                                    {% endif %}
+                                {% endif %}
+                                   
+                                {% comment %} </button>&nbsp;&nbsp;<button type="button"
+                                    class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button> {% endcomment %}
+                                 
                             </td>
                         </tr>
                         {% endif %}

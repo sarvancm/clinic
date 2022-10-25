@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
-from .models import BillsModel, GeneralVitals, ProductDetails,PatientDetails,TodayPatients,PrescribedMedicine,HealthHistory,BillsModel
-from .forms import RegisterForm, InputForm,ProductDetailsForm,PatientDetailsForm,HistoryForm,MedicineDetailForm,BillsModelForm,GeneralVitalsForm
+from .models import BillsModel, GeneralVitals, ProductDetails,PatientDetails,TodayPatients,PrescribedMedicine,HealthHistory,BillsModel,AddFees
+from .forms import RegisterForm, InputForm,ProductDetailsForm,PatientDetailsForm,HistoryForm,MedicineDetailForm,BillsModelForm,GeneralVitalsForm,AddFeesForm
 from django.contrib.auth import login as log
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate,logout
@@ -353,6 +353,7 @@ def add_patient(request):
 
 
 def user_view(request):
+    user=request.user
     x=  TodayPatients.objects.filter(created_at__contains=datetime.today().date())
     print(x)
     list=[]
@@ -365,7 +366,7 @@ def user_view(request):
     
     z=zip(list,x)    
    
-    return render(request,"management/user_view.html",{'x':x,'z':z})
+    return render(request,"management/user_view.html",{'x':x,'z':z,'user':user})
     
     
     
@@ -374,23 +375,27 @@ def user_view(request):
 
 
 def doctor_view(request):
-    # user=request.user
-    # if user.is_admin:
-        x=  TodayPatients.objects.filter(created_at__contains=datetime.today().date())
-        return render(request,"management/doctor_view.html",{'x':x})
-    # else:
-    #     messages.success(request,"Not admin")
-    #     return redirect('login_view')
+    user=request.user
+    if user.is_admin:
+        x=  [TodayPatients.objects.get(id=i.id) for i in TodayPatients.objects.filter(created_at__contains=datetime.today().date()) if i.is_active==1]
+        # if x.is_active==1:
+
+
+        return render(request,"management/doctor_view.html",{'x':x,'user':user})
+    else:
+        messages.success(request,"Not admin")
+        return redirect('login_view')
 
     
 def doctor_vie(request,id):  
     x=  TodayPatients.objects.get(id=id)
     view=x.patient_id 
     y=PatientDetails.objects.filter(id=x.patient_id).first()
-    z=GeneralVitals.objects.get(patient_id=view)
+    z=GeneralVitals.objects.filter(patient_id=view).first()
 
 
     return render(request,"management/doctor_vie.html",{'x':y,'z':z})
+    
 
 
 def disable_view(request,id):
@@ -485,6 +490,7 @@ def general_vitals(request):
 
     else:
         form=GeneralVitalsForm()
+        messages.success(request, 'Account created successfully') 
         x=  TodayPatients.objects.filter(created_at__contains=datetime.today().date())
         return render(request,"management/user_view.html",{'form':form,'patient_id':patient_id,'x':x})
     
@@ -573,6 +579,46 @@ def increment_bill_no():
         last = last.id
     last+=1
     return ( "BBILL001" "%03d" % last)
+
+def add_fees(request):
+    addfees= AddFees.objects.all()    
+    if request.method=="POST":
+        form=AddFeesForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'created successfully')
+            return redirect('add_fees') 
+        else:
+            print(form.errors)
+            return render(request,"management/add_fees.html",{'addfees':addfees,'form':form}) 
+
+    else:
+        form=AddFeesForm()
+        return render(request,"management/add_fees.html",{'addfees':addfees,'form':form})
+
+def fee_mode(request):
+    if request.method=="POST":
+        object=request.POST.get("ob")
+        name=request.POST.get("fee_name")
+        print(name)
+        amount=request.POST.get("amount")
+        print(amount)
+        z=AddFees.objects.get(id=object)
+        form1=AddFeesForm(request.POST)          
+        if form1.is_valid():
+            z.fee_name= name
+            z.amount=  amount 
+            z.save()   
+            messages.success(request, 'Updated successfully')
+            return redirect('add_fees')
+        else:
+            addfees= AddFees.objects.all()
+            return render(request,"management/add_fees.html",{'form1':form1,'err':True,'object':object,'addfees':addfees})
+    else:
+        form=AddFeesForm()
+        return render(request,"management/add_fees.html",{'form':form})
+
+
 
 
     

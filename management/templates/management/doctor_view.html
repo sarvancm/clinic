@@ -5,8 +5,8 @@
 
 
 <section id="out_patient">
-    <div class="container">
-        <div class="card mt-4">
+    <div class="container-fluid">
+        <div class="card mt-4 mx-5">
             <div class="card-body">
                 <h1 class="card-title text-center mt-4">REGISTERED OUT_PATIENT</h1><br>
                 <hr><br><br>
@@ -38,7 +38,8 @@
                                 {% endif %}
                             </td>
 
-                            <td> {% if i.is_active %}
+                            <td> {% if user.is_user %}
+                                {% if i.is_active %}
                                 <a href="{% url 'disable_view' i.id %}"><button type="submit"
                                         class="btn btn-outline-dark"><i
                                             class="fa-solid fa-play"></i></button></a>&nbsp;&nbsp;
@@ -51,8 +52,13 @@
                                     data-toggle="modal" data-target="#exampleModal">
                                     <i object_id="{{i.id}}" id="general_vitals{{i.id}}"
                                         class="fa-solid fa-temperature-three-quarters"></i>
-                                    {% if user.is_admin %}</button>&nbsp;&nbsp;<button type="button"
-                                    class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button>
+                                        {% endif %}
+
+                                     {% if user.is_admin %}
+                                    
+                                    <!-- </button>&nbsp;&nbsp;<button type="button"  -->
+                                    <a href="{% url 'doctor_vie' i.id %}"><button type="button"
+                                        class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button></a>
                                     {% endif %}
                             </td>
                         </tr>
@@ -71,7 +77,9 @@
                                 {% endif %}
                             </td>
 
-                            <!-- <td> {% if i.is_active %}
+                            <td> 
+                                {% if user.is_user %} 
+                                {% if i.is_active %}
                                 <a href="{% url 'disable_view' i.id %}"><button type="submit"
                                         class="btn btn-outline-dark"><i
                                             class="fa-solid fa-play"></i></button></a>&nbsp;&nbsp;
@@ -83,11 +91,13 @@
                                 <button type="button" class="btn btn-outline-dark" onclick="view('{{i.id}}')"
                                     data-toggle="modal" data-target="#exampleModal">
                                     <i object_id="{{i.id}}" id="general_vitals{{i.id}}"
-                                        class="fa-solid fa-temperature-three-quarters"></i> -->
-                                <td>    
+                                        class="fa-solid fa-temperature-three-quarters"></i>
+                                {% endif %}
+                                <td>
+                                {% if user.is_admin %}    
                                     <a href="{% url 'doctor_vie' i.id %}"><button type="button"
                                     class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button></a>
-                               
+                                {% endif %}
                             </td>
                         </tr>
                         {% endif %}

@@ -39,7 +39,7 @@ class PatientDetails(models.Model):
     patient_id= models.CharField(max_length=30)
     patient_name= models.CharField(max_length=30)
     fathers_name= models.CharField(max_length=30)
-    age= models.IntegerField(null=True,blank=True)
+    age= models.CharField(max_length=30)
     date_of_birth= models.DateField()
     gender= models.CharField(max_length=30)
     blood_group=models.CharField(max_length=30,null=True,blank=True)
@@ -106,7 +106,7 @@ class HealthHistory(models.Model):
     treatment_details = models.TextField()
 
     def __str__(self):
-        return f'{self.patient.patient_name }'
+        return f'{self.patient.patient_name}'
 
 
 
@@ -136,6 +136,11 @@ class GeneralVitals(models.Model):
     height=models.FloatField()
     weight=models.FloatField()
     others=models.TextField()
+
+class AddFees(models.Model):
+    fee_name=models.CharField(max_length=30)
+    amount=models.IntegerField(null=True, blank=True)
+
 
 
 

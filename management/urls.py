@@ -41,6 +41,10 @@ urlpatterns = [
     path('general_vitals/',views.general_vitals, name='general_vitals'),
     path('doctor_view/',views.doctor_view, name='doctor_view'),
      path('doctor_vie/<int:id>/',views.doctor_vie, name='doctor_vie'),
+     path('fee_mode/',views.fee_mode, name='fee_mode'),
+
+     path('add_fees/',views.add_fees, name='add_fees'),
+
 
 
 
