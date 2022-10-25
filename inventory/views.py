@@ -4,6 +4,7 @@ from .forms import MedicineForm
 from .models import Medicine
 import datetime
 from django.db.models import Q
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -61,28 +62,28 @@ def update_medicine(request):
         name_id=request.POST.get('search')
         start_date=request.POST.get('start_date')
         end_date=request.POST.get('end_date')
-        medi=Medicine.objects.filter(Q(medicine_name=name_id)|Q(medicine_id=name_id))
-        medi_id=[i.id for i in medi] 
-        try:
-            a = datetime.datetime.strptime( start_date, '%Y-%m-%d').date()
-            b = datetime.datetime.strptime( end_date, '%Y-%m-%d').date()
-            medicines=Medicine.objects.filter(created_at__date__gte=a,created_at__date__lte=b)
-        except:
-            a=start_date
-            b=end_date
-            medicines=[]
-        if medi_id and medicines:
-            medicines=[i for i in medicines if i.id in medi_id]
-        elif medi:
-            medicines=medi
-        else:
-            medicines = medicines
+        
         object=Medicine.objects.get(id=id)
         form = MedicineForm(request.POST,instance=object)
         if form.is_valid():
             form.save()
             messages.success(request, 'medicine updated successfully')
-            
+            medi=Medicine.objects.filter(Q(medicine_name=name_id)|Q(medicine_id=name_id))
+            medi_id=[i.id for i in medi] 
+            try:
+                a = datetime.datetime.strptime( start_date, '%Y-%m-%d').date()
+                b = datetime.datetime.strptime( end_date, '%Y-%m-%d').date()
+                medicines=Medicine.objects.filter(created_at__date__gte=a,created_at__date__lte=b)
+            except:
+                a=start_date
+                b=end_date
+                medicines=[]
+            if medi_id and medicines:
+                medicines=[i for i in medicines if i.id in medi_id]
+            elif medi:
+                medicines=medi
+            else:
+                medicines = medicines
             return render(request,'inventory/search_medicine.html', {'medicines': medicines,'name_id':name_id,'start_date':start_date,'end_date':end_date})
 
         else:
@@ -95,6 +96,22 @@ def update_medicine(request):
 
 
 
+def doctor(request):
+    if request.method == "POST": 
+        id = request.POST.get('name')
+        data ={}
+        return JsonResponse(data)
+    # return render(request,'inventory/doctor.html')
+
+def doctor(request):
+    if request.method == "POST": 
+        id = request.POST.get('name')
+        data ={}
+        return JsonResponse(data)
+
+
+
+
 def incrementid():
     last = Medicine.objects.last()
     if last == None:
@@ -103,3 +120,5 @@ def incrementid():
         last = last.id
     last+=1
     return ( "MD022" "%04d" % last)
+
+
