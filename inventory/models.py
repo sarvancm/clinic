@@ -51,6 +51,9 @@ class Patient_medicine(models.Model):
     night= models.CharField(max_length=200,null=True, blank=True)
     days= models.CharField(max_length=200,null=True, blank=True)
     total= models.CharField(max_length=200,null=True, blank=True)
+    symptom=models.TextField(null=True, blank=True)
+    diagnose=models.TextField(null=True, blank=True)
+    lab_test=models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

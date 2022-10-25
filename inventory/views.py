@@ -110,6 +110,17 @@ def medicine_amount(request):
         return JsonResponse(data)
 
 
+def previous_medicine(request):
+    if request.method == "POST": 
+        id = request.POST.get('name')
+        data ={}
+        return JsonResponse(data)
+
+def next_medicine(request):
+    if request.method == "POST": 
+        id = request.POST.get('name')
+        data ={}
+        return JsonResponse(data)
 
 
 def incrementid():

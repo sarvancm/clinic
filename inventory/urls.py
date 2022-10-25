@@ -9,6 +9,8 @@ urlpatterns = [
     path('update_medicine/', views.update_medicine, name='inventory_update_medicine'),
     path('doctor/', views.doctor, name='inventory_doctor'),
     path('medicine_amount/', views.medicine_amount, name='inventory_medicine_amount'),
+    path('previous_medicine/', views.previous_medicine, name='inventory_previous_medicine'),
+    path('next_medicine/', views.next_medicine, name='inventory_next_medicine'),
   
     # path('register/', views.register, name='register'),  
 
