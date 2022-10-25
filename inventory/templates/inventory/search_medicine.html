@@ -102,8 +102,7 @@
         <div class="modal-body">
             <form method="POST"  action="{% url 'inventory_update_medicine' %}">
                 {% csrf_token %}
-                {% comment %} <div class="row" id="hiddden_section" style="display: none;"> {% endcomment %}
-                    <div class="row">
+                <div class="row" id="hiddden_section" style="display: none;">
                     <div class="col-lg-6">
                         <input type="text" id="search_item" name="search">
                     </div>
@@ -275,7 +274,7 @@
         <div class="modal-body">
             <form method="POST"  action="{% url 'inventory_update_medicine' %}">
                 {% csrf_token %}
-                <div class="row">
+                <div class="row" style="display: none;">
                     <div class="col-lg-6">
                         <input type="text" value="{{name_id}}" name="search" id="search_item">
                     </div>
