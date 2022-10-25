@@ -442,7 +442,8 @@ def general_vitals(request):
                 vital.save()           
                 return redirect('user_view')
             else:
-               
+                id=request.POST.get("object")
+                vitalsid=request.POST.get("vitals") 
                 x=  TodayPatients.objects.filter(created_at__contains=datetime.today().date())
                 print(x)
                 list=[]
@@ -454,7 +455,7 @@ def general_vitals(request):
                     list.append(y)
                 
                 z=zip(list,x)              
-                return render(request,"management/user_view.html",{'form':form,'err':True,'x':x,'z':z}) 
+                return render(request,"management/user_view.html",{'form':form,'err':True,'x':x,'z':z,'object':id,'vital':vitalsid}) 
 
             
 
@@ -486,13 +487,13 @@ def general_vitals(request):
                     list.append(y)
                 
                 z=zip(list,x)              
-                return render(request,"management/user_view.html",{'form':form,'err':True,'x':x,'z':z}) 
+                return render(request,"management/user_view.html",{'form':form,'patient_id':patient_id,'err':True,'x':x,'z':z}) 
 
     else:
         form=GeneralVitalsForm()
         messages.success(request, 'Account created successfully') 
         x=  TodayPatients.objects.filter(created_at__contains=datetime.today().date())
-        return render(request,"management/user_view.html",{'form':form,'patient_id':patient_id,'x':x})
+        return render(request,"management/user_view.html",{'form':form,'x':x})
     
 
 

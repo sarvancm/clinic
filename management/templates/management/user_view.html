@@ -162,8 +162,8 @@
                                     <div class="input-group-append">
                                         <span class="input-group-text" id="basic-addon2">/min</span>
                                     </div>
-                                    <input type="text" name="object" id="object_id">
-                                    <input type="text" name="vitals" id="vitals_id">
+                                    <input type="hidden" name="object" id="object_id">
+                                    <input type="hidden" name="vitals" id="vitals_id">
 
                                 </div>
                             </div>
@@ -292,8 +292,8 @@
                                         <span class="input-group-text" id="basic-addon2">/min</span>
                                     </div>
                                     <span class="text-danger">{{form.pulse_rate.errors}}</span>
-                                    <input type="text" name="object" id="object_id">
-                                    <input type="text" name="vitals" id="vitals_id">
+                                    <input type="hidden" name="object" value="{{object}}" id="object_id">
+                                    <input type="hidden" name="vitals" value="{{vital}}" id="vitals_id">
 
                                 </div>
                             </div>
