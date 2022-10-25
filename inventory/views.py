@@ -103,7 +103,7 @@ def doctor(request):
         return JsonResponse(data)
     # return render(request,'inventory/doctor.html')
 
-def doctor(request):
+def medicine_amount(request):
     if request.method == "POST": 
         id = request.POST.get('name')
         data ={}
