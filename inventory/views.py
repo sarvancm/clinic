@@ -122,12 +122,15 @@ def doctor(request):
 
 def medicine_amount(request):
     if request.method == "POST": 
-        # id = request.POST.get('v1')
-        data = json.load(request)
-        # datas=data['payload']
-        print (data)
+        id = request.POST.get('consulting')
+        
+        
+        # data = json.loads(id)
+        # dict = json.loads(request.POST.get('payload'))
+        # datas=data['payload'] 
+        print (id)
+        # print (data)
         data ={}
-        print(id)
         return JsonResponse(data)
 
 

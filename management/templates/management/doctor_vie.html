@@ -598,7 +598,7 @@
      if(consulting != '' && consultingFees != ''){
         if (current_row == null) {
             if ( $("#consulting").val().length && $("#consulting-fees").val().length ) {
-              let row = '<tr data-row="'+counter+'"> <td> '+ count+'</td> <td class="consulting-name">' + $("#consulting").val() +  '</td> <td class="consulting-amount">' + $("#consulting-fees").val() + ' </td> <td><button type="button" class="btn" id="con-update"><i class="fa-solid fa-file-pen"></i></button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn" id="con-delete" onclick="productDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
+              let row = '<tr data-row="'+counter+'"> <td>'+ count +'</td> <td class="consulting-name">' + $("#consulting").val() +  '</td> <td class="consulting-amount">' + $("#consulting-fees").val() + '</td> <td><button type="button" class="btn" id="con-update"><i class="fa-solid fa-file-pen"></i></button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn" id="con-delete" onclick="productDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
               $('#consulting-table').append(row);
               counter++;
               }
@@ -662,7 +662,7 @@
      if(allergyMedicine != ''){
         if (current_row1 == null) {
             if ( $("#allergy-medicine").val().length ) {
-              let row = '<tr data-row="'+counter1+'"> <td> '+ count1+'</td><td>' + $("#allergy-medicine").val() + '</td> <td><button type="button" class="btn" id="allergy-delete" onclick="allergyDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
+              let row = '<tr data-row="'+counter1+'"> <td>'+ count1+'</td><td>' + $("#allergy-medicine").val() + '</td> <td><button type="button" class="btn" id="allergy-delete" onclick="allergyDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
               $('#allergy-table').append(row);
               counter1++;
               }
@@ -797,7 +797,7 @@
      if(medicineName != ''){
         if (current_row2 == null) {
             if ( $("#medicine_name").val().length ) {
-              let row = '<tr data-row="'+counter2+'"> <td> '+ count2+'</td> <td>' + $("#medicine_name").val() + '</td> <td>' + $("#morning").val() + '</td> <td>' + $("#after_noon").val() + '</td> <td>' + $("#evening").val() + '</td> <td>' + $("#night").val() + '</td> <td>' + $("#days").val() + '</td><td>' + $("#total_tablets").val() + '</td> <td><button type="button" class="btn" id="Pres_update"><i class="fa-solid fa-file-pen"></i></button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn" id="pres-delete" onclick="prescriptionDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
+              let row = '<tr data-row="'+counter2+'"> <td>'+ count2+'</td> <td>' + $("#medicine_name").val() + '</td> <td>' + $("#morning").val() + '</td> <td>' + $("#after_noon").val() + '</td> <td>' + $("#evening").val() + '</td> <td>' + $("#night").val() + '</td> <td>' + $("#days").val() + '</td><td>' + $("#total_tablets").val() + '</td> <td><button type="button" class="btn" id="Pres_update"><i class="fa-solid fa-file-pen"></i></button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn" id="pres-delete" onclick="prescriptionDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
               $('#prescription-body').append(row);
               counter2++;
               }
@@ -899,62 +899,61 @@
 
         //consulting Table
             function consultingTableForm() {
-                var consulting = '{';
+                var consulting = '';
                 var otArr = [];
                 // var i = 1;
-                var tbl2 = $('table#consulting-fees-table tbody tr').each(function(e) {    
-                    alert('cons-table')    
+                var tbl2 = $('table#consulting-fees-table tbody tr ').each(function(e) {   
                 x = $(this).children();
                 var itArr = [];
                 var keys = ['sl_no','consulting_name','consulting_fees'];
                 x.each(function(i) {
                     itArr.push('"' + keys[i] + '":"' + $(this).text() + '"');
                 });
-                otArr.push('"' + (e+1) + '": {' + itArr.join(',') + '}');
+                otArr.push('{' + itArr.join(',') + '}');
                 })
-                consulting += otArr.join(",") + '}'
-
+                consulting += otArr.join(",");
                 return consulting;
             }
 
+
         //Allergy Table
             function allergyTableForm() {
-                var consulting = '{';
+                var allergy = '';
                 var otArr = [];
                 // var i = 1;
                 var tbl2 = $('table#allergy-medicine-table tbody tr').each(function(e) {    
-                    alert('cons-table')    
+                    
                 x = $(this).children();
                 var itArr = [];
                 var keys = ['sl_no','allergy_med'];
                 x.each(function(i) {
                     itArr.push('"' + keys[i] + '":"' + $(this).text() + '"');
                 });
-                otArr.push('"' + (e+1) + '": {' + itArr.join(',') + '}');
+                otArr.push('{' + itArr.join(',') + '}');
                 })
-                consulting += otArr.join(",") + '}'
+                allergy += otArr.join(",");
 
-                return consulting;
+                return allergy;
             }
 
         //Prescription Table
             function prescriptionTableForm() {
-                var consulting = '{';
+                var prescription = '';
                 var otArr = [];
                 // var i = 1;
                 var tbl2 = $('table#prescription-table tbody tr').each(function(e) {    
-                    alert('cons-table')    
+                    
                 x = $(this).children();
                 var itArr = [];
                 var keys = ['sl_no','medicine','morning','afternoon','evening','night','no_days','total_tab'];
                 x.each(function(i) {
                     itArr.push('"' + keys[i] + '":"' + $(this).text() + '"');
                 });
-                otArr.push('"' + (e+1) + '": {' + itArr.join(',') + '}');
+                otArr.push('{' + itArr.join(',') + '}');
                 })
-                consulting += otArr.join(",") + '}'
+                prescription += otArr.join(",");
 
-                return consulting;
+                return prescription;
             }
         
 
@@ -962,8 +961,7 @@
 
         // Consulting Table
 		var consulting_rowCount = $('#consulting-fees-table > tbody > tr').length;
-        var consulting = consultingTableForm();
-
+        const consulting = consultingTableForm();
         // Allergy Table
 		var allergy_rowCount = $('#allergy-medicine-table > tbody > tr').length;
         var allergy = allergyTableForm();
@@ -984,8 +982,7 @@
             headers: {
                 "X-CSRFToken": $('input[name=csrfmiddlewaretoken]').val(),
             },
-            data: JSON.stringify({
-
+			data: {
                 // consulting
                 'consulting_rowCount': consulting_rowCount,
                 'consulting':consulting,
@@ -1001,10 +998,12 @@
                 // Others
                 'patient_diagnose':patient_diagnose,
                 'patient_symptom':patient_symptom,
-            }),
+            },
+
             success: function (data) {
+                alert(data)
                 alert('success')
-                window.location.reload();
+                {% comment %} window.location.reload(); {% endcomment %}
                 
                 
             },
