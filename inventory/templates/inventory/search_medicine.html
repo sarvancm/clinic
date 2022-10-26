@@ -133,9 +133,7 @@
                     </div>
                     <div class="col-lg-5">
                         <input type="text" class="form-control mb-2" name="medicine_brand" value="{{form.medicine_brand.value|default_if_none:''}}" id="medicine_brand" required>
-                        {% if form.medicine_brand.errors %}
-                        <span class="text-danger">{{form.medicine_brand.errors}} </span>
-                        {% endif %}
+                       
                     </div>
                 </div>
                 <div class="form-group row d-flex justify-content-center">
@@ -145,9 +143,7 @@
                     </div>
                     <div class="col-lg-5">
                         <input type="text" name="medicine_name" class="form-control mb-2" value="{{form.medicine_name.value|default_if_none:''}}" id="medicine_name" required>
-                        {% if form.medicine_name.errors %}
-                        <span class="text-danger">{{form.medicine_name.errors}} </span>
-                        {% endif %}
+                       
                     </div>
                 </div>
                 <div class="form-group row d-flex justify-content-center">
@@ -164,9 +160,7 @@
 
                             </div>
                         </div>
-                        {% if form.medicine_mg.errors %}
-                        <span class="text-danger">{{form.medicine_mg.errors}} </span>
-                        {% endif %}
+                        
                     </div>
                 </div>
                 <div class="form-group row d-flex justify-content-center">
@@ -176,9 +170,7 @@
                     </div>
                     <div class="col-lg-5">
                         <input type="text" class="form-control mb-2" name="quantity" value="{{form.quantity.value|default_if_none:''}}" id="quantity" required>
-                        {% if form.quantity.errors %}
-                        <span class="text-danger">{{form.quantity.errors}} </span>
-                        {% endif %}
+                       
 
                     </div>
                 </div>
@@ -193,9 +185,7 @@
                         <input type="date" class="form-control mb-2" name="expiry_date" id="expiry_date">
 
                         {% comment %} {{  form.expiry_date }} {% endcomment %}
-                        {% if form.expiry_date.errors %}
-                        <span class="text-danger">{{form.expiry_date.errors}} </span>
-                        {% endif %}
+                       
 
                     </div>
                 </div>
@@ -210,9 +200,7 @@
                     <div class="col-lg-5">
                         <input type="date" class="form-control mb-2" name="purchase_date" id="purchase_date">
                         {% comment %} {{  form.purchase_date }} {% endcomment %}
-                        {% if form.purchase_date.errors %}
-                        <span class="text-danger">{{form.purchase_date.errors}} </span>
-                        {% endif %}
+                       
 
                     </div>
                 </div>
@@ -227,9 +215,7 @@
                     <div class="col-lg-5">
                         <input type="date" class="form-control mb-2" name="stocked_date" id="stocked_date">
                         {% comment %} {{  form.stocked_date }} {% endcomment %}
-                        {% if form.stocked_date.errors %}
-                        <span class="text-danger">{{form.stocked_date.errors}} </span>
-                        {% endif %}
+                        
 
                     </div>
                 </div>
@@ -241,9 +227,7 @@
                     <div class="col-lg-5">
                         <input type="text" class="form-control" id="medicine_price" name="medicine_price" value="{{form.medicine_price.value|default_if_none:''}}" required maxlength="10">
                         
-                        {% if form.medicine_price.errors %}
-                        <span class="text-danger">{{form.medicine_price.errors}} </span>
-                        {% endif %}
+                       
 
 
                     </div>
