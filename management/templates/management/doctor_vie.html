@@ -456,11 +456,14 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center mt-4 mb-3">
-                <button type="submit" class="btn btn-success">save</button>
+                <button type="button" class="btn btn-success" id="doctor-submit">save</button>
                 <button type="reset" class="btn btn-danger ml-4">Cancel</button>
             </div>
         </div>
-        <!-- Modal -->
+
+
+        <!-- =========== Modal =========================== -->
+
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -595,7 +598,7 @@
      if(consulting != '' && consultingFees != ''){
         if (current_row == null) {
             if ( $("#consulting").val().length && $("#consulting-fees").val().length ) {
-              let row = '<tr data-row="'+counter+'"> <td> '+ count+'</td> <td>' + $("#consulting").val() + '</td> <td>' + $("#consulting-fees").val() + '</td> <td><button type="button" class="btn" id="con-update"><i class="fa-solid fa-file-pen"></i></button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn" id="con-delete" onclick="productDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
+              let row = '<tr data-row="'+counter+'"> <td> '+ count+'</td> <td class="consulting-name">' + $("#consulting").val() +  '</td> <td class="consulting-amount">' + $("#consulting-fees").val() + ' </td> <td><button type="button" class="btn" id="con-update"><i class="fa-solid fa-file-pen"></i></button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn" id="con-delete" onclick="productDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
               $('#consulting-table').append(row);
               counter++;
               }
@@ -890,5 +893,128 @@
         } else return o.selectionStart
     }
     
+
+
+    // API request
+
+        //consulting Table
+            function consultingTableForm() {
+                var consulting = '{';
+                var otArr = [];
+                // var i = 1;
+                var tbl2 = $('table#consulting-fees-table tbody tr').each(function(e) {    
+                    alert('cons-table')    
+                x = $(this).children();
+                var itArr = [];
+                var keys = ['sl_no','consulting_name','consulting_fees'];
+                x.each(function(i) {
+                    itArr.push('"' + keys[i] + '":"' + $(this).text() + '"');
+                });
+                otArr.push('"' + (e+1) + '": {' + itArr.join(',') + '}');
+                })
+                consulting += otArr.join(",") + '}'
+
+                return consulting;
+            }
+
+        //Allergy Table
+            function allergyTableForm() {
+                var consulting = '{';
+                var otArr = [];
+                // var i = 1;
+                var tbl2 = $('table#allergy-medicine-table tbody tr').each(function(e) {    
+                    alert('cons-table')    
+                x = $(this).children();
+                var itArr = [];
+                var keys = ['sl_no','allergy_med'];
+                x.each(function(i) {
+                    itArr.push('"' + keys[i] + '":"' + $(this).text() + '"');
+                });
+                otArr.push('"' + (e+1) + '": {' + itArr.join(',') + '}');
+                })
+                consulting += otArr.join(",") + '}'
+
+                return consulting;
+            }
+
+        //Prescription Table
+            function prescriptionTableForm() {
+                var consulting = '{';
+                var otArr = [];
+                // var i = 1;
+                var tbl2 = $('table#prescription-table tbody tr').each(function(e) {    
+                    alert('cons-table')    
+                x = $(this).children();
+                var itArr = [];
+                var keys = ['sl_no','medicine','morning','afternoon','evening','night','no_days','total_tab'];
+                x.each(function(i) {
+                    itArr.push('"' + keys[i] + '":"' + $(this).text() + '"');
+                });
+                otArr.push('"' + (e+1) + '": {' + itArr.join(',') + '}');
+                })
+                consulting += otArr.join(",") + '}'
+
+                return consulting;
+            }
+        
+
+    $("#doctor-submit").click(function(){
+
+        // Consulting Table
+		var consulting_rowCount = $('#consulting-fees-table > tbody > tr').length;
+        var consulting = consultingTableForm();
+
+        // Allergy Table
+		var allergy_rowCount = $('#allergy-medicine-table > tbody > tr').length;
+        var allergy = allergyTableForm();
+
+        // Prescription Table
+		var prescription_rowCount = $('#prescription-table > tbody > tr').length;
+        var prescription = prescriptionTableForm();
+
+        // Other Details
+		const patient_diagnose = $('#patient-diagnose').val();
+		const patient_symptom = $('#patient-symptom').val();
+
+
+            $.ajax({
+                type: "POST",
+            url: "{% url 'inventory_medicine_amount' %}",
+            dataType: "json",
+            headers: {
+                "X-CSRFToken": $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            data: JSON.stringify({
+
+                // consulting
+                'consulting_rowCount': consulting_rowCount,
+                'consulting':consulting,
+
+                // allergy
+                'allergy_rowCount':allergy_rowCount,
+                'allergy':allergy,
+
+                // prescription
+                'prescription_rowCount':prescription_rowCount,
+                'prescription':prescription,
+
+                // Others
+                'patient_diagnose':patient_diagnose,
+                'patient_symptom':patient_symptom,
+            }),
+            success: function (data) {
+                alert('success')
+                window.location.reload();
+                
+                
+            },
+            error: function (response) {
+            alert('Error')
+            }
+            
+        });
+       
+	});
+
     {% endblock script %}
 

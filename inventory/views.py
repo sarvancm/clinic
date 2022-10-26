@@ -5,6 +5,8 @@ from .models import Medicine
 import datetime
 from django.db.models import Q
 from django.http import JsonResponse
+import json
+
 
 # Create your views here.
 
@@ -105,8 +107,12 @@ def doctor(request):
 
 def medicine_amount(request):
     if request.method == "POST": 
-        id = request.POST.get('name')
+        # id = request.POST.get('v1')
+        data = json.load(request)
+        # datas=data['payload']
+        print (data)
         data ={}
+        print(id)
         return JsonResponse(data)
 
 
