@@ -48,6 +48,10 @@ h1 {
     height: 500px;
     overflow: auto;
 }
+.height_card_v2{
+    height: 823px;
+    overflow: auto;
+}
 
 h4 {
     font-size: large;
@@ -103,3 +107,20 @@ textarea {
     background: #0a2558b4; 
     cursor: pointer !important;
   }
+
+  /* ======  Selected table row class  ========= */
+  table > tbody > tr.selected
+  {
+    background: #1858cf96 !important;
+    color: #FFF !important;
+    transition: 0.3s;
+  }
+  table > tbody > tr.selected > td > button i
+{
+    color: #FFF !important;
+    transition: 0.3s;
+}
+
+table > tbody > tr.selected > td > button.btn:focus{
+    box-shadow:none !important;
+}

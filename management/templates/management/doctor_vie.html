@@ -112,8 +112,8 @@
                                 </div>
 
                             </div>
-                            <hr>
-                            <form>
+                            <hr>&nbsp;
+                            <form autocomplete="off">
 
                                 <div class="form-row">
                                     <div class="col-lg-4">
@@ -122,7 +122,7 @@
                                     <div class="col-lg-4">
 
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" placeholder="Amount"
+                                            <input type="text" class="form-control noZero" placeholder="Amount"
                                                 aria-label="Recipient's username" onkeypress="return validateFloatKeyPress(this,event);" name="consulting-fees" id="consulting-fees" required aria-describedby="basic-addon2">
                                             <div class="input-group-append">
                                                 <span class="input-group-text" id="basic-addon2">Rs</span>
@@ -132,14 +132,13 @@
                                     </div>
 
                                     <div class="col-lg-4 text-right">
-                                        <button type="button" class="btn btn-outline-dark" id="con-add"><i
-                                                class="fa-solid fa-check"></i></button>&nbsp;&nbsp;&nbsp;
+                                        <button type="button" class="btn btn-outline-dark" id="con-add"><i class="fa-solid fa-check"></i></button>&nbsp;&nbsp;&nbsp;
                                         <button type="button" class="btn btn-outline-dark" id="con-clear"><i
                                                 class="fa-solid fa-xmark"></i></button>
                                     </div>
                                 </div>
                             </form><br>
-                            <div class="table-responsive p-2 height_card">
+                            <div class="table-responsive p-2 height_card_v2">
                                 <table id="consulting-fees-table" class="table table-bordered table-striped text-center auto-index "
                                     style="width:100%">
                                     <thead>
@@ -407,19 +406,19 @@
                                                 </div>
                                                 <div class="col-md-3 col-lg-2 col-sm-4 mt-2">
                                                     <label for="days">Days</label>
-                                                    <input type="text" class="form-control" name=""
-                                                        id="days">
+                                                    <input type="text" class="form-control plan_eff noZero" name=""
+                                                        id="days" maxlength="3">
                                                 </div>
                                                 <div class="col-md-3 col-lg-2 col-sm-4 mt-2">
                                                     <label for="total_tablets">Total&nbsp;Tablets</label>
-                                                    <input type="text" class="form-control" name=""
+                                                    <input type="text" class="form-control" name="" disabled
                                                         id="total_tablets">
                                                 </div>
                                             </div>
                                             <hr class="hr-center">
                                             <div class="text-center my-3">
                                                 <button type="button" id="Precreption-add" class="btn btn-outline-success">Add</button>
-                                                <button type="reset" id="Precreption-clear" class="btn btn-outline-danger">cancel</button>
+                                                <button type="button" id="Precreption-clear" class="btn btn-outline-danger" >cancel</button>
                                             </div>
                                         </form>
                                     </div>
@@ -589,25 +588,38 @@
 
    var counter = 0;
    var current_row = null;
+   var tableRow = $('#consulting-fees-table tbody tr');
+   tableRow.removeClass('selected');
 
    $("#con-add").on('click', function() {
     var consulting = $("#consulting").val();
     var consultingFees = $("#consulting-fees").val();
+    var tableRow = $('#consulting-fees-table tbody tr');
+    tableRow.removeClass('selected');
 
     var count = $('#consulting-fees-table tr').length;
+
+
      if(consulting != '' && consultingFees != ''){
         if (current_row == null) {
             if ( $("#consulting").val().length && $("#consulting-fees").val().length ) {
-              let row = '<tr data-row="'+counter+'"> <td>'+ count +'</td> <td class="consulting-name">' + $("#consulting").val() +  '</td> <td class="consulting-amount">' + $("#consulting-fees").val() + '</td> <td><button type="button" class="btn" id="con-update"><i class="fa-solid fa-file-pen"></i></button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn" id="con-delete" onclick="productDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
+              let row = '<tr data-row="'+counter+'"> <td>'+ count +'</td> <td class="consulting-name">' + $("#consulting").val() + '</td> <td class="consulting-amount">' + $("#consulting-fees").val() + '</td> <td><button type="button" class="btn" id="con-update"><i class="fa-solid fa-file-pen"></i></button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn" id="con-delete" onclick="productDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
               $('#consulting-table').append(row);
+              
               counter++;
               }
             } else {
-       
+                
               var select_row = $('tr[data-row='+current_row+']');
               let cells = $(select_row).find('td');
               $(cells[1]).text($("#consulting").val());
               $(cells[2]).text($("#consulting-fees").val());
+              
+                var currentRow1 = select_row;
+                currentRow1.removeClass('selected');
+
+                // Icon Change
+            $('#con-add').html('<i class="fa-solid fa-check"></i>');
        
             }
      clear_input();
@@ -617,9 +629,19 @@
      }
    
    $("#consulting-table #con-update").on('click', function() {
+    var tableRow = $('#consulting-fees-table tbody tr');
+    tableRow.removeClass('selected');
+
        let cells = $(this).parents('tr').find('td');
+
+       var currentRow = $(this).closest("tr");
+       currentRow.addClass('selected');
+
        $("#consulting").val($(cells[1]).text());
        $("#consulting-fees").val($(cells[2]).text());
+
+       // Icon Change
+       $('#con-add').html('<i class="fa-solid fa-file-pen"></i>');
 
        current_row = $(this).parents('tr').data('row');
        $('#consulting-fees-table tbody tr').each(function(i){            
@@ -633,6 +655,7 @@
    function productDelete(ctl) {
   
     $(ctl).parents("tr").remove();
+    clear_input();
 
     $('#consulting-fees-table tbody tr').each(function(i){            
         $($(this).find('td')[0]).html(i+1);          
@@ -646,6 +669,8 @@
        current_row = null;
        $("#consulting-fees").val('');
        $("#consulting").val('');
+       // Icon Change
+   $('#con-add').html('<i class="fa-solid fa-check"></i>');
        
    }
 
@@ -794,9 +819,9 @@
     var totalTablets = $("#total_tablets").val();
 
     var count2 = $('#prescription-table tbody tr').length +1;
-     if(medicineName != ''){
+     if(medicineName != '' && days != '' && totalTablets != 0){
         if (current_row2 == null) {
-            if ( $("#medicine_name").val().length ) {
+            if ( $("#medicine_name").val().length && $("#days").val().length ) {
               let row = '<tr data-row="'+counter2+'"> <td>'+ count2+'</td> <td>' + $("#medicine_name").val() + '</td> <td>' + $("#morning").val() + '</td> <td>' + $("#after_noon").val() + '</td> <td>' + $("#evening").val() + '</td> <td>' + $("#night").val() + '</td> <td>' + $("#days").val() + '</td><td>' + $("#total_tablets").val() + '</td> <td><button type="button" class="btn" id="Pres_update"><i class="fa-solid fa-file-pen"></i></button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn" id="pres-delete" onclick="prescriptionDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
               $('#prescription-body').append(row);
               counter2++;
@@ -812,6 +837,12 @@
               $(cells[5]).text($("#night").val());
               $(cells[6]).text($("#days").val());
               $(cells[7]).text($("#total_tablets").val());
+
+              var currentRow1 = select_row;
+                currentRow1.removeClass('selected');
+
+                // Icon Change
+                $('#Precreption-add').html('Add');
        
             }
      clear_input2();
@@ -821,7 +852,19 @@
      }
    
     $("#prescription-body #Pres_update").on('click', function() {
+
+        var tableRow = $('#prescription-table tbody tr');
+        tableRow.removeClass('selected');
+
        let cells = $(this).parents('tr').find('td');
+
+       var currentRow = $(this).closest("tr");
+       currentRow.addClass('selected');
+
+       // Icon Change
+       $('#Precreption-add').html('Update');
+
+
        $("#medicine_name").val($(cells[1]).text());
        $("#morning").val($(cells[2]).text());
         $("#after_noon").val($(cells[3]).text());
@@ -837,15 +880,19 @@
      });
    });
 
+
    // Delete current Row
    function prescriptionDelete(ctl) {
   
     $(ctl).parents("tr").remove();
+        clear_input2();
 
-    $('#prescription-table tbody tr').each(function(i){            
-        $($(this).find('td')[0]).html(i+1);          
-       });
-}
+        $('#prescription-table tbody tr').each(function(i){            
+            $($(this).find('td')[0]).html(i+1);          
+        });
+    }
+
+   $('#Precreption-clear').on("click", () => clear_input2());
 
    
    function clear_input2() {
@@ -858,9 +905,9 @@
         $("#days").val('');
         $("#total_tablets").val('');
        
+        // Icon Change
+        $('#Precreption-add').html('Add');
    }
-
-
 
 
 
@@ -897,7 +944,6 @@
 
     // API request
 
-        //consulting Table
             function consultingTableForm() {
                 var consulting = '';
                 var otArr = [];
@@ -912,7 +958,12 @@
                 otArr.push('{' + itArr.join(',') + '}');
                 })
                 consulting += otArr.join(",");
-                return consulting;
+                {% comment %} consultingData= JSON.parse(consulting); {% endcomment %}
+                {% comment %} alert(jQuery.type( consultingData )); {% endcomment %}
+                consultingData1= JSON.stringify(consulting);
+                alert(jQuery.type( consultingData1 ));
+
+                return consultingData1;
             }
 
 
@@ -955,6 +1006,99 @@
 
                 return prescription;
             }
+
+// Second json converter
+//consulting Table
+
+            function consultingTableForm(){
+                var myRows = [];
+                var headersText = [];
+                var $headers = $("table#consulting-fees-table th");
+
+                // Loop through grabbing everything
+                var $rows = $("table#consulting-fees-table tbody tr").each(function(index) {
+                $cells = $(this).find("td");
+                myRows[index] = {};
+
+                $cells.each(function(cellIndex) {
+                    // Set the header text
+                    if(headersText[cellIndex] === undefined) {
+                    headersText[cellIndex] = $($headers[cellIndex]).text();
+                    }
+                    // Update the row object with the header/cell combo
+                    myRows[index][headersText[cellIndex]] = $(this).text();
+                });    
+                });
+
+                // Let's put this in the object like you want and convert to JSON (Note: jQuery will also do this for you on the Ajax request)
+                var myObj = {
+                    "consulting": myRows
+                };
+
+                return myObj;
+            }
+
+
+//Allergy Table
+
+            function allergyTableForm(){
+                var myRows = [];
+                var headersText = [];
+                var $headers = $("table#allergy-medicine-table th");
+
+                // Loop through grabbing everything
+                var $rows = $("table#allergy-medicine-table tbody tr").each(function(index) {
+                $cells = $(this).find("td");
+                myRows[index] = {};
+
+                $cells.each(function(cellIndex) {
+                    // Set the header text
+                    if(headersText[cellIndex] === undefined) {
+                    headersText[cellIndex] = $($headers[cellIndex]).text();
+                    }
+                    // Update the row object with the header/cell combo
+                    myRows[index][headersText[cellIndex]] = $(this).text();
+                });    
+                });
+
+                // Let's put this in the object like you want and convert to JSON (Note: jQuery will also do this for you on the Ajax request)
+                var myObj = {
+                    "Allergy": myRows
+                };
+
+                return myObj;
+            }
+
+
+//Prescription Table
+
+            function prescriptionTableForm(){
+                var myRows = [];
+                var headersText = [];
+                var $headers = $("table#prescription-table th");
+
+                // Loop through grabbing everything
+                var $rows = $("table#prescription-table tbody tr").each(function(index) {
+                $cells = $(this).find("td");
+                myRows[index] = {};
+
+                $cells.each(function(cellIndex) {
+                    // Set the header text
+                    if(headersText[cellIndex] === undefined) {
+                    headersText[cellIndex] = $($headers[cellIndex]).text();
+                    }
+                    // Update the row object with the header/cell combo
+                    myRows[index][headersText[cellIndex]] = $(this).text();
+                });    
+                });
+
+                // Let's put this in the object like you want and convert to JSON (Note: jQuery will also do this for you on the Ajax request)
+                var myObj = {
+                    "Prescription": myRows
+                };
+
+                return myObj;
+            }
         
 
     $("#doctor-submit").click(function(){
@@ -962,6 +1106,8 @@
         // Consulting Table
 		var consulting_rowCount = $('#consulting-fees-table > tbody > tr').length;
         const consulting = consultingTableForm();
+        {% comment %} alert(jQuery.type( consulting )); {% endcomment %}
+
         // Allergy Table
 		var allergy_rowCount = $('#allergy-medicine-table > tbody > tr').length;
         var allergy = allergyTableForm();
@@ -974,7 +1120,10 @@
 		const patient_diagnose = $('#patient-diagnose').val();
 		const patient_symptom = $('#patient-symptom').val();
 
-
+        if(prescription_rowCount == 0){
+            alert('Plz Fill the Prescription Form ');
+        }
+        else{
             $.ajax({
                 type: "POST",
             url: "{% url 'inventory_medicine_amount' %}",
@@ -982,7 +1131,7 @@
             headers: {
                 "X-CSRFToken": $('input[name=csrfmiddlewaretoken]').val(),
             },
-			data: {
+			data: JSON.stringify({
                 // consulting
                 'consulting_rowCount': consulting_rowCount,
                 'consulting':consulting,
@@ -998,12 +1147,12 @@
                 // Others
                 'patient_diagnose':patient_diagnose,
                 'patient_symptom':patient_symptom,
-            },
+            }),
+
 
             success: function (data) {
-                alert(data)
                 alert('success')
-                {% comment %} window.location.reload(); {% endcomment %}
+                window.location.reload();
                 
                 
             },
@@ -1012,8 +1161,20 @@
             }
             
         });
+    }
        
 	});
+
+
+    jQuery('.plan_eff').keyup(function () {     
+        this.value = this.value.replace(/[^0-9]/g,'');
+      });
+
+      $(".noZero").keyup(function(){
+        var value = $(this).val();
+        value = value.replace(/^(0*)/,"");
+        $(this).val(value);
+    });
 
     {% endblock script %}
 

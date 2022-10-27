@@ -122,8 +122,28 @@ def doctor(request):
 
 def medicine_amount(request):
     if request.method == "POST": 
-        id = request.POST.get('consulting')
+        # id = request.POST.get('consulting')
+        data = json.loads(request.body)
+        datas=data['consulting']['consulting']
+        print (data)   
+        print(type(data))
+        print (datas)   
+        print(type(datas))
+        for i in datas:
+            print(type(i))
+            print(i['Consulting'])
         
+        from pprint import pprint
+        pprint(data)
+        
+        
+        
+        
+        
+        
+        
+            
+        # print(datas[1]['Consulting'])
         
         # data = json.loads(id)
         # dict = json.loads(request.POST.get('payload'))
