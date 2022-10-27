@@ -1,11 +1,12 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from .forms import MedicineForm
-from .models import Medicine
+from .models import Medicine,Fees,Allergy_Medicine,Patient_medicine
 import datetime
 from django.db.models import Q
 from django.http import JsonResponse
 import json
+from pprint import pprint
 
 
 # Create your views here.
@@ -115,10 +116,32 @@ def update_medicine(request):
 
 def doctor(request):
     if request.method == "POST": 
-        id = request.POST.get('name')
-        data ={}
+        data = json.loads(request.body)
+        patient_object=data['patient_object']
+
+        fees=data['consulting']['consulting']
+        allergy=data['allergy']['Allergy']
+        prescription=data['prescription']['Prescription']
+        
+        for i in fees:
+            Fees.objects.create(patient_id=patient_object,fees_type=i['Consulting'],fees_amount=i['Amount'])
+
+        for i in allergy:
+            Allergy_Medicine.objects.create(patient_id=patient_object,medicine_name=i['Allergy\xa0Medicine'])
+            
+        for i in prescription:
+            Patient_medicine.objects.create(patient_id=patient_object,medicine_name=i['Medicine\xa0Name'],morning=i['Morning'],noon=i['After\xa0Noon'],
+            evening=i['Evening'],night=i['Night'],days=i['Days'],total=i['Total'],symptom=data['patient_symptom'],diagnose=data['patient_diagnose'])
+
+        print(data)
+
+        # return_allergy=[i.medicine_name for i in Allergy_Medicine.objects.filter(patient_id=patient_object)]
+        # data ={
+        #     'return_allergy':return_allergy
+        # }
+        data={}
         return JsonResponse(data)
-    # return render(request,'inventory/doctor.html')
+   
 
 def medicine_amount(request):
     if request.method == "POST": 
@@ -133,8 +156,8 @@ def medicine_amount(request):
             print(type(i))
             print(i['Consulting'])
         
-        from pprint import pprint
-        pprint(data)
+        # from pprint import pprint
+        # pprint(data)
         
         
         

@@ -21,6 +21,7 @@
                                         <label for="name" class="col-form-label">Patient&nbsp;ID&nbsp;&nbsp;:</label>
                                     </div>
                                     <div class="col-lg-6">
+                                        <input type="text" value="{{x.id}}" id="patient">
                                         <input type="text" class="form-control" name="patient_id" value="{{x.patient_id}}" id="name" placeholder="" disabled>
                                     </div>
                                 </div>
@@ -78,6 +79,9 @@
                                                 </div>
                                             </div>
                                         </form><br>
+                                        {% for i in return_allergy %}
+                                        <p>{{i}}</p>
+                                        {% endfor %}
                                         <div class="table-responsive p-2 height_card">
                                             <table id="allergy-medicine-table" class="table table-bordered table-striped text-center"
                                                 style="width:100%">
@@ -117,6 +121,9 @@
 
                                 <div class="form-row">
                                     <div class="col-lg-4">
+                                        {% for i in fees %}
+                                        <p>{{i.fee_name}}</p>
+                                        {% endfor %}
                                         <input type="text" class="form-control" name="consulting" id="consulting" placeholder="Consulting" required>
                                     </div>
                                     <div class="col-lg-4">
@@ -355,8 +362,10 @@
                                                         name="medicine_name"
                                                         id="medicine_name">
                                                     <datalist id="medicine_names">
-                                                        <option value="Paracetamol 500"></option>
-                                                        <option value="Paracetamol 600"></option>
+                                                        {% for i in medicines %}
+                                                        <option value="Paracetamol 500">{{i.medicine_name}}</option>
+                                                        <option value="Paracetamol 600">{{i.medicine_name}}</option>
+                                                        {% endfor %}
                                     
                                                     </datalist>
                                                 </div>
@@ -427,18 +436,15 @@
                                             <table class="table table-striped table-bordered text-center w-100" id="prescription-table">
                                                 <thead>
                                                     <tr>
-                                                        <th rowspan="2">S.No</th>
-                                                        <th rowspan="2">Medicine&nbsp;Name</th>
-                                                        <th colspan="4">Timing</th>
-                                                        <th rowspan="2">Days</th>
-                                                        <th rowspan="2">Total</th>
-                                                        <th rowspan="2">Action</th>
-                                                    </tr>
-                                                    <tr>
+                                                        <th>S.No</th>
+                                                        <th>Medicine&nbsp;Name</th>
                                                         <th>Morning</th>
                                                         <th>After&nbsp;Noon</th>
                                                         <th>Evening</th>
                                                         <th>Night</th>
+                                                        <th>Days</th>
+                                                        <th>Total</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="prescription-body">
@@ -1119,6 +1125,8 @@
         // Other Details
 		const patient_diagnose = $('#patient-diagnose').val();
 		const patient_symptom = $('#patient-symptom').val();
+		const patient_object = $('#patient').val();
+        
 
         if(prescription_rowCount == 0){
             alert('Plz Fill the Prescription Form ');
@@ -1126,7 +1134,7 @@
         else{
             $.ajax({
                 type: "POST",
-            url: "{% url 'inventory_medicine_amount' %}",
+            url: "{% url 'inventory_doctor' %}",
             dataType: "json",
             headers: {
                 "X-CSRFToken": $('input[name=csrfmiddlewaretoken]').val(),
@@ -1147,6 +1155,7 @@
                 // Others
                 'patient_diagnose':patient_diagnose,
                 'patient_symptom':patient_symptom,
+                'patient_object':patient_object,
             }),
 
 

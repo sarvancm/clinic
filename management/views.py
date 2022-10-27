@@ -10,6 +10,7 @@ from datetime import datetime
 from datetime import date
 from django.contrib.auth.decorators import login_required
 from dateutil import relativedelta
+from inventory.models import Medicine,Allergy_Medicine
 
 
 
@@ -388,13 +389,16 @@ def doctor_view(request):
 
     
 def doctor_vie(request,id):  
+    fees=AddFees.objects.all()
     x=  TodayPatients.objects.get(id=id)
     view=x.patient_id 
     y=PatientDetails.objects.filter(id=x.patient_id).first()
     z=GeneralVitals.objects.filter(patient_id=view).first()
+    medicines=Medicine.objects.all()
+    return_allergy=[i.medicine_name for i in Allergy_Medicine.objects.filter(patient_id=y.id)]
 
 
-    return render(request,"management/doctor_vie.html",{'x':y,'z':z})
+    return render(request,"management/doctor_vie.html",{'x':y,'z':z,'fees':fees,'medicines':medicines,'return_allergy':return_allergy})
     
 
 
