@@ -79,9 +79,7 @@
                                                 </div>
                                             </div>
                                         </form><br>
-                                        {% for i in return_allergy %}
-                                        <p>{{i}}</p>
-                                        {% endfor %}
+                                        
                                         <div class="table-responsive p-2 height_card">
                                             <table id="allergy-medicine-table" class="table table-bordered table-striped text-center"
                                                 style="width:100%">
@@ -93,7 +91,23 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="allergy-table">
-            
+                                                    {% for i in return_allergy %}
+                                                    <tr> 
+                                                        <td>{{forloop.counter}}</td>
+                                                        <td>{{i}}</td>
+                                                        <td><button type="button" class="btn" id="allergy-delete" onclick="allergyDelete(this);"><i class="fa-solid fa-xmark"></i></button></td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                    {% comment %} <tr> 
+                                                        <td>bfhfk</td>
+                                                        <td>bfhfk</td>
+                                                        <td><button type="button" class="btn" id="allergy-delete" onclick="allergyDelete(this);"><i class="fa-solid fa-xmark"></i></button></td>
+                                                    </tr>
+                                                    <tr> 
+                                                        <td>bfhfk</td>
+                                                        <td>bfhfk</td>
+                                                        <td><button type="button" class="btn" id="allergy-delete" onclick="allergyDelete(this);"><i class="fa-solid fa-xmark"></i></button></td>
+                                                    </tr> {% endcomment %}
                                                 </tbody>
                                             </table>
                                         </div>
