@@ -1,3 +1,4 @@
+from enum import unique
 from sqlite3 import Date
 from django.db import models
 from django.contrib.auth.models import AbstractUser
@@ -10,7 +11,7 @@ from datetime import date
 class User(AbstractUser):
     address=models.TextField()
     aadhar_number=models.IntegerField()
-    pan_number=models.CharField(max_length=10)
+    pan_number=models.CharField(max_length=30,null=True,blank=True)
     phone_number=models.IntegerField()
     is_admin = models.BooleanField('Is admin', default=False)
     is_user = models.BooleanField('Is_customer', default=False)
@@ -129,7 +130,7 @@ class BillsModel(models.Model):
 
 class GeneralVitals(models.Model):
     patient=models.ForeignKey(PatientDetails,on_delete=models.CASCADE,null=True,blank=True)
-    temperature=models.IntegerField()
+    temperature=models.FloatField()
     pulse_rate=models.IntegerField()
     blood_pressure_start=models.IntegerField()
     blood_pressure_end=models.IntegerField()
@@ -138,8 +139,8 @@ class GeneralVitals(models.Model):
     others=models.TextField()
 
 class AddFees(models.Model):
-    fee_name=models.CharField(max_length=30)
-    amount=models.IntegerField(null=True, blank=True)
+    fee_name=models.CharField(max_length=30,unique=True)
+    amount=models.DecimalField(max_digits=15, decimal_places=2)
 
 
 

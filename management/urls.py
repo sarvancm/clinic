@@ -44,6 +44,7 @@ urlpatterns = [
      path('fee_mode/',views.fee_mode, name='fee_mode'),
 
      path('add_fees/',views.add_fees, name='add_fees'),
+     path('delete_fees/',views.delete_fees, name='delete_fees'),
 
 
 

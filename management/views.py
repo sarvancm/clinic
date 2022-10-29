@@ -32,7 +32,7 @@ def register(request):
         # is_admin=request.POST.get("is_admin")
         # if is_admin==None:
         #     is_admin=0
-         
+        user_select=request.POST.get("user_select")
         if form.is_valid():  
             x=form.save() 
             user_select=request.POST.get("user_select")
@@ -47,8 +47,8 @@ def register(request):
             messages.success(request, 'Account created successfully') 
             return redirect('login_view')
         else:
-            
-            return render(request,'management/register.html', {'form':form})             
+            messages.success(request, 'Account created successfully') 
+            return render(request,'management/register.html', {'user_select':user_select,'form':form})             
     else:        
         
         return render(request, 'management/register.html') 
@@ -64,9 +64,11 @@ def login_view(request):
             if user:    
                 if user.is_admin :
                     log(request,user)
+                    messages.success(request, 'login successfully') 
                     return redirect('doctor_view')
                 elif user.is_user:
                     log(request,user)
+                    messages.success(request, 'login successfully') 
                     return redirect('patients_register')
                 else:
                     return HttpResponse("invalid")                  
@@ -260,9 +262,8 @@ def patients_register(request):
             # z.save()            
             messages.success(request, 'Details created successfully') 
             return redirect('search_patient')
-        else:
-            print(form.errors)            
-            messages.info(request,'User Registration Failed')
+        else:           
+            messages.warning(request,'User Registration Failed')
             return render(request,'management/patient_register.html',{'patient_id':increment_patient_id(),'form': form})     
     else:
      form = PatientDetailsForm()  
@@ -334,7 +335,8 @@ def update_patient_details(request):
          update.Address=request.POST.get("address")
          update.Age=request.POST.get("age")
          update.Phone_number=request.POST.get("phone_number")
-         update.save()         
+         update.save() 
+
          return redirect('search_patient')        
     else:   
         return render(request,"management/search_patient.html")
@@ -491,7 +493,7 @@ def general_vitals(request):
                     list.append(y)
                 
                 z=zip(list,x)              
-                return render(request,"management/user_view.html",{'form':form,'patient_id':patient_id,'err':True,'x':x,'z':z}) 
+                return render(request,"management/user_view.html",{'form':form,'patient_id':patient_id,'err':True,'x':x,'z':z,'object':id,'vital':vitalsid}) 
 
     else:
         form=GeneralVitalsForm()
@@ -588,6 +590,8 @@ def increment_bill_no():
 def add_fees(request):
     addfees= AddFees.objects.all()    
     if request.method=="POST":
+        amount=request.POST.get('amount')
+        print(amount)
         form=AddFeesForm(request.POST)
         if form.is_valid():
             form.save()
@@ -625,6 +629,14 @@ def fee_mode(request):
 
 
 
+
+def delete_fees(request):
+    id= request.POST.get('newobid')
+    x = AddFees.objects.get(id=id)
+    name=x.fee_name
+    x.delete()
+    messages.success(request, f'{name} deleted successfully')
+    return redirect('add_fees')
 
     
 

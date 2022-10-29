@@ -22,7 +22,7 @@
                         <label for="amount">Amount&nbsp;:</label>
                     </div>
                     <div class="col-md-6 my-2">
-                        <input type="text" class="form-control" name="amount" value="{{form.amount.value|default_if_none:''}}" id="amount">
+                        <input type="text" class="form-control" name="amount" value="{{form.amount.value|default_if_none:'0'}}" id="amount">
                         <span class="text-danger">{{form.amount.errors}} </span>
                     </div>
                 </div>
@@ -53,10 +53,10 @@
                             <td>{{i.fee_name}}</td>
                             <td>{{i.amount}}</td>
                             <td><i class="fa-solid fa-edit px-2 text-info" onclick="view('{{i.id}}')" ob_id="{{i.id}}" id="add_fees{{i.id}}" fee_name="{{i.fee_name}}" amount="{{i.amount}}" data-toggle="modal" data-target="#edit_fees"></i></a>
-                                <i
-                                    class="fa-solid fa-trash px-2 text-danger"></i></td>
-                                    {% endfor %}
+                                <a data-toggle="modal" data-target="#delete" onclick="remove('{{i.id}}')"  ob_id="{{i.id}}"><i class="fa-solid fa-trash px-2 text-danger"></i></a></td>
+                                    
                         </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -87,7 +87,7 @@
                     </div>
                     <div class="col-md-6 my-2">
                         <input type="text" class="form-control" name="fee_name" id="fee_name_id">
-                        <input type="text" name="ob" id="ob_id">
+                        <input type="hidden" name="ob" id="ob_id">
                     </div>
                 </div>
                 <div class="row">
@@ -132,7 +132,7 @@
                     <div class="col-md-6 my-2">
                         <input type="text" class="form-control" name="fee_name" value="{{form1.fee_name.value|default_if_none:''}}" id="fee_name_id">
                         <span class="text-danger">{{form1.fee_name.errors}} </span>
-                        <input type="text" name="ob" value="{{object}}" id="ob_id">
+                        <input type="hidden" name="ob" value="{{object}}" id="ob_id">
                     </div>
                 </div>
                 <div class="row">
@@ -156,7 +156,35 @@
       </div>
     </div>
   </div>
-
+  
+  
+  <!--delete  Modal -->
+  <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-sm modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteLabel">Delete</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center">
+            <form action="{% url 'delete_fees' %}" method="POST">
+                {% csrf_token %}
+        
+        <div id="del_name">Are you sure Delete ?&nbsp;</div>
+        <input type="hidden" name="newobid" id="newobid">
+        <hr class="hr-center">
+        <div class="mt-2">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Delete</button>
+          </div>
+        </form>
+        </div>
+       
+      </div>
+    </div>
+  </div>
 
 
 {% endblock %}
@@ -171,6 +199,21 @@
     });
 {% endif %} 
    
+function remove(event) {
+
+    var newfeename = $('#add_fees' + event).attr("fee_name")
+    var newamount = $('#add_fees' + event).attr("amount")
+    var newobid=$('#add_fees'+event).attr("ob_id")
+
+
+    $('#fee_name_id').val(newfeename)
+    $('#fee_amount').val(newamount)
+    $('#newobid').val(newobid)
+$('#del_name').append(newfeename)
+
+}
+
+
     function view(event) {
 
         var newfeename = $('#add_fees' + event).attr("fee_name")

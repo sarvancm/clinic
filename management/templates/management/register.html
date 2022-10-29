@@ -71,7 +71,7 @@
                             <div class="form-group">
                                
                                 <label for="first_name">PAN Card&nbsp;Number*</label>
-                                <input type="text" class="form-control" name="pan_number" id="pan_number" value="{{form.pan_number.value}}" required minlength="10" maxlength="10">
+                                <input type="text" class="form-control" name="pan_number" id="pan_number" value="{{form.pan_number.value}}">
                                 <span class="text-danger">{{form.pan_number.errors}} </span>
                             </div>
                         </div>
@@ -97,7 +97,7 @@
                                     <label for="user_select"><span><i
                                                 class="fa-solid fa-user"></i></span>&nbsp;Select&nbsp;User&nbsp;Type*</label>
                                 </div>
-                            {% if form.user_select == 'admin' %}
+                            {% if user_select == 'admin' %}
                                 <div class="col-sm-4">
                                     <input class="form-check-input" type="radio" name="user_select"  id="user"
                                         value="user" >
