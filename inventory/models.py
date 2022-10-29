@@ -1,5 +1,5 @@
 from django.db import models
-from management.models import PatientDetails
+from management.models import PatientDetails,GeneralVitals
 
 # Create your models here.
 
@@ -23,6 +23,7 @@ class Medicine(models.Model):
     
 class Fees(models.Model):
     patient=models.ForeignKey(PatientDetails,on_delete=models.CASCADE,null=True,blank=True)
+    vitals=models.ForeignKey(GeneralVitals,on_delete=models.CASCADE,null=True,blank=True)
     fees_type= models.CharField(max_length=200,null=True, blank=True)
     fees_amount= models.DecimalField(max_digits = 16, decimal_places = 2,null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -34,6 +35,7 @@ class Fees(models.Model):
 
 class Allergy_Medicine(models.Model):
     patient=models.ForeignKey(PatientDetails,on_delete=models.CASCADE,null=True,blank=True)
+    vitals=models.ForeignKey(GeneralVitals,on_delete=models.CASCADE,null=True,blank=True)
     medicine_name= models.CharField(max_length=200,null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -44,6 +46,7 @@ class Allergy_Medicine(models.Model):
 
 class Patient_medicine(models.Model):
     patient=models.ForeignKey(PatientDetails,on_delete=models.CASCADE,null=True,blank=True)
+    vitals=models.ForeignKey(GeneralVitals,on_delete=models.CASCADE,null=True,blank=True)
     medicine_name= models.CharField(max_length=200,null=True, blank=True)
     morning= models.CharField(max_length=200,null=True, blank=True)
     noon= models.CharField(max_length=200,null=True, blank=True)
@@ -53,10 +56,15 @@ class Patient_medicine(models.Model):
     total= models.CharField(max_length=200,null=True, blank=True)
     symptom=models.TextField(null=True, blank=True)
     diagnose=models.TextField(null=True, blank=True)
-    lab_test=models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f" {self.patient} {self.medicine_name} details"
     
+class Lab_test(models.Model):
+    patient=models.ForeignKey(PatientDetails,on_delete=models.CASCADE,null=True,blank=True)
+    vitals=models.ForeignKey(GeneralVitals,on_delete=models.CASCADE,null=True,blank=True)
+    lab_test=models.TextField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

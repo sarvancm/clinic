@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from .forms import MedicineForm
-from .models import Medicine,Fees,Allergy_Medicine,Patient_medicine
+from .models import Medicine,Fees,Allergy_Medicine,Patient_medicine,Lab_test
 import datetime
 from django.db.models import Q
 from django.http import JsonResponse
@@ -124,10 +124,7 @@ def doctor(request):
         allergy=data['allergy']['Allergy']
         prescription=data['prescription']['Prescription']
         labtesting=data['lab_testing']['LabTesting']
-        
-        pprint(data)
-        
-        print(labtesting)
+   
         
         for i in fees:
             Fees.objects.create(patient_id=patient_object,fees_type=i['Consulting'],fees_amount=i['Amount'])
@@ -139,7 +136,8 @@ def doctor(request):
             Patient_medicine.objects.create(patient_id=patient_object,medicine_name=i['Medicine\xa0Name'],morning=i['Morning'],noon=i['After\xa0Noon'],
             evening=i['Evening'],night=i['Night'],days=i['Days'],total=i['Total'],symptom=data['patient_symptom'],diagnose=data['patient_diagnose'])
 
-        print(data)
+        for i in labtesting:
+            Lab_test.objects.create(patient_id=patient_object,lab_test=i['Tests'])
 
         # return_allergy=[i.medicine_name for i in Allergy_Medicine.objects.filter(patient_id=patient_object)]
         # data ={
