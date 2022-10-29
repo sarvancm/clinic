@@ -7,6 +7,8 @@ from django.db.models import Q
 from django.http import JsonResponse
 import json
 from pprint import pprint
+from django.views.decorators.csrf import csrf_exempt
+
 
 
 # Create your views here.
@@ -113,7 +115,6 @@ def update_medicine(request):
         return redirect('inventory_search_medicine')
 
 
-
 def doctor(request):
     if request.method == "POST": 
         data = json.loads(request.body)
@@ -122,6 +123,11 @@ def doctor(request):
         fees=data['consulting']['consulting']
         allergy=data['allergy']['Allergy']
         prescription=data['prescription']['Prescription']
+        labtesting=data['lab_testing']['LabTesting']
+        
+        pprint(data)
+        
+        print(labtesting)
         
         for i in fees:
             Fees.objects.create(patient_id=patient_object,fees_type=i['Consulting'],fees_amount=i['Amount'])
@@ -145,19 +151,10 @@ def doctor(request):
 
 def medicine_amount(request):
     if request.method == "POST": 
-        # id = request.POST.get('consulting')
-        data = json.loads(request.body)
-        datas=data['consulting']['consulting']
-        print (data)   
-        print(type(data))
-        print (datas)   
-        print(type(datas))
-        for i in datas:
-            print(type(i))
-            print(i['Consulting'])
+        id = request.POST.get('consultingName')
         
         # from pprint import pprint
-        # pprint(data)
+        print(id)
         
         
         

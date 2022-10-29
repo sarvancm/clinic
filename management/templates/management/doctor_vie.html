@@ -3,8 +3,6 @@
 
 {% block content %}
 
-    {% comment %} <section id="Doctor-view">
-        <div class="container"> {% endcomment %}
             <h1 class="mt-2">Doctor-view</h1>
             <hr>
 
@@ -59,19 +57,15 @@
                                         <div class="col-lg-6">
                                             <h4>Allergy Medicine</h4>
                                         </div>
-                                        <div class="col-lg-6 text-right">
-                                            <button type="text" class="btn btn-outline-dark btn-sm"><i
-                                                    class="fa-regular fa-eye" ></i></button>
-                                        </div>
                                     </div>
                                     <hr>
                                         <form>
                                             <div class="form-row ">
-                                                <div class="col-md-8">
+                                                <div class="col-md-8 mb-2">
                                                     <input type="text" class="form-control" placeholder="Allergy Medicine" id="allergy-medicine">
                                                 </div>
             
-                                                <div class="col-lg-4 text-right">
+                                                <div class="col-md-4 text-center text-md-right">
                                                     <button type="button" id="allergy-add" class="btn btn-outline-dark"><i
                                                             class="fa-solid fa-check"></i></button>&nbsp;&nbsp;&nbsp;
                                                     <button type="button" id="allergy-clear" class="btn btn-outline-dark"><i
@@ -116,7 +110,7 @@
                         </div>
                     </div>
                 </div>
-
+{% csrf_token %}
                 <div class="col-lg-6">
                     <div class="card p-2 ">
                         <div class="card-body">
@@ -124,23 +118,24 @@
                                 <div class="col-lg-6">
                                     <h4>FEES</h4>
                                 </div>
-                                <div class="col-lg-6 text-right">
-                                    <button type="text" class="btn btn-outline-dark btn-sm"><i
-                                            class="fa-regular fa-eye"></i></button>
-                                </div>
 
                             </div>
                             <hr>&nbsp;
                             <form autocomplete="off">
 
                                 <div class="form-row">
-                                    <div class="col-lg-4">
-                                        {% for i in fees %}
-                                        <p>{{i.fee_name}}</p>
-                                        {% endfor %}
-                                        <input type="text" class="form-control" name="consulting" id="consulting" placeholder="Consulting" required>
+                                    <div class="col-md-4 mb-2">
+                                        <input type="text" class="form-control data-list" name="consulting" id="consulting" list="consulting_names" placeholder="Consulting" required>
+                                        <div class="datalist__show">
+                                            <datalist id="consulting_names" >
+                                                {% for i in fees %}
+                                                <option value="{{i.fee_name}}">{{i.fee_name}}</option>
+                                                {% endfor %}
+                            
+                                            </datalist>
+                                        </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-md-4 mb-2">
 
                                         <div class="input-group mb-3">
                                             <input type="text" class="form-control noZero" placeholder="Amount"
@@ -152,7 +147,7 @@
 
                                     </div>
 
-                                    <div class="col-lg-4 text-right">
+                                    <div class="col-md-4 text-center text-md-right">
                                         <button type="button" class="btn btn-outline-dark" id="con-add"><i class="fa-solid fa-check"></i></button>&nbsp;&nbsp;&nbsp;
                                         <button type="button" class="btn btn-outline-dark" id="con-clear"><i
                                                 class="fa-solid fa-xmark"></i></button>
@@ -181,20 +176,20 @@
                 </div>
             </div>
 
-            <div class="card p-2 mt-3">
+            <div class="card mt-3">
                 <div class="card-body">
-                    <div class="card pt-3 px-3">
+                    <div class="card ">
                         <div class="row">
                             <div class="col-lg-6 mt-2">
                                 <p>01/05/2021&nbsp;
                                     7.30&nbsp;PM</p>
                             </div>
-                            <div class="col-lg-6 text-right mt-2">
+                            <!-- <div class="col-lg-6 text-right mt-2">
                                 <p>Today&nbsp;
                                     <button type="text" class="btn btn-outline-dark btn-sm"><i
                                             class="fa-solid fa-arrow-up"></i></button>
                                 </p>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
 
@@ -202,117 +197,86 @@
 
                 <div class="row">
                     <div class="col-lg-6">
-                        <div class="card mt-4 p-2 height_card">
+                        <div class="card">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <h4>VITALS</h4>
                                     </div>
-                                    <div class="col-lg-6 text-right">
-                                        <button type="text" class="btn btn-outline-dark btn-sm"  data-toggle="modal"
-                                            data-target="#exampleModal"><i class="fa-regular fa-eye"  ></i></button>
-                                    </div>
                                 </div>
                                 <hr>
 
-                                <form action="">
-                                    <div class="form-group row">
-                                        <div class="col-lg-6 text-lg-center">
+                                <form action="" >
+                                    <div class="height_card">
+                                    <div class="row mt-4">
+                                        <div class="col-6 text-md-center">
                                             <label for="temperature"
-                                                class="col-form-label">Temperature&nbsp;&nbsp;:</label>
+                                                class="">Temperature&nbsp;&nbsp;:</label>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" placeholder=""
-                                                    aria-label="Recipient's username" name="temperature" value="{{z.temperature}}"  aria-describedby="basic-addon2" disabled>
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text" id="basic-addon2"> &#8457;</span>
-                                                </div>
-                                            </div>
+                                        <div class="col-6">
+                                            <h4 class="vital_data">{{z.temperature}} &nbsp;<span class="" id="basic-addon2">  &nbsp;&#8457;</span></h4>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <div class="col-lg-6 text-lg-center">
+                                    <div class="row mt-2">
+                                        <div class="col-6 text-md-center">
                                             <label for="temperature"
-                                                class="col-form-label">Pulse&nbsp;Rate&nbsp;&nbsp;:</label>
+                                                class="">Pulse&nbsp;Rate&nbsp;&nbsp;:</label>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" placeholder=""
-                                                    aria-label="Recipient's username" name="pulse_rate" value="{{z.pulse_rate}}" aria-describedby="basic-addon2" disabled>
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text" id="basic-addon2">/min</span>
-                                                </div>
-                                            </div>
+                                        <div class="col-6">
+                                            <h4 class="vital_data">{{z.pulse_rate}} &nbsp;<span class="" id="basic-addon2">&nbsp; /&nbsp;min</span></h4>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <div class="col-lg-6 text-lg-center">
+                                    <div class="row mt-2">
+                                        <div class="col-6 text-md-center">
                                             <label for="inputname"
-                                                class="col-form-label">Blood&nbsp;Pressure&nbsp;&nbsp;:</label>
+                                                class="">Blood&nbsp;Pressure&nbsp;&nbsp;:</label>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <input type="text" class="form-control" name="blood_pressure_start" value="{{z.blood_pressure_start}}" id="inputname" disabled>
-                                                </div>
-                                                <div class="col-lg-1 text-center">
-                                                    <label for="inputname" class="col-form-label">-</label>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <input type="text" class="form-control" name="blood_pressure_end" value="{{z.blood_pressure_end}}" id="inputname" disabled>
-                                                </div>
-                                                <div class="col-lg-1">
-                                                    <label for="inputname" class="col-form-label">mm/Hg</label>
-                                                </div>
-                                            </div>
+                                        <div class="col-6">
+                                            <h4 class="vital_data">{{z.blood_pressure_start}} &nbsp; - &nbsp; {{z.blood_pressure_end}} &nbsp;<span class="" id="basic-addon2">&nbsp;mm&nbsp;/&nbsp;Hg</span></h4>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <div class="col-lg-6 text-lg-center">
-                                            <label for="temperature" class="col-form-label">Height&nbsp;&nbsp;:</label>
+                                    <div class="row mt-2">
+                                        <div class="col-6 text-md-center">
+                                            <label for="temperature" class="">Height&nbsp;&nbsp;:</label>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <input type="text" class="form-control" name="height" value="{{z.height}}" id="inputname1" disabled>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-lg-6 text-lg-center">
-                                            <label for="temperature" class="col-form-label">Weight&nbsp;&nbsp;:</label>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <input type="text" class="form-control" name="weight" value="{{z.weight}}" id="inputname2" disabled>
+                                        <div class="col-6">
+                                            <h4 class="vital_data">{{z.height}} &nbsp;<span class="" id="basic-addon2">&nbsp; cm</span></h4>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <div class="col-lg-6 text-lg-center">
-                                            <label for="text" class="col-form-label">Others&nbsp;&nbsp;:</label>
+                                    <div class="row mt-2">
+                                        <div class="col-6 text-md-center">
+                                            <label for="temperature" class="">Weight&nbsp;&nbsp;:</label>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <textarea class="form-control mb-4" name="others" value="" id="validationTextarea" placeholder=""
-                                                disabled>{{z.others}}</textarea>
+                                        <div class="col-6">
+                                            <h4 class="vital_data">{{z.weight}} &nbsp;<span class="" id="basic-addon2">&nbsp; Kg</span></h4>
                                         </div>
                                     </div>
+                                    <div class="row mt-2">
+                                        <div class="col-6 text-md-center">
+                                            <label for="text" class="">Others&nbsp;&nbsp;:</label>
+                                        </div>
+                                        <div class="col-6">
+                                            <textarea class="mb-4 form-control vital_textarea" name="others" value="" id="validationTextarea" placeholder="" rows="5" cols="30"
+                                                disabled>{{z.others}} </textarea>
+                                        </div>
+                                    </div>
+                                </div>
                                 </form>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <div class="card mt-4 p-2 height_card">
+                        <div class="card ">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <h4>PATIENT&nbsp;SYMPTOM</h4>
                                     </div>
-                                    <div class="col-lg-6 text-right">
-                                        <button type="text" class="btn btn-outline-dark btn-sm"><i
-                                                class="fa-regular fa-eye"></i></button>
-                                    </div>
                                     
                                 </div>
                                 <hr>
-                                <div class="col-md-12 mt-5">
-                                    <textarea name="patient-symptom" id="patient-symptom" cols="30" rows="10" class="form-control"></textarea>
+                                <div class="col-md-12 mt-3 height_card">
+                                    <textarea name="patient-symptom" id="patient-symptom" cols="40" rows="13" class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -321,37 +285,73 @@
 
                 <div class="row">
                     <div class="col-lg-6">
-                        <div class="card mt-4 p-2 height_card">
+                        <div class="card ">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <h4>DIAGNOSE</h4>
                                     </div>
-                                    <div class="col-lg-6 text-right">
-                                        <button type="text" class="btn btn-outline-dark btn-sm"><i
-                                                class="fa-regular fa-eye"></i></button>
-                                    </div>
+                                    
                                 </div>
                                 <hr>
-                                <div class="col-md-12 mt-5">
-                                    <textarea name="patient-diagnose" id="patient-diagnose" cols="30" rows="10" class="form-control"></textarea>
+                                <div class="col-md-12 mt-3 height_card">
+                                    <textarea name="patient-diagnose" id="patient-diagnose" cols="40" rows="13" class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <div class="card mt-4 p-2 height_card">
+                        <div class="card">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <h4>LAB&nbsp;TESTING</h4>
                                     </div>
-                                    <div class="col-lg-6 text-right">
-                                        <button type="text" class="btn btn-outline-dark btn-sm"><i
+                                    <!-- <div class="col-lg-6 text-right">
+                                        <button type="text" class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#labTestingModal"><i
                                                 class="fa-regular fa-eye"  ></i></button>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <hr>
+                                <form autocomplete="off">
+
+                                    <div class="form-row">
+                                        <div class="col-md-8 mb-2" >
+                                            <!-- <input type="text" class="form-control" name="consulting" id="consulting" placeholder="Sele" required> -->
+                                            <select class="js-example-basic-single" aria-disabled="true" name="state" id="lab-test" required>
+                                                <optgroup label="Swedish Cars">
+                                                    <option value="volvo">Volvo</option>
+                                                    <option value="saab">Saab</option>
+                                                  </optgroup>
+                                                  <optgroup label="German Cars">
+                                                    <option value="mercedes">Mercedes</option>
+                                                    <option value="audi">Audi</option>
+                                                  </optgroup>
+                                              </select>
+                                        </div>
+    
+                                        <div class="col-md-4 text-md-right text-center">
+                                            <button type="button" class="btn btn-outline-dark" id="labtest-add"><i class="fa-solid fa-check"></i></button>&nbsp;&nbsp;&nbsp;
+                                            <button type="button" class="btn btn-outline-dark" id="labtest-clear"><i
+                                                    class="fa-solid fa-xmark"></i></button>
+                                        </div>
+                                    </div>
+                                </form><br>
+                                <div class="table-responsive p-2 height_card">
+                                    <table id="lab-testing-table" class="table table-bordered table-striped text-center auto-index "
+                                        style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">S.No</th>
+                                                <th class="text-center">Tests</th>
+                                                <th class="text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="lab-testing-body">
+    
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -362,26 +362,24 @@
                                     <div class="col-lg-6">
                                         <h4>PRESCRIPTION</h4>
                                     </div>
-                                    <div class="col-lg-6 text-right">
-                                        <button type="text" class="btn btn-outline-dark btn-sm"><i
-                                                class="fa-regular fa-eye"></i></button>
-                                    </div>
 
                                     <div class="col-md-12 mt-3">
-                                        <form action="" id="formSubmission">
-                                            <div class="row text-center">
+                                        <form action="" autocomplete="off" >
+                                            <div class="row text-left text-md-center">
                                                 <div class="col-md-6 col-lg-4 col-sm-4 mt-2">
                                                     <label for="medicine_name">Medicine Name</label>
-                                                    <input list="medicine_names" class="form-control"
+                                                    <input list="medicine_names" class="form-control data-list"
                                                         name="medicine_name"
                                                         id="medicine_name">
-                                                    <datalist id="medicine_names">
-                                                        {% for i in medicines %}
-                                                        <option value="Paracetamol 500">{{i.medicine_name}}</option>
-                                                        <option value="Paracetamol 600">{{i.medicine_name}}</option>
-                                                        {% endfor %}
-                                    
-                                                    </datalist>
+                                                    <div class="datalist__show">
+
+                                                        <datalist id="medicine_names">
+                                                            {% for i in medicines %}
+                                                            <option>{{i.medicine_name}}</option>
+                                                            {% endfor %}
+                                        
+                                                        </datalist>
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-3 col-lg-1 col-sm-4 mt-2">
                                                     <label for="morning">Morning</label>
@@ -481,118 +479,17 @@
         </div>
 
 
-        <!-- =========== Modal =========================== -->
-
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2 class="modal-title w-100 text-center" id="exampleModal">General Vitals </h2>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{% url 'general_vitals' %}" method="POST">
-                            {% csrf_token %}
-                            <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label for="temperature" class="col-form-label">Temperature&nbsp;&nbsp;:</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder="" name="temperature" value="{{z.temperature}}" 
-                                            aria-label="Recipient's username" aria-describedby="basic-addon2"  readonly>
-                                        <div class="input-group-append">
-                                            <span class="input-group-text" id="basic-addon2"> &#8457;</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label for="temperature" class="col-form-label">Pulse&nbsp;Rate&nbsp;&nbsp;:</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder=""
-                                            aria-label="Recipient's username" name="pulse_rate" value="{{z.pulse_rate}}" aria-describedby="basic-addon2"  readonly>
-                                        <div class="input-group-append">
-                                            <span class="input-group-text" id="basic-addon2">/min</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label for="inputname"
-                                        class="col-form-label">Blood&nbsp;Pressure&nbsp;&nbsp;:</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                            <input type="text" class="form-control" name="blood_pressure_start" value="{{z.blood_pressure_start}}" id="inputname"  readonly>
-                                        </div>
-                                        <div class="col-lg-1 text-center">
-                                            <label for="inputname" class="col-form-label">-</label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <input type="text" class="form-control" name="blood_pressure_end" value="{{z.blood_pressure_end}}" id="inputname"  readonly>
-                                        </div>
-                                        <div class="col-lg-1">
-                                            <label for="inputname" class="col-form-label">mm/Hg</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label for="temperature" class="col-form-label">Height&nbsp;&nbsp;:</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <input type="text" class="form-control" name="height" value="{{z.height}}" id="inputname1"  readonly> 
-                                    {% comment %} <input type="text" name="ob_id" id="ob_id"> {% endcomment %}
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label for="temperature" class="col-form-label">Weight&nbsp;&nbsp;:</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <input type="text" class="form-control" value="{{z.weight}}" name="weight" id="inputname2" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-lg-6">
-                                    <label for="temperature" class="col-form-label">Others&nbsp;&nbsp;:</label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <textarea class="form-control mb-4" name="others" id="validationTextarea" placeholder=""
-                                         readonly>{{z.others}}</textarea >
-                                </div>
-                            </div>
-
-                       
+       
 
 
-
-
-                    
-                    {% comment %} <div class="modal-footer justify-content-center">
-                        <button type="submit" class="btn btn-success" data-dismiss="modal">Save</button>
-                        <button type="reset" class="btn btn-danger ml-3">Cancel</button>
-                    </div> {% endcomment %}
-                </form>
-                </div>
-            </div>
-        </div>
-        {% comment %} </div>
-    </section> {% endcomment %}
     {% endblock %}
 
 {% block script %}
 
-   
+    $(document).ready(function() {
+        $('.js-example-basic-single').select2();
+    });
+
     function view(event) {
 
         var newid = $('#vitals' + event).attr("ob_id")
@@ -614,61 +511,65 @@
    $("#con-add").on('click', function() {
     var consulting = $("#consulting").val();
     var consultingFees = $("#consulting-fees").val();
-    var tableRow = $('#consulting-fees-table tbody tr');
-    tableRow.removeClass('selected');
-
     var count = $('#consulting-fees-table tr').length;
 
-
-     if(consulting != '' && consultingFees != ''){
-        if (current_row == null) {
-            if ( $("#consulting").val().length && $("#consulting-fees").val().length ) {
-              let row = '<tr data-row="'+counter+'"> <td>'+ count +'</td> <td class="consulting-name">' + $("#consulting").val() + '</td> <td class="consulting-amount">' + $("#consulting-fees").val() + '</td> <td><button type="button" class="btn" id="con-update"><i class="fa-solid fa-file-pen"></i></button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn" id="con-delete" onclick="productDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
-              $('#consulting-table').append(row);
-              
-              counter++;
-              }
-            } else {
-                
-              var select_row = $('tr[data-row='+current_row+']');
-              let cells = $(select_row).find('td');
-              $(cells[1]).text($("#consulting").val());
-              $(cells[2]).text($("#consulting-fees").val());
-              
-                var currentRow1 = select_row;
-                currentRow1.removeClass('selected');
-
-                // Icon Change
-            $('#con-add').html('<i class="fa-solid fa-check"></i>');
-       
-            }
-     clear_input();
-     }
-     else{
-        alert("Plz Fill the counsultings form");
-     }
-   
-   $("#consulting-table #con-update").on('click', function() {
     var tableRow = $('#consulting-fees-table tbody tr');
     tableRow.removeClass('selected');
 
-       let cells = $(this).parents('tr').find('td');
-
-       var currentRow = $(this).closest("tr");
-       currentRow.addClass('selected');
-
-       $("#consulting").val($(cells[1]).text());
-       $("#consulting-fees").val($(cells[2]).text());
-
-       // Icon Change
-       $('#con-add').html('<i class="fa-solid fa-file-pen"></i>');
-
-       current_row = $(this).parents('tr').data('row');
-       $('#consulting-fees-table tbody tr').each(function(i){            
-        $($(this).find('td')[0]).html(i+1);          
-       });
-     });
+        if(count == 1)
+        {
+            addConsulting();
+        }
+        else{
+            var table = $("#consulting-fees-table");
+            var t1 = $("#consulting").val();
+            var exists = false;
+            table.find("tbody tr td.consulting_compare").each(function () {
+                if ($.trim($(this).html()) == t1) {
+                    exists = true;
+                    alert(t1 + " Already Exists! ");
+                    return;
+                }
+            });
+            if (!exists) {
+                addConsulting();
+            }
+        }
    });
+
+
+   function addConsulting(){
+        var consulting = $("#consulting").val();
+        var consultingFees = $("#consulting-fees").val();
+        var count = $('#consulting-fees-table tr').length;
+
+        if(consulting != '' && consultingFees != ''){
+            if (current_row == null) {
+                if ( $("#consulting").val().length && $("#consulting-fees").val().length ) {
+                  let row = '<tr data-row="'+counter+'"> <td>'+ count +'</td> <td class="consulting_compare">' + $("#consulting").val() + '</td> <td class="consulting-amount">' + $("#consulting-fees").val() + '</td> <td><button type="button" class="btn" id="con-delete" onclick="productDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
+                  $('#consulting-table').append(row);
+                  
+                  counter++;
+                  }
+            } 
+            else {
+                var select_row = $('tr[data-row='+current_row+']');
+                let cells = $(select_row).find('td');
+                $(cells[1]).text($("#consulting").val());
+                $(cells[2]).text($("#consulting-fees").val());
+                  
+                    var currentRow1 = select_row;
+                    currentRow1.removeClass('selected');
+    
+                    // Icon Change
+                $('#con-add').html('<i class="fa-solid fa-check"></i>');
+            }
+            clear_input();
+        }
+        else{
+            alert("Plz Fill the counsultings form");
+        }
+    }
    
 
    // Delete current Row
@@ -690,7 +591,7 @@
        $("#consulting-fees").val('');
        $("#consulting").val('');
        // Icon Change
-   $('#con-add').html('<i class="fa-solid fa-check"></i>');
+    $('#con-add').html('<i class="fa-solid fa-check"></i>');
        
    }
 
@@ -702,28 +603,54 @@
 
    $("#allergy-add").on('click', function() {
     var allergyMedicine = $("#allergy-medicine").val();
-
     var count1 = $('#allergy-medicine-table tr').length;
+          
+        if(count1 == 1)
+        {
+            addAllergy();
+        }
+        else{
+            var table = $("#allergy-medicine-table");
+            var t1 = $("#allergy-medicine").val();
+            var exists = false;
+            table.find("tbody tr td.allergy_compare").each(function () {
+                if ($.trim($(this).html()) == t1) {
+                    exists = true;
+                    alert(t1 + " Already Exists! ");
+                    return;
+                }
+            });
+            if (!exists) {
+            addAllergy();
+            }
+        }
+    });
+
+    function addAllergy(){
+        var allergyMedicine = $("#allergy-medicine").val();
+        var count1 = $('#allergy-medicine-table tr').length;
+
      if(allergyMedicine != ''){
         if (current_row1 == null) {
             if ( $("#allergy-medicine").val().length ) {
-              let row = '<tr data-row="'+counter1+'"> <td>'+ count1+'</td><td>' + $("#allergy-medicine").val() + '</td> <td><button type="button" class="btn" id="allergy-delete" onclick="allergyDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
+              let row = '<tr data-row="'+counter1+'"> <td>'+ count1+'</td><td class="allergy_compare">' + $("#allergy-medicine").val() + '</td> <td><button type="button" class="btn" id="allergy-delete" onclick="allergyDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
               $('#allergy-table').append(row);
               counter1++;
               }
-            } else {
+        } 
+        else {
        
-              var select_row = $('tr[data-row='+current_row1+']');
-              let cells = $(select_row).find('td');
-              $(cells[1]).text($("#allergy-medicine").val());
+            var select_row = $('tr[data-row='+current_row1+']');
+            let cells = $(select_row).find('td');
+            $(cells[1]).text($("#allergy-medicine").val());
        
-            }
-     clear_input1();
-     }
-     else{
-        alert("Plz Fill the Allergy form");
-     }
-    });
+        }
+        clear_input1();
+        }
+        else{
+            alert("Plz Fill the Allergy form");
+        }
+    }
 
    // Delete current Row
    function allergyDelete(ctl) {
@@ -745,6 +672,86 @@
    }
 
 
+
+   // ======  LAB TESTING TABLE ======
+
+   var counterLab = 0;
+   var current_row_lab = null;
+
+   $("#labtest-add").on('click', function(e) {
+    var labTest = $("#lab-test").val();
+    var count3 = $('#lab-testing-table tr').length;
+
+        if(count3 == 1)
+        {
+            addLabTesting();
+        }
+        else{
+            var table = $("#lab-testing-table");
+            var t1 = $("#lab-test").val();
+            var exists = false;
+            table.find("tbody tr td.lab_compare").each(function () {
+                if ($.trim($(this).html()) == t1) {
+                    exists = true;
+                    alert(t1 + " Already Exists! ");
+                    return;
+                }
+            });
+            if (!exists) {
+                addLabTesting();
+            }
+        }
+        
+    });
+
+    function addLabTesting(){
+        var labTest = $("#lab-test").val();
+        var count3 = $('#lab-testing-table tr').length;
+
+        if(labTest != ''){
+            if (current_row_lab == null) {
+                if ( $("#lab-test").val().length ) {
+                let row = '<tr data-row="'+counterLab+'"> <td>'+ count3+'</td><td class="lab_compare">' + $("#lab-test").val() + '</td> <td><button type="button" class="btn" id="allergy-delete" onclick="allergyDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
+                $('#lab-testing-body').append(row);
+                counterLab++;
+                }
+            } 
+            else {
+        
+                var select_row = $('tr[data-row='+current_row_lab+']');
+                let cells = $(select_row).find('td');
+                $(cells[1]).text($("#lab-test").val());
+        
+            }
+            clear_input_lab();
+            }
+        else{
+            alert("Plz Fill the Lab form");
+        }
+    }
+    
+
+        // Delete current Row
+        function allergyDelete(ctl) {
+        
+            $(ctl).parents("tr").remove();
+
+            $('#lab-testing-table tbody tr').each(function(i){            
+                $($(this).find('td')[0]).html(i+1);          
+            });
+        }
+
+        $('#labtest-clear').on("click", () => clear_input_lab());
+        
+        function clear_input_lab() {
+            current_row_lab = null;
+            <!-- $("#lab-test").text('volvo'); -->
+            let long_name = 'Volvo';
+            let $element = $('#lab-test')
+            let val = $element.find("option:contains('"+long_name+"')").val()
+            $element.val(val).trigger('change.select2');
+            
+        }
 
 
    // Precreption Calculation
@@ -830,75 +837,107 @@
    var current_row2 = null;
 
    $("#Precreption-add").on('click', function() {
-    var medicineName = $("#medicine_name").val();
-    var morning = $("#morning").val();
-    var afterNoon = $("#after_noon").val();
-    var evening = $("#evening").val();
-    var night = $("#night").val();
-    var days = $("#days").val();
-    var totalTablets = $("#total_tablets").val();
+        var medicineName = $("#medicine_name").val();
+        var morning = $("#morning").val();
+        var afterNoon = $("#after_noon").val();
+        var evening = $("#evening").val();
+        var night = $("#night").val();
+        var days = $("#days").val();
+        var totalTablets = $("#total_tablets").val();
+        var count2 = $('#prescription-table tbody tr').length +1;
 
-    var count2 = $('#prescription-table tbody tr').length +1;
-     if(medicineName != '' && days != '' && totalTablets != 0){
-        if (current_row2 == null) {
-            if ( $("#medicine_name").val().length && $("#days").val().length ) {
-              let row = '<tr data-row="'+counter2+'"> <td>'+ count2+'</td> <td>' + $("#medicine_name").val() + '</td> <td>' + $("#morning").val() + '</td> <td>' + $("#after_noon").val() + '</td> <td>' + $("#evening").val() + '</td> <td>' + $("#night").val() + '</td> <td>' + $("#days").val() + '</td><td>' + $("#total_tablets").val() + '</td> <td><button type="button" class="btn" id="Pres_update"><i class="fa-solid fa-file-pen"></i></button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn" id="pres-delete" onclick="prescriptionDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
-              $('#prescription-body').append(row);
-              counter2++;
-              }
-            } else {
-       
-              var select_row = $('tr[data-row='+current_row2+']');
-              let cells = $(select_row).find('td');
-              $(cells[1]).text($("#medicine_name").val());
-              $(cells[2]).text($("#morning").val());
-              $(cells[3]).text($("#after_noon").val());
-              $(cells[4]).text($("#evening").val());
-              $(cells[5]).text($("#night").val());
-              $(cells[6]).text($("#days").val());
-              $(cells[7]).text($("#total_tablets").val());
-
-              var currentRow1 = select_row;
-                currentRow1.removeClass('selected');
-
-                // Icon Change
-                $('#Precreption-add').html('Add');
-       
+        if(count2 == 1)
+        {
+            addPrecreption();
+        }
+        else{
+            var table = $("#prescription-table");
+            var t1 = $("#medicine_name").val();
+            var exists = false;
+            table.find("tbody tr td.medicine_compare").each(function () {
+                if ($.trim($(this).html()) == t1) {
+                    exists = true;
+                    alert(t1 + " Already Exists! ");
+                    return;
+                }
+            });
+            if (!exists) {
+                addPrecreption();
             }
-     clear_input2();
-     }
-     else{
-        alert("Plz Fill the counsultings form");
-     }
-   
-    $("#prescription-body #Pres_update").on('click', function() {
-
-        var tableRow = $('#prescription-table tbody tr');
-        tableRow.removeClass('selected');
-
-       let cells = $(this).parents('tr').find('td');
-
-       var currentRow = $(this).closest("tr");
-       currentRow.addClass('selected');
-
-       // Icon Change
-       $('#Precreption-add').html('Update');
-
-
-       $("#medicine_name").val($(cells[1]).text());
-       $("#morning").val($(cells[2]).text());
-        $("#after_noon").val($(cells[3]).text());
-        $("#evening").val($(cells[4]).text());
-        $("#night").val($(cells[5]).text());
-        $("#days").val($(cells[6]).text());
-        $("#total_tablets").val($(cells[7]).text());
-
-       current_row2 = $(this).parents('tr').data('row');
-       $('#prescription-table tbody tr').each(function(i){            
-        $($(this).find('td')[0]).html(i+1);          
-       });
-     });
+        }
    });
+
+
+   function addPrecreption(){
+        var medicineName = $("#medicine_name").val();
+        var morning = $("#morning").val();
+        var afterNoon = $("#after_noon").val();
+        var evening = $("#evening").val();
+        var night = $("#night").val();
+        var days = $("#days").val();
+        var totalTablets = $("#total_tablets").val();
+
+        var count2 = $('#prescription-table tbody tr').length +1;
+        if(medicineName != '' && days != '' && totalTablets != 0){
+            if (current_row2 == null) {
+                if ( $("#medicine_name").val().length && $("#days").val().length ) {
+                let row = '<tr data-row="'+counter2+'"> <td>'+ count2+'</td> <td class="medicine_compare">' + $("#medicine_name").val() + '</td> <td>' + $("#morning").val() + '</td> <td>' + $("#after_noon").val() + '</td> <td>' + $("#evening").val() + '</td> <td>' + $("#night").val() + '</td> <td>' + $("#days").val() + '</td><td>' + $("#total_tablets").val() + '</td> <td><button type="button" class="btn" id="Pres_update"><i class="fa-solid fa-file-pen"></i></button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn" id="pres-delete" onclick="prescriptionDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
+                $('#prescription-body').append(row);
+                counter2++;
+                }
+                } else {
+        
+                var select_row = $('tr[data-row='+current_row2+']');
+                let cells = $(select_row).find('td');
+                $(cells[1]).text($("#medicine_name").val());
+                $(cells[2]).text($("#morning").val());
+                $(cells[3]).text($("#after_noon").val());
+                $(cells[4]).text($("#evening").val());
+                $(cells[5]).text($("#night").val());
+                $(cells[6]).text($("#days").val());
+                $(cells[7]).text($("#total_tablets").val());
+
+                var currentRow1 = select_row;
+                    currentRow1.removeClass('selected');
+
+                    // Icon Change
+                    $('#Precreption-add').html('Add');
+        
+                }
+        clear_input2();
+        }
+        else{
+            alert("Plz Fill the counsultings form");
+        }
+    
+        $("#prescription-body #Pres_update").on('click', function() {
+
+            var tableRow = $('#prescription-table tbody tr');
+            tableRow.removeClass('selected');
+
+        let cells = $(this).parents('tr').find('td');
+
+        var currentRow = $(this).closest("tr");
+        currentRow.addClass('selected');
+
+        // Icon Change
+        $('#Precreption-add').html('Update');
+
+
+        $("#medicine_name").val($(cells[1]).text());
+        $("#morning").val($(cells[2]).text());
+            $("#after_noon").val($(cells[3]).text());
+            $("#evening").val($(cells[4]).text());
+            $("#night").val($(cells[5]).text());
+            $("#days").val($(cells[6]).text());
+            $("#total_tablets").val($(cells[7]).text());
+
+        current_row2 = $(this).parents('tr').data('row');
+            $('#prescription-table tbody tr').each(function(i){            
+                $($(this).find('td')[0]).html(i+1);          
+            });
+        });
+    }
 
 
    // Delete current Row
@@ -961,73 +1000,38 @@
     }
     
 
+    // API request 1
 
-    // API request
+    $("#consulting").change(function(){
 
-            function consultingTableForm() {
-                var consulting = '';
-                var otArr = [];
-                // var i = 1;
-                var tbl2 = $('table#consulting-fees-table tbody tr ').each(function(e) {   
-                x = $(this).children();
-                var itArr = [];
-                var keys = ['sl_no','consulting_name','consulting_fees'];
-                x.each(function(i) {
-                    itArr.push('"' + keys[i] + '":"' + $(this).text() + '"');
-                });
-                otArr.push('{' + itArr.join(',') + '}');
-                })
-                consulting += otArr.join(",");
-                {% comment %} consultingData= JSON.parse(consulting); {% endcomment %}
-                {% comment %} alert(jQuery.type( consultingData )); {% endcomment %}
-                consultingData1= JSON.stringify(consulting);
-                alert(jQuery.type( consultingData1 ));
+        var consultingName = $('#consulting').val();
 
-                return consultingData1;
-            }
+        $.ajax({
+            type: "POST",
+        url: "{% url 'inventory_medicine_amount' %}",
+        dataType: "json",
+        headers: {
+            "X-CSRFToken": $('input[name=csrfmiddlewaretoken]').val(),
+        },
+        data: {
+            'consultingName':consultingName,
+        },
+        success: function (data) {
+            ('#consulting-fees').val(data);
+            window.location.reload();
+            
+            
+        },
+        error: function (response) {
+        alert('Error')
+        }
+        
+    });
+});
+    // API request 2
 
+        // Second json converter
 
-        //Allergy Table
-            function allergyTableForm() {
-                var allergy = '';
-                var otArr = [];
-                // var i = 1;
-                var tbl2 = $('table#allergy-medicine-table tbody tr').each(function(e) {    
-                    
-                x = $(this).children();
-                var itArr = [];
-                var keys = ['sl_no','allergy_med'];
-                x.each(function(i) {
-                    itArr.push('"' + keys[i] + '":"' + $(this).text() + '"');
-                });
-                otArr.push('{' + itArr.join(',') + '}');
-                })
-                allergy += otArr.join(",");
-
-                return allergy;
-            }
-
-        //Prescription Table
-            function prescriptionTableForm() {
-                var prescription = '';
-                var otArr = [];
-                // var i = 1;
-                var tbl2 = $('table#prescription-table tbody tr').each(function(e) {    
-                    
-                x = $(this).children();
-                var itArr = [];
-                var keys = ['sl_no','medicine','morning','afternoon','evening','night','no_days','total_tab'];
-                x.each(function(i) {
-                    itArr.push('"' + keys[i] + '":"' + $(this).text() + '"');
-                });
-                otArr.push('{' + itArr.join(',') + '}');
-                })
-                prescription += otArr.join(",");
-
-                return prescription;
-            }
-
-// Second json converter
 //consulting Table
 
             function consultingTableForm(){
@@ -1120,13 +1124,44 @@
                 return myObj;
             }
         
+//Lab Test Table
+
+            function labTestTableForm(){
+                var myRows = [];
+                var headersText = [];
+                var $headers = $("table#lab-testing-table th");
+
+                // Loop through grabbing everything
+                var $rows = $("table#lab-testing-table tbody tr").each(function(index) {
+                $cells = $(this).find("td");
+                myRows[index] = {};
+
+                $cells.each(function(cellIndex) {
+                    // Set the header text
+                    if(headersText[cellIndex] === undefined) {
+                    headersText[cellIndex] = $($headers[cellIndex]).text();
+                    }
+                    // Update the row object with the header/cell combo
+                    myRows[index][headersText[cellIndex]] = $(this).text();
+                });    
+                });
+
+                // Let's put this in the object like you want and convert to JSON (Note: jQuery will also do this for you on the Ajax request)
+                var myObj = {
+                    "LabTesting": myRows
+                };
+
+                return myObj;
+            }
+        
+
 
     $("#doctor-submit").click(function(){
 
         // Consulting Table
 		var consulting_rowCount = $('#consulting-fees-table > tbody > tr').length;
         const consulting = consultingTableForm();
-        {% comment %} alert(jQuery.type( consulting )); {% endcomment %}
+       
 
         // Allergy Table
 		var allergy_rowCount = $('#allergy-medicine-table > tbody > tr').length;
@@ -1136,6 +1171,12 @@
 		var prescription_rowCount = $('#prescription-table > tbody > tr').length;
         var prescription = prescriptionTableForm();
 
+        // Lab Testing Table
+		var lab_testing_rowCount = $('#lab-testing-table > tbody > tr').length;
+        var lab_testing = labTestTableForm();
+
+        alert(jQuery.type( lab_testing_rowCount )); 
+        alert(jQuery.type( lab_testing )); 
         // Other Details
 		const patient_diagnose = $('#patient-diagnose').val();
 		const patient_symptom = $('#patient-symptom').val();
@@ -1165,6 +1206,10 @@
                 // prescription
                 'prescription_rowCount':prescription_rowCount,
                 'prescription':prescription,
+
+                // prescription
+                'lab_testing_rowCount':lab_testing_rowCount,
+                'lab_testing':lab_testing,
 
                 // Others
                 'patient_diagnose':patient_diagnose,
