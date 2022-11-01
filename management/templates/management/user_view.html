@@ -135,10 +135,10 @@
                         {% comment %} <!-- {% if z %}
                         {% for i,j in z %} --> {% endcomment %}
                         <div class="form-group row">
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <label for="temperature" class="">Temperature&nbsp;&nbsp;:</label>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="" 
                                         aria-label="Recipient's username" name="temperature" id="temp"
@@ -153,10 +153,10 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <label for="temperature" class="">Pulse&nbsp;Rate&nbsp;&nbsp;:</label>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="" id="pulserate"
                                         aria-label="Recipient's username" name="pulse_rate"
@@ -171,47 +171,49 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <label for="inputname" class="">Blood&nbsp;Pressure&nbsp;&nbsp;:</label>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <div class="row">
-                                    <div class="col-lg-4">
+                                    <div class="col-md-8 mb-1">
                                         <input type="text" class="form-control" name="blood_pressure_start"  id="bloodstart" >
                                     </div>
-                                    <div class="col-lg-1 text-center">
-                                        <label for="inputname" class="">-</label>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <input type="text" class="form-control" name="blood_pressure_end" id="bloodend" >
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <label for="inputname" class="">mm/Hg</label>
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder=""
+                                                aria-label="Recipient's username" name="blood_pressure_end" id="bloodend"
+                                                aria-describedby="basic-addon3" >
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon3">mm/Hg</span>
+                                            </div>
+        
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <label for="temperature" class="">Height&nbsp;&nbsp;:</label>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <input type="text" class="form-control" name="height"  id="heig" >
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <label for="temperature" class="">Weight&nbsp;&nbsp;:</label>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <input type="text" class="form-control" name="weight"   id="weig" >
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <label for="temperature" class="">Others&nbsp;&nbsp;:</label>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <textarea class="form-control mb-4" name="others" id="other"  placeholder=""
                                     required></textarea>
                             </div>
@@ -259,10 +261,10 @@
                         {% comment %} <!-- {% if z %}
                         {% for i,j in z %} --> {% endcomment %}
                         <div class="form-group row">
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <label for="temperature" class="">Temperature&nbsp;&nbsp;:</label>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="" 
                                         aria-label="Recipient's username" name="temperature" id="temp" value="{{form.temperature.value}}"
@@ -281,10 +283,10 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <label for="temperature" class="">Pulse&nbsp;Rate&nbsp;&nbsp;:</label>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="" id="pulserate"
                                         aria-label="Recipient's username" name="pulse_rate" value="{{form.pulse_rate.value}}"
@@ -301,25 +303,25 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <label for="inputname" class="">Blood&nbsp;Pressure&nbsp;&nbsp;:</label>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <div class="row">
-                                    <div class="col-lg-4">
+                                    <div class="col-md -4">
                                         <input type="text" class="form-control" name="blood_pressure_start"  id="bloodstart"  value="{{form.blood_pressure_start.value}}">
                                         <span class="text-danger">{{form.blood_pressure_start.errors}}</span>
                                     </div>
                                  
-                                    <div class="col-lg-1 text-center">
+                                    <div class="col-md -1 text-center">
                                         <label for="inputname" class="">-</label>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-md -4">
                                         <input type="text" class="form-control" name="blood_pressure_end" id="bloodend"  value="{{form.blood_pressure_end.value}}">
                                         <span class="text-danger">{{form.blood_pressure_end.errors}}</span>
                                     </div>
                                     
-                                    <div class="col-lg-2">
+                                    <div class="col-md -2">
                                         <label for="inputname" class="">mm/Hg</label>
                                     </div>
                                     
@@ -328,28 +330,28 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <label for="temperature" class="">Height&nbsp;&nbsp;:</label>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <input type="text" class="form-control" name="height"  id="heig"  value="{{form.height.value}}" >
                             </div>
                             <span class="text-danger">{{form.height.errors}}</span>
                         </div>
                         <div class="form-group row">
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <label for="temperature" class="">Weight&nbsp;&nbsp;:</label>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <input type="text" class="form-control" name="weight"   id="weig"  value="{{form.weight.value}}">
                             </div>
                             <span class="text-danger">{{form.weight.errors}}</span>
                         </div>
                         <div class="form-group row">
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <label for="temperature" class="">Others&nbsp;&nbsp;:</label>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <textarea class="form-control mb-4" name="others" id="other"  value="" placeholder=""
                                     required>{{form.others.value}}</textarea>
                             </div>
