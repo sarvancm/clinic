@@ -383,7 +383,7 @@ def doctor_view(request,id=None):
          messages.success(request, 'Details created successfully') 
     user=request.user
     if user.is_admin:
-        x=  [TodayPatients.objects.get(id=i.id) for i in TodayPatients.objects.filter(created_at__contains=datetime.today().date()) if i.is_active==1]
+        x=  [TodayPatients.objects.get(id=i.id) for i in TodayPatients.objects.filter(created_at__contains=datetime.today().date()) ]
         # if x.is_active==1:
 
 
@@ -617,7 +617,7 @@ def fee_mode(request):
         amount=request.POST.get("amount")
         print(amount)
         z=AddFees.objects.get(id=object)
-        form1=AddFeesForm(request.POST)          
+        form1=AddFeesForm(request.POST,instance=z)          
         if form1.is_valid():
             z.fee_name= name
             z.amount=  amount 

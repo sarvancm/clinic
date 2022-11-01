@@ -56,14 +56,16 @@
 
                                      {% if user.is_admin %}
                                     
-                                    <!-- </button>&nbsp;&nbsp;<button type="button"  -->
-                                    <a href="{% url 'doctor_vie' i.id %}"><button type="button"
-                                        class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button></a>
+                                     {% if i.is_active %}
+                                     <a href="{% url 'doctor_vie' i.id %}"><button type="button"
+                                         class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button></a>
+                                         
+                                     {% endif %}
                                     {% endif %}
                             </td>
                         </tr>
                         {% else %}
-                        <tr>
+                        <tr style="background-color: rgba(141, 141, 141, 0.678);">
                             <td>{{forloop.counter}}</td>
                             <td>{{i.patient.patient_id}}</td>
                             <td>{{i.patient.patient_name}}</td>
@@ -93,10 +95,13 @@
                                     <i object_id="{{i.id}}" id="general_vitals{{i.id}}"
                                         class="fa-solid fa-temperature-three-quarters"></i>
                                 {% endif %}
-                                <td>
-                                {% if user.is_admin %}    
-                                    <a href="{% url 'doctor_vie' i.id %}"><button type="button"
+                                
+                                {% if user.is_admin %}
+                                {% if i.is_active %}
+                                <a href="{% url 'doctor_vie' i.id %}"><button type="button"
                                     class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button></a>
+                                
+                                {% endif %}
                                 {% endif %}
                             </td>
                         </tr>
