@@ -67,13 +67,7 @@
 
                             <form action="{% url 'login_view' %}" method="POST">
                                 {% csrf_token %}
-                                {% if messages %}  
-                                <ul>   
-                                {% for message in messages %}  
-                                <li style="color:green">{{ message }}</li>  
-                                {% endfor %}  
-                                </ul>   
-                                {% endif %}
+                                
                                 {% if form.non_field_errors %}
                                 <div class="non-field-errors">
                                   {% for err in form.non_field_errors %}

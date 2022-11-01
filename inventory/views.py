@@ -8,7 +8,7 @@ from django.http import JsonResponse
 import json
 from pprint import pprint
 from django.views.decorators.csrf import csrf_exempt
-
+from management.models import AddFees 
 
 
 # Create your views here.
@@ -119,7 +119,7 @@ def doctor(request):
     if request.method == "POST": 
         data = json.loads(request.body)
         patient_object=data['patient_object']
-
+        vital_object=data['vital_object']
         fees=data['consulting']['consulting']
         allergy=data['allergy']['Allergy']
         prescription=data['prescription']['Prescription']
@@ -127,17 +127,19 @@ def doctor(request):
    
         
         for i in fees:
-            Fees.objects.create(patient_id=patient_object,fees_type=i['Consulting'],fees_amount=i['Amount'])
+            Fees.objects.create(patient_id=patient_object,vitals_id=vital_object,fees_type=i['Consulting'],fees_amount=i['Amount'])
 
         for i in allergy:
-            Allergy_Medicine.objects.create(patient_id=patient_object,medicine_name=i['Allergy\xa0Medicine'])
+            Allergy_Medicine.objects.create(patient_id=patient_object,vitals_id=vital_object,medicine_name=i['Allergy\xa0Medicine'])
             
         for i in prescription:
-            Patient_medicine.objects.create(patient_id=patient_object,medicine_name=i['Medicine\xa0Name'],morning=i['Morning'],noon=i['After\xa0Noon'],
+            Patient_medicine.objects.create(patient_id=patient_object,vitals_id=vital_object,medicine_name=i['Medicine\xa0Name'],morning=i['Morning'],noon=i['After\xa0Noon'],
             evening=i['Evening'],night=i['Night'],days=i['Days'],total=i['Total'],symptom=data['patient_symptom'],diagnose=data['patient_diagnose'])
 
         for i in labtesting:
-            Lab_test.objects.create(patient_id=patient_object,lab_test=i['Tests'])
+            Lab_test.objects.create(patient_id=patient_object,vitals_id=vital_object,lab_test=i['Tests'])
+            
+        
 
         # return_allergy=[i.medicine_name for i in Allergy_Medicine.objects.filter(patient_id=patient_object)]
         # data ={
@@ -153,6 +155,9 @@ def medicine_amount(request):
         
         # from pprint import pprint
         print(id)
+        amount=AddFees.objects.get(id=id)
+        amount=amount.amount
+        
         
         
         
@@ -168,7 +173,7 @@ def medicine_amount(request):
         # datas=data['payload'] 
         print (id)
         # print (data)
-        data ={}
+        data ={'data':amount}
         return JsonResponse(data)
 
 
@@ -193,5 +198,4 @@ def incrementid():
         last = last.id
     last+=1
     return ( "MD022" "%04d" % last)
-
 

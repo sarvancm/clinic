@@ -19,7 +19,7 @@
                                         <label for="name" class="col-form-label">Patient&nbsp;ID&nbsp;&nbsp;:</label>
                                     </div>
                                     <div class="col-lg-6">
-                                        <input type="text" value="{{x.id}}" id="patient">
+                                        <input type="hidden" value="{{x.id}}" id="patient">
                                         <input type="text" class="form-control" name="patient_id" value="{{x.patient_id}}" id="name" placeholder="" disabled>
                                     </div>
                                 </div>
@@ -125,20 +125,28 @@
 
                                 <div class="form-row">
                                     <div class="col-md-4 mb-2">
-                                        <input type="text" class="form-control data-list" name="consulting" id="consulting" list="consulting_names" placeholder="Consulting" required>
+                                        <!-- <input type="text" class="form-control data-list" name="consulting" id="consulting" list="consulting_names" placeholder="Consulting" required>
+
                                         <div class="datalist__show">
                                             <datalist id="consulting_names" >
                                                 {% for i in fees %}
-                                                <option value="{{i.fee_name}}">{{i.fee_name}}</option>
+                                                <option value="{{i.fee_name}}" data-xyz ="{{i.fee_name}}" >{{i.fee_name}}</option>
                                                 {% endfor %}
                             
                                             </datalist>
-                                        </div>
+                                        </div> -->
+                                        <select class="js-example-basic-single" name="state" id="consulting">
+                                            <option value="" selected>Select</option>
+                                            {% for i in fees %}
+                                                <option value="{{i.fee_name}}" data-id="{{i.id}}" >{{i.fee_name}}</option>
+                                            {% endfor %}
+                                          </select>
+
                                     </div>
                                     <div class="col-md-4 mb-2">
 
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control noZero" placeholder="Amount"
+                                            <input type="text" class="form-control noZero" placeholder="Amount" disabled
                                                 aria-label="Recipient's username" onkeypress="return validateFloatKeyPress(this,event);" name="consulting-fees" id="consulting-fees" required aria-describedby="basic-addon2">
                                             <div class="input-group-append">
                                                 <span class="input-group-text" id="basic-addon2">Rs</span>
@@ -232,6 +240,7 @@
                                                 class="">Blood&nbsp;Pressure&nbsp;&nbsp;:</label>
                                         </div>
                                         <div class="col-6">
+                                            <input type="hidden" id="vital_object" value="{{z.id}}">
                                             <h4 class="vital_data">{{z.blood_pressure_start}} &nbsp; - &nbsp; {{z.blood_pressure_end}} &nbsp;<span class="" id="basic-addon2">&nbsp;mm&nbsp;/&nbsp;Hg</span></h4>
                                         </div>
                                     </div>
@@ -543,7 +552,7 @@
         var consultingFees = $("#consulting-fees").val();
         var count = $('#consulting-fees-table tr').length;
 
-        if(consulting != '' && consultingFees != ''){
+        if(consulting != '' && consultingFees >0){
             if (current_row == null) {
                 if ( $("#consulting").val().length && $("#consulting-fees").val().length ) {
                   let row = '<tr data-row="'+counter+'"> <td>'+ count +'</td> <td class="consulting_compare">' + $("#consulting").val() + '</td> <td class="consulting-amount">' + $("#consulting-fees").val() + '</td> <td><button type="button" class="btn" id="con-delete" onclick="productDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
@@ -589,7 +598,9 @@
    function clear_input() {
        current_row = null;
        $("#consulting-fees").val('');
-       $("#consulting").val('');
+       $('#consulting-fees').prop('disabled', false);
+                $('#consulting-fees').val('');
+                $("#consulting").val('').trigger('change')
        // Icon Change
     $('#con-add').html('<i class="fa-solid fa-check"></i>');
        
@@ -907,7 +918,7 @@
         clear_input2();
         }
         else{
-            alert("Plz Fill the counsultings form");
+            alert("Plz Fill the Prescription form");
         }
     
         $("#prescription-body #Pres_update").on('click', function() {
@@ -1001,33 +1012,45 @@
     
 
     // API request 1
-
-    $("#consulting").change(function(){
-
-        var consultingName = $('#consulting').val();
-
-        $.ajax({
-            type: "POST",
-        url: "{% url 'inventory_medicine_amount' %}",
-        dataType: "json",
-        headers: {
-            "X-CSRFToken": $('input[name=csrfmiddlewaretoken]').val(),
-        },
-        data: {
-            'consultingName':consultingName,
-        },
-        success: function (data) {
-            ('#consulting-fees').val(data);
-            window.location.reload();
+    
+   
+        $('#consulting').change(function(){
+            var consulting = $('#consulting').find(':selected').data("id");
+            var consultingName= $('#consulting').val();
+            if(consultingName == ''){
+                $('#consulting-fees').prop('disabled', true);
+                $('#consulting-fees').val('');
+            }
+            else{
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'inventory_medicine_amount' %}",
+                    dataType: "json",
+                    headers: {
+                        "X-CSRFToken": $('input[name=csrfmiddlewaretoken]').val(),
+                    },
+                    data: {
+                        'consultingName':consulting,
+                    },
+                    success: function (response) {
+                        if(response.data == 0){
+                        $('#consulting-fees').val(0);
+                        $('#consulting-fees').prop('disabled', false);
+                        }
+                        else{
+                            $('#consulting-fees').val(response.data);
+                            $('#consulting-fees').prop('disabled', true);
+                        }
+                        
+                    },
+                    error: function (response) {
+                    alert('Error')
+                    }
+                    
+                    });
+            }
             
-            
-        },
-        error: function (response) {
-        alert('Error')
-        }
-        
-    });
-});
+        });
     // API request 2
 
         // Second json converter
@@ -1175,12 +1198,12 @@
 		var lab_testing_rowCount = $('#lab-testing-table > tbody > tr').length;
         var lab_testing = labTestTableForm();
 
-        alert(jQuery.type( lab_testing_rowCount )); 
-        alert(jQuery.type( lab_testing )); 
+        
         // Other Details
 		const patient_diagnose = $('#patient-diagnose').val();
 		const patient_symptom = $('#patient-symptom').val();
 		const patient_object = $('#patient').val();
+		const vital_object = $('#vital_object').val();
         
 
         if(prescription_rowCount == 0){
@@ -1215,14 +1238,15 @@
                 'patient_diagnose':patient_diagnose,
                 'patient_symptom':patient_symptom,
                 'patient_object':patient_object,
+                'vital_object':vital_object
             }),
 
 
             success: function (data) {
                 alert('success')
-                window.location.reload();
-                
-                
+                window.location.href = '/doctor_view/1/';
+                alert('success')
+
             },
             error: function (response) {
             alert('Error')

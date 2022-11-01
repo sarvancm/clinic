@@ -143,3 +143,26 @@ textarea{
         width: 100%;
     }
 }
+
+
+/* $.ajax({
+    type: "POST",
+url: "{% url 'inventory_medicine_amount' %}",
+dataType: "json",
+headers: {
+    "X-CSRFToken": $('input[name=csrfmiddlewaretoken]').val(),
+},
+data: {
+    'consultingName':consultingName,
+},
+success: function (data) {
+    $('#consulting-fees').val(data);
+    window.location.reload();
+    
+    
+},
+error: function (response) {
+alert('Error')
+}
+
+}); */

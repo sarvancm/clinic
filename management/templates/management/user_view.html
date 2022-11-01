@@ -10,104 +10,106 @@
             <div class="card-body">
                 <h1 class="card-title text-center mt-4">REGISTERED OUT_PATIENT</h1><br>
                 <hr><br><br>
-                <table id="example" class="table table-bordered text-center" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th class="text-center">S.No</th>
-                            <th class="text-center">Patient&nbsp;ID</th>
-                            <th class="text-center">Patient&nbsp;Name</th>
-                            <th class="text-center">Mobile&nbsp;Number</th>
-                            <th class="text-center">Status</th>
-                            <th class="text-center">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                     
-
-
-
-                      
-                        {% for j,i in z %}
-                        {% if i.is_active %}
-                       
-                        <tr style="background-color: rgb(172, 184, 246);">
-                            <td>{{forloop.counter}}</td>
-                            <td>{{i.patient.patient_id}}</td>
-                            <td>{{i.patient.patient_name}}</td>
-                            <td>{{i.patient.phone_number}}</td>
-
-
-                            <td>{% if i.is_active %}
-                                <strong>Active</strong>
-                                {% else %}
-                                <strong>In-Active</strong>{% endif %}
-                            </td>
-
-                            <td> {% if user.is_admin %}
-                                {% if i.is_active %}
-                                <a href="{% url 'disable_view' i.id %}"><button type="submit"
-                                        class="btn btn-outline-dark"><i
-                                            class="fa-solid fa-play"></i></button></a>&nbsp;&nbsp;
-                                {% else %}
-                                <a href="{% url 'enable_view' i.id %}"> <button type="submit"
-                                        class="btn btn-outline-dark"> <i class="fa-solid fa-pause"> </i></button>
-                                </a>&nbsp;&nbsp;
-                                {% endif %}
-                                <button type="button" class="btn btn-outline-dark" onclick="view('{{i.id}}')"
-                                    data-toggle="modal" data-target="#exampleModal">
-                                    <i object_id="{{i.id}}" vitals_id="{{j.id}}" id="general_vitals{{i.id}}" temp="{{j.temperature}}" pulserate="{{j.pulse_rate}}" bloodstart="{{j.blood_pressure_start}}" bloodend="{{j.blood_pressure_end}}" heig="{{j.height}}" weig="{{j.weight}}" other="{{j.others}}"
-                                        class="fa-solid fa-temperature-three-quarters"></i>
+                <div class="table-responsive">
+                    <table id="example" class="table table-bordered text-center " style="width:100%">
+                        <thead>
+                            <tr>
+                                <th class="text-center">S.No</th>
+                                <th class="text-center">Patient&nbsp;ID</th>
+                                <th class="text-center">Patient&nbsp;Name</th>
+                                <th class="text-center">Mobile&nbsp;Number</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+    
+                         
+    
+    
+    
+                          
+                            {% for j,i in z %}
+                            {% if i.is_active %}
+                           
+                            <tr >
+                                <td>{{forloop.counter}}</td>
+                                <td>{{i.patient.patient_id}}</td>
+                                <td>{{i.patient.patient_name}}</td>
+                                <td>{{i.patient.phone_number}}</td>
+    
+    
+                                <td>{% if i.is_active %}
+                                    <strong>Active</strong>
+                                    {% else %}
+                                    <strong>In-Active</strong>{% endif %}
+                                </td>
+    
+                                <td> 
+                                    <div class="d-flex">
+                                        {% if user.is_admin %}
+                                    {% if i.is_active %}
+                                    <a href="{% url 'disable_view' i.id %}"><button type="submit"
+                                            class="btn btn-outline-dark"><i
+                                                class="fa-solid fa-play"></i></button></a>&nbsp;&nbsp;
+                                    {% else %}
+                                    <a href="{% url 'enable_view' i.id %}"> <button type="submit"
+                                            class="btn btn-outline-dark"> <i class="fa-solid fa-pause"> </i></button>
+                                    </a>&nbsp;&nbsp;
+                                    {% endif %}
+                                    <button type="button" class="btn btn-outline-dark" onclick="view('{{i.id}}')"
+                                        data-toggle="modal" data-target="#exampleModal">
+                                        <i object_id="{{i.id}}" vitals_id="{{j.id}}" id="general_vitals{{i.id}}" temp="{{j.temperature}}" pulserate="{{j.pulse_rate}}" bloodstart="{{j.blood_pressure_start}}" bloodend="{{j.blood_pressure_end}}" heig="{{j.height}}" weig="{{j.weight}}" other="{{j.others}}"
+                                            class="fa-solid fa-temperature-three-quarters"></i>
+                                            {% endif %}
+                                       
+                                    </div>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr style="background-color: rgba(141, 141, 141, 0.678);">
+                                <td>{{forloop.counter}}</td>
+                                <td>{{i.patient.patient_id}}</td>
+                                <td>{{i.patient.patient_name}}</td>
+                                <td>{{i.patient.phone_number}}</td>
+    
+    
+                                <td>{% if i.is_active %}
+                                    <strong>Active</strong>
+                                    {% else %}
+                                    <strong>In&nbsp;-&nbsp;Active</strong>{% endif %}
+                                </td>
+    
+                                <td>
+                                    <div class="d-flex">
+                                        {% if user.is_admin %}
+                                        {% if i.is_active %}
+                                        <a href="{% url 'disable_view' i.id %}"><button type="submit"
+                                                class="btn btn-outline-dark"><i
+                                                    class="fa-solid fa-play"></i></button></a>&nbsp;&nbsp;
+                                        {% else %}
+                                        <a href="{% url 'enable_view' i.id %}"> <button type="submit"
+                                                class="btn btn-outline-dark"> <i class="fa-solid fa-pause"> </i></button>
+                                        </a>&nbsp;&nbsp;
                                         {% endif %}
-                                    {% comment %} </button>&nbsp;&nbsp;<button type="button"
-                                    class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button> {% endcomment %}
-                                   
-                                 
-                                    
-                            </td>
-                        </tr>
-                        {% else %}
-                        <tr>
-                            <td>{{forloop.counter}}</td>
-                            <td>{{i.patient.patient_id}}</td>
-                            <td>{{i.patient.patient_name}}</td>
-                            <td>{{i.patient.phone_number}}</td>
-
-
-                            <td>{% if i.is_active %}
-                                <strong>Active</strong>
-                                {% else %}
-                                <strong>In-Active</strong>{% endif %}
-                            </td>
-
-                            <td> {% if user.is_admin %}
-                                {% if i.is_active %}
-                                <a href="{% url 'disable_view' i.id %}"><button type="submit"
-                                        class="btn btn-outline-dark"><i
-                                            class="fa-solid fa-play"></i></button></a>&nbsp;&nbsp;
-                                {% else %}
-                                <a href="{% url 'enable_view' i.id %}"> <button type="submit"
-                                        class="btn btn-outline-dark"> <i class="fa-solid fa-pause"> </i></button>
-                                </a>&nbsp;&nbsp;
-                                {% endif %}
-                                <button type="button" class="btn btn-outline-dark" onclick="view('{{i.id}}')"
-                                    data-toggle="modal" data-target="#exampleModal">
-                                    <i object_id="{{i.id}}" id="general_vitals{{i.id}}" vitals_id="{{j.id}}" temp="{{j.temperature}}" pulserate="{{j.pulse_rate}}" bloodstart="{{j.blood_pressure_start}}" bloodend="{{j.blood_pressure_end}}" heig="{{j.height}}" weig="{{j.weight}}" other="{{j.others}}"
-                                        class="fa-solid fa-temperature-three-quarters"></i>
-                                {% endif %}
-                                   
-                                {% comment %} </button>&nbsp;&nbsp;<button type="button"
-                                    class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button> {% endcomment %}
-                                 
-                            </td>
-                        </tr>
-                        {% endif %}
-                       
-                       
-                        {% endfor %}
-
-                    </tbody>
-                </table>
+                                        <button type="button" class="btn btn-outline-dark" onclick="view('{{i.id}}')"
+                                            data-toggle="modal" data-target="#exampleModal">
+                                            <i object_id="{{i.id}}" id="general_vitals{{i.id}}" vitals_id="{{j.id}}" temp="{{j.temperature}}" pulserate="{{j.pulse_rate}}" bloodstart="{{j.blood_pressure_start}}" bloodend="{{j.blood_pressure_end}}" heig="{{j.height}}" weig="{{j.weight}}" other="{{j.others}}"
+                                                class="fa-solid fa-temperature-three-quarters"></i>
+                                        {% endif %}
+                                           
+                                       
+                                    </div> 
+                                </td>
+                            </tr>
+                            {% endif %}
+                           
+                           
+                            {% endfor %}
+    
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     {% comment %} </div> {% endcomment %}
@@ -134,10 +136,10 @@
                         {% for i,j in z %} --> {% endcomment %}
                         <div class="form-group row">
                             <div class="col-lg-6">
-                                <label for="temperature" class="col-form-label">Temperature&nbsp;&nbsp;:</label>
+                                <label for="temperature" class="">Temperature&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-lg-6">
-                                <div class="input-group mb-3">
+                                <div class="input-group">
                                     <input type="text" class="form-control" placeholder="" 
                                         aria-label="Recipient's username" name="temperature" id="temp"
                                         aria-describedby="basic-addon2" >
@@ -152,10 +154,10 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-lg-6">
-                                <label for="temperature" class="col-form-label">Pulse&nbsp;Rate&nbsp;&nbsp;:</label>
+                                <label for="temperature" class="">Pulse&nbsp;Rate&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-lg-6">
-                                <div class="input-group mb-3">
+                                <div class="input-group">
                                     <input type="text" class="form-control" placeholder="" id="pulserate"
                                         aria-label="Recipient's username" name="pulse_rate"
                                         aria-describedby="basic-addon2" >
@@ -170,7 +172,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-lg-6">
-                                <label for="inputname" class="col-form-label">Blood&nbsp;Pressure&nbsp;&nbsp;:</label>
+                                <label for="inputname" class="">Blood&nbsp;Pressure&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-lg-6">
                                 <div class="row">
@@ -178,20 +180,20 @@
                                         <input type="text" class="form-control" name="blood_pressure_start"  id="bloodstart" >
                                     </div>
                                     <div class="col-lg-1 text-center">
-                                        <label for="inputname" class="col-form-label">-</label>
+                                        <label for="inputname" class="">-</label>
                                     </div>
                                     <div class="col-lg-4">
                                         <input type="text" class="form-control" name="blood_pressure_end" id="bloodend" >
                                     </div>
                                     <div class="col-lg-2">
-                                        <label for="inputname" class="col-form-label">mm/Hg</label>
+                                        <label for="inputname" class="">mm/Hg</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-lg-6">
-                                <label for="temperature" class="col-form-label">Height&nbsp;&nbsp;:</label>
+                                <label for="temperature" class="">Height&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-lg-6">
                                 <input type="text" class="form-control" name="height"  id="heig" >
@@ -199,7 +201,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-lg-6">
-                                <label for="temperature" class="col-form-label">Weight&nbsp;&nbsp;:</label>
+                                <label for="temperature" class="">Weight&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-lg-6">
                                 <input type="text" class="form-control" name="weight"   id="weig" >
@@ -207,7 +209,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-lg-6">
-                                <label for="temperature" class="col-form-label">Others&nbsp;&nbsp;:</label>
+                                <label for="temperature" class="">Others&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-lg-6">
                                 <textarea class="form-control mb-4" name="others" id="other"  placeholder=""
@@ -258,10 +260,10 @@
                         {% for i,j in z %} --> {% endcomment %}
                         <div class="form-group row">
                             <div class="col-lg-6">
-                                <label for="temperature" class="col-form-label">Temperature&nbsp;&nbsp;:</label>
+                                <label for="temperature" class="">Temperature&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-lg-6">
-                                <div class="input-group mb-3">
+                                <div class="input-group">
                                     <input type="text" class="form-control" placeholder="" 
                                         aria-label="Recipient's username" name="temperature" id="temp" value="{{form.temperature.value}}"
                                         aria-describedby="basic-addon2" >
@@ -280,10 +282,10 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-lg-6">
-                                <label for="temperature" class="col-form-label">Pulse&nbsp;Rate&nbsp;&nbsp;:</label>
+                                <label for="temperature" class="">Pulse&nbsp;Rate&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-lg-6">
-                                <div class="input-group mb-3">
+                                <div class="input-group">
                                     <input type="text" class="form-control" placeholder="" id="pulserate"
                                         aria-label="Recipient's username" name="pulse_rate" value="{{form.pulse_rate.value}}"
                                         aria-describedby="basic-addon2" >
@@ -300,7 +302,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-lg-6">
-                                <label for="inputname" class="col-form-label">Blood&nbsp;Pressure&nbsp;&nbsp;:</label>
+                                <label for="inputname" class="">Blood&nbsp;Pressure&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-lg-6">
                                 <div class="row">
@@ -310,7 +312,7 @@
                                     </div>
                                  
                                     <div class="col-lg-1 text-center">
-                                        <label for="inputname" class="col-form-label">-</label>
+                                        <label for="inputname" class="">-</label>
                                     </div>
                                     <div class="col-lg-4">
                                         <input type="text" class="form-control" name="blood_pressure_end" id="bloodend"  value="{{form.blood_pressure_end.value}}">
@@ -318,7 +320,7 @@
                                     </div>
                                     
                                     <div class="col-lg-2">
-                                        <label for="inputname" class="col-form-label">mm/Hg</label>
+                                        <label for="inputname" class="">mm/Hg</label>
                                     </div>
                                     
                                     
@@ -327,7 +329,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-lg-6">
-                                <label for="temperature" class="col-form-label">Height&nbsp;&nbsp;:</label>
+                                <label for="temperature" class="">Height&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-lg-6">
                                 <input type="text" class="form-control" name="height"  id="heig"  value="{{form.height.value}}" >
@@ -336,7 +338,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-lg-6">
-                                <label for="temperature" class="col-form-label">Weight&nbsp;&nbsp;:</label>
+                                <label for="temperature" class="">Weight&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-lg-6">
                                 <input type="text" class="form-control" name="weight"   id="weig"  value="{{form.weight.value}}">
@@ -345,7 +347,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-lg-6">
-                                <label for="temperature" class="col-form-label">Others&nbsp;&nbsp;:</label>
+                                <label for="temperature" class="">Others&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-lg-6">
                                 <textarea class="form-control mb-4" name="others" id="other"  value="" placeholder=""
@@ -387,10 +389,6 @@
 
 
 
-    $(document).ready(function () {
-        $('#example').DataTable();
-        $('#example1').DataTable();
-    });
     function view(event) {
 
         var newid = $('#general_vitals' + event).attr("object_id")

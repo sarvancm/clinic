@@ -377,7 +377,10 @@ def user_view(request):
 
 
 
-def doctor_view(request):
+def doctor_view(request,id=None):
+    
+    if id :
+         messages.success(request, 'Details created successfully') 
     user=request.user
     if user.is_admin:
         x=  [TodayPatients.objects.get(id=i.id) for i in TodayPatients.objects.filter(created_at__contains=datetime.today().date()) if i.is_active==1]
@@ -395,9 +398,10 @@ def doctor_vie(request,id):
     x=  TodayPatients.objects.get(id=id)
     view=x.patient_id 
     y=PatientDetails.objects.filter(id=x.patient_id).first()
-    z=GeneralVitals.objects.filter(patient_id=view).first()
+    z=GeneralVitals.objects.filter(patient_id=view).last()
     medicines=Medicine.objects.all()
-    return_allergy=[i.medicine_name for i in Allergy_Medicine.objects.filter(patient_id=y.id)]
+    # return_allergy=[i.medicine_name for i in Allergy_Medicine.objects.filter(patient_id=y.id,vitals_id=z.id)]
+    return_allergy=[]
 
 
     return render(request,"management/doctor_vie.html",{'x':y,'z':z,'fees':fees,'medicines':medicines,'return_allergy':return_allergy})

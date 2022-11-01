@@ -230,3 +230,29 @@ tr.find("td").eq(0).html(table[0].rows.length);
 tr.find("td").eq(1).html(t1);
 tr.find("td").eq(2).html("item" + (table[0].rows.length));
 table.append(tr); --> */
+
+
+
+/* ==========   ERROR MEG  =========*/
+.errorlist{
+  list-style: none;
+}
+.errorlist li{
+  font-size: .85rem;
+  font-weight: 600;
+}
+
+.err_msg{
+  position: absolute;
+  z-index: 199;
+  width: 60%;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 15%;
+}
+
+.center__align{
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+}
