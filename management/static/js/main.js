@@ -50,3 +50,24 @@ $(".empty_Zero").keyup(function () {
 });
 
 // Numbers Only Checking end
+
+
+// Scroll from Bottom
+
+// var scrollBottom = document.getElementById("previous_reports");
+// scrollBottom.scrollTop = scrollBottom.scrollHeight;
+
+
+
+
+// window.addEventListener('load', () => {
+//     let scrollElement = document.querySelector('#previous_reports');
+//     scrollElement.scrollLeft =  (scrollElement.scrollWidth - scrollElement.clientWidth ) / 2;
+//   });
+
+function scrollToElement(){
+    var parentElement = document.querySelector('#total_reports')
+    var childElement = document.querySelector('#today_report')
+    parentElement.scrollTop = childElement.offsetTop - parentElement.offsetTop;
+}
+document.addEventListener('DOMContentLoaded',scrollToElement())

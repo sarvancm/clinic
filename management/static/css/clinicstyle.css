@@ -46,7 +46,7 @@ h1 {
 
 .height_card {
     height: 400px;
-    overflow: auto;
+    overflow-y: auto;
 }
 .height_card_v2{
     height: 723px;
@@ -87,7 +87,7 @@ textarea {
 
 ::-webkit-scrollbar {
     width: 8px;
-    height: 3px;
+    height: 8px;
   }
   
   /* Track */
@@ -257,4 +257,21 @@ table.append(tr); --> */
   align-items: center;
   justify-content: center;
   gap: 50px;
+}
+.previous_reports_card{
+  height: 80vh;
+  overflow-y: scroll;
+  
+}
+.border_card{
+  border: 0.25px solid rgba(128, 128, 128, 0.526) !important;
+}
+.previous_details_text{
+  text-indent: 100px;
+  text-align: justify;
+}
+@media screen and (max-width:560px) {
+  .previous_details_text{
+    font-size: 12px;
+  }
 }
