@@ -350,7 +350,7 @@ def doctor_view(request,id=None):
     user=request.user
     if user.is_admin:
         x=  [TodayPatients.objects.get(id=i.id) for i in TodayPatients.objects.filter(created_at__contains=datetime.today().date()) ]
-        # if x.is_active==1:
+        x.reverse()
 
 
         return render(request,"management/doctor_view.html",{'x':x,'user':user})

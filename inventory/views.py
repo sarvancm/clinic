@@ -158,7 +158,7 @@ def patients(request):
         data ={}
         return JsonResponse(data)
     else:
-        x= [Patient_medicine.objects.get(id=j) for j in {i.vitals_id for i in Patient_medicine.objects.filter(created_at__contains=datetime.datetime.today().date())}]
+        x= [Patient_medicine.objects.get(vitals_id=j) for j in {i.vitals_id for i in Patient_medicine.objects.filter(created_at__contains=datetime.datetime.today().date())}]
         return render(request,'inventory/patients.html',{'x':x})
 
 def previous_medicine(request):

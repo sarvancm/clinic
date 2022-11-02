@@ -3,7 +3,15 @@ from management.models import PatientDetails,GeneralVitals
 
 # Create your models here.
 
+class Code_medicine(models.Model):
+    medicine_name= models.CharField(max_length=200)
+    medicine_brand= models.CharField(max_length=200)
+    medicine_id= models.CharField(max_length=30)
+
+
+
 class Medicine(models.Model):
+    code=models.ForeignKey(Code_medicine,on_delete=models.CASCADE,null=True,blank=True)
     medicine_name= models.CharField(max_length=200)
     medicine_brand= models.CharField(max_length=200)
     medicine_id= models.CharField(max_length=30)
