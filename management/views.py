@@ -218,56 +218,22 @@ def disable_product_details(request,id):
 
 def patients_register(request):
     if request.method=="POST":
-        patient_id=request.POST.get("patient_id")
-        # print(patient_id)
+        age=request.POST.get("age")
         form = PatientDetailsForm(request.POST)
-        # date_of_birth=request.POST.get("date_of_birth")
-        # current = date.today()
-        
-        # birth=datetime.strptime(str(date_of_birth), '%Y-%m-%d')
-        # diff=relativedelta.relativedelta(current, birth)
-        # if diff.years > 0:
-        #         age={f'{diff.years} years'}
-        # elif diff.months >0:
-        #         age={f'{diff.months} months'}
-        # elif diff.days >0:
-        #         age={f'{diff.days} days'}
-        # elif diff.hours >0:
-        #         age={f'{diff.hours} hours'}
-
-          
-        
-        # if dt.month<today.month:
-        #     age=today.year-dt.year
-        #     print(age)
-        # elif dt.month>today.month:
-        #         age=today.year-dt.year+1
-        #         print(age)
-        # elif dt.month==today.month & dt.day<today.day:
-        #             age=today.year-dt.year
-        #             print(age)
-
-        # elif dt.year==today.year & dt.month==today.month
-
-
-
-        # else: 
-        #         age=today.year-dt.year-1
-        #         print(age)      
-
-              
+       
         if form.is_valid(): 
             form.save() 
             # z.age=age
             # z.save()            
             messages.success(request, 'Details created successfully') 
             return redirect('search_patient')
-        else:           
-            messages.warning(request,'User Registration Failed')
-            return render(request,'management/patient_register.html',{'patient_id':increment_patient_id(),'form': form})     
+        else:   
+            print(form.errors) 
+            messages.warning(request,'Patient Registration Failed')
+            return render(request,'management/patient_register.html',{'age':age,'patient_id':increment_patient_id(),'form': form})     
     else:
      form = PatientDetailsForm()  
-     print(form.errors) 
+     
      return render(request,'management/patient_register.html',{'patient_id':increment_patient_id(),'form':form})  
 
 

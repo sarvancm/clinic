@@ -236,6 +236,8 @@ table.append(tr); --> */
 /* ==========   ERROR MEG  =========*/
 .errorlist{
   list-style: none;
+  font-size: .85rem;
+  font-weight: 600;
 }
 .errorlist li{
   font-size: .85rem;

@@ -45,7 +45,7 @@ class PatientDetails(models.Model):
     gender= models.CharField(max_length=30)
     blood_group=models.CharField(max_length=30,null=True,blank=True)
     address= models.TextField(max_length=30)
-    phone_number = models.IntegerField(null=True,blank=True)
+    phone_number = models.IntegerField(null=True,blank=True,error_messages={'phone_number':'Enter a valid phone number'})
    
    
     @property

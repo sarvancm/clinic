@@ -1,4 +1,5 @@
 {% load static %}
+{% load active_link_tags %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,7 +38,7 @@
         </div>
         <ul class="nav-links">
             <li>
-                <a href="#" class="active">
+                <a href="#" class="">
                     <i class='bx bx-grid-alt'></i>
                     <span class="links_name">Dashboard</span>
                 </a>
@@ -45,7 +46,7 @@
            
             <li>
                
-                    <a href="{% url 'register' %}">
+                    <a href="{% url 'register' %}" class="{% active_link 'register' %}">
                         <i class='bx bx-pie-chart-alt-2'></i>
                         <span class="links_name">Register</span>
                     </a>
@@ -57,61 +58,54 @@
                 </a>
             </li>
             <li>
-                <a href="{% url 'user_view' %}">
+                <a href="{% url 'user_view' %}" class="{% active_link 'user_view' %}">
                     <i class='bx bx-pie-chart-alt-2'></i>
                     <span class="links_name">User view</span>
                 </a>
             </li>
             <li>
-                <a href="{% url 'doctor_view' %}">
+                <a href="{% url 'doctor_view' %}" class="{% active_link 'doctor_view' %}">
                     <i class='bx bx-pie-chart-alt-2'></i>
                     <span class="links_name">Doctor view</span>
                 </a>
             </li>
             
             <li>
-                <a href="{% url 'search_patient' %}">
+                <a href="{% url 'search_patient' %}" class="{% active_link 'search_patient' %}">
                     <i class='bx bx-pie-chart-alt-2'></i>
                     <span class="links_name">Search patient</span>
                 </a>
             </li>
             <li>
-                <a href="{% url 'patients_register' %}">
+                <a href="{% url 'patients_register' %}" class="{% active_link 'patients_register' %}">
                     <i class='bx bx-pie-chart-alt-2'></i>
                     <span class="links_name">Patient Registration</span>
                 </a>
             </li>
             <li>
-                <a href="{% url 'add_fees' %}">
+                <a href="{% url 'add_fees' %}" class="{% active_link 'add_fees' %}">
                     <i class='bx bx-box'></i>
                     <span class="links_name">Add fees</span>
                 </a>
             </li>
-           
-            <!-- <li>
-                <a href="#">
-                    <i class='bx bx-coin-stack'></i>
-                    <span class="links_name">Services</span>
-                </a>
-            </li> -->
             
            
             <li>
-                <a href="{% url 'inventory_add_medicine' %}">
+                <a href="{% url 'inventory_add_medicine' %}" {% if add %}class="active"{% endif %}>
                     <i class='bx bx-message'></i>
                     <span class="links_name">Inventory</span>
                 </a>
             </li>
             <li>
-                <a href="{% url 'inventory_search_medicine' %}">
+                <a href="{% url 'inventory_search_medicine' %}" {% if search %}class="active"{% endif %}>
                     <i class="fa-regular fa-heart"></i>
                     <span class="links_name">Search Inventory</span>
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="{% url 'inventory_patients' %}"  class="{% active_link 'inventory_patients' %}">
                     <i class='bx bx-cog'></i>
-                    <span class="links_name">Setting</span>
+                    <span class="links_name">Consulted</span>
                 </a>
             </li>
             <li class="log_out" data-toggle="modal" data-target="#logoutModal">
@@ -127,7 +121,7 @@
         <nav>
             <div class="sidebar-button">
                 <i class='bx bx-menu sidebarBtn' id="sidebarBtn"></i>
-                <span class="dashboard">Dashboard</span>
+                {% comment %} <span class="dashboard">Dashboard</span> {% endcomment %}
             </div>
 
             <div>

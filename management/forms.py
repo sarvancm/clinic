@@ -4,7 +4,7 @@ from msilib.schema import Class
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from.models import User,Items_saled,ProductDetails,PatientDetails,HealthHistory,PrescribedMedicine,BillsModel,GeneralVitals,AddFees 
-
+from django.core.exceptions import ValidationError
 
 
 
@@ -29,17 +29,33 @@ class ProductDetailsForm(forms.ModelForm):
    class Meta:
       model=ProductDetails
       fields=['product_name','product_id','product_quantity','product_price','expiry_date']
+      
  
 
       widgets = { 'expiry_date' : forms.DateInput(attrs={'type':'date',}),}
 
 class PatientDetailsForm(forms.ModelForm):   
    class Meta:
-        model=PatientDetails
-        fields='__all__'
-        widgets = {
-            'date_of_birth': forms.DateInput(attrs={'type': 'date'})
-        }
+      model=PatientDetails
+      fields = '__all__'
+      widgets = {
+         'date_of_birth': forms.DateInput(attrs={'type': 'date'})
+      }
+
+      # def clean_phone_number(self):
+      #    phone_number = self.cleaned_data['phone_number']
+      #    print(phone_number)
+      #    #   try:
+      #    #       x=int(phone_number)
+      #    #       count=len(str(x))
+      #    #       if count!=10:
+      #    #          raise ValidationError("Enter a valid 10 digit phone number")
+               
+      #    #   except:
+      #    #       raise ValidationError("Enter a valid phone number")
+
+      #    return phone_number
+        
    def __init__(self,*args,**kwargs):
       super().__init__(*args,**kwargs)
       for field in self.fields.values():

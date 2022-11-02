@@ -22,12 +22,12 @@ def add_medicine(request):
             form.save()
             messages.success(request, 'medicine added successfully')
             form = MedicineForm()
-            return render(request,'inventory/add_medicine.html', {'form': form,'medicine':incrementid()})
+            return render(request,'inventory/add_medicine.html', {'add':True,'form': form,'medicine':incrementid()})
         else:
-            return render(request,'inventory/add_medicine.html', {'form': form,'medicine':incrementid()})
+            return render(request,'inventory/add_medicine.html', {'add':True,'form': form,'medicine':incrementid()})
     else:
         form = MedicineForm()
-    return render(request,'inventory/add_medicine.html', {'form': form,'medicine':incrementid()})
+        return render(request,'inventory/add_medicine.html', {'add':True,'form': form,'medicine':incrementid()})
 
 
 # search_medicine
@@ -53,10 +53,10 @@ def search_medicine(request):
         else:
             medicines = medicines
 
-        return render(request,'inventory/search_medicine.html', {'medicines': medicines,'name_id':name_id,'start_date':start_date,'end_date':end_date})
+        return render(request,'inventory/search_medicine.html', {'search':True,'medicines': medicines,'name_id':name_id,'start_date':start_date,'end_date':end_date})
     else:
 
-        return render(request,'inventory/search_medicine.html', {})
+        return render(request,'inventory/search_medicine.html', {'search':True})
 
 
 # update_medicine
@@ -89,7 +89,7 @@ def update_medicine(request):
                 medicines=medi
             else:
                 medicines = medicines
-            return render(request,'inventory/search_medicine.html', {'medicines': medicines,'name_id':name_id,'start_date':start_date,'end_date':end_date})
+            return render(request,'inventory/search_medicine.html', {'search':True,'medicines': medicines,'name_id':name_id,'start_date':start_date,'end_date':end_date})
 
         else:
             medi=Medicine.objects.filter(Q(medicine_name=name_id)|Q(medicine_id=name_id))
@@ -108,7 +108,7 @@ def update_medicine(request):
                 medicines=medi
             else:
                 medicines = medicines
-            return render(request,'inventory/search_medicine.html', {'object':id,'err':True,'form':form,'medicines': medicines,'name_id':name_id,'start_date':start_date,'end_date':end_date})
+            return render(request,'inventory/search_medicine.html', {'search':True,'object':id,'err':True,'form':form,'medicines': medicines,'name_id':name_id,'start_date':start_date,'end_date':end_date})
 
     else:
         
@@ -139,12 +139,6 @@ def doctor(request):
         for i in labtesting:
             Lab_test.objects.create(patient_id=patient_object,vitals_id=vital_object,lab_test=i['Tests'])
             
-        
-
-        # return_allergy=[i.medicine_name for i in Allergy_Medicine.objects.filter(patient_id=patient_object)]
-        # data ={
-        #     'return_allergy':return_allergy
-        # }
         data={}
         return JsonResponse(data)
    
@@ -152,30 +146,20 @@ def doctor(request):
 def medicine_amount(request):
     if request.method == "POST": 
         id = request.POST.get('consultingName')
-        
-        # from pprint import pprint
-        print(id)
         amount=AddFees.objects.get(id=id)
         amount=amount.amount
-        
-        
-        
-        
-        
-        
-        
-        
-            
-        # print(datas[1]['Consulting'])
-        
-        # data = json.loads(id)
-        # dict = json.loads(request.POST.get('payload'))
-        # datas=data['payload'] 
-        print (id)
-        # print (data)
         data ={'data':amount}
         return JsonResponse(data)
 
+
+def patients(request):
+    if request.method == "POST": 
+        id = request.POST.get('name')
+        data ={}
+        return JsonResponse(data)
+    else:
+        x= [Patient_medicine.objects.get(id=j) for j in {i.vitals_id for i in Patient_medicine.objects.filter(created_at__contains=datetime.datetime.today().date())}]
+        return render(request,'inventory/patients.html',{'x':x})
 
 def previous_medicine(request):
     if request.method == "POST": 

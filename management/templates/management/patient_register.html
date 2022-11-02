@@ -64,7 +64,7 @@
                 
               </div>
               <div class="col-lg-5">
-                <input type="text" class="form-control"  name="age" id="exact_age">
+                <input type="text" class="form-control" {% if age %}value="{{age}}"{% endif %} name="age" id="exact_age">
                 <span class="text-danger">{{form.age.errors}} </span>
               </div>
             </div>
@@ -179,8 +179,8 @@
                 <label for="number" class="col-form-label">Phone&nbsp;Number&nbsp;&nbsp;:</label>
               </div>
               <div class="col-lg-5">                
-                <input onkeypress="return isNumberKey(event)" type="tel" name="phone_number" value="{{form.phone_number.value|default_if_none:''}}" class="form-control" id="number" required minlength="10" maxlength="10">
-                <br><span class="text-danger">{{form.phone_number.errors}} </span>
+                <input onkeypress="return isNumberKey(event)" type="text" name="phone_number" value="{{form.phone_number.value|default_if_none:''}}" class="form-control" id="number" required minlength="10" maxlength="10">
+                {% if form.phone_number.errors %}<span class="text-danger errorlist"> Enter a valid 10 digit phone number</span>{% endif %}
             </div>
             </div>
         </div>
@@ -198,65 +198,10 @@
 
 
 
-{% if messages %}  
-    <ul>   
-        {% for message in messages %}  
-            <li>{{ message }}</li>  
-            {% endfor %}  
-    </ul>   
-{% endif %}
+
   {% endblock %} 
 
   {% block script %}
-        $(document).ready(function () {
-          
-
-          var mdate = $("#birth_date").val().toString();
-          var yearThen = parseInt(mdate.substring(0, 4), 10);
-          var monthThen = parseInt(mdate.substring(5, 7), 10);
-          var dayThen = parseInt(mdate.substring(8, 10), 10);
-
-          var today = new Date();
-          var birthday = new Date(yearThen, monthThen - 1, dayThen);
-
-          var differenceInMilisecond = today.valueOf() - birthday.valueOf();
-
-          var year_age = Math.floor(differenceInMilisecond / 31536000000);
-          var day_age = Math.floor((differenceInMilisecond % 31536000000) / 86400000);
-
-          if ((today.getMonth() == birthday.getMonth()) && (today.getDate() == birthday.getDate())) {
-              alert("Happy B'day!!!");
-          }
-
-          var month_age = Math.floor(day_age / 30);
-
-          day_age = day_age % 30;
-
-          if (isNaN(year_age) || isNaN(month_age) || isNaN(day_age)) {
-              $("#exact_age").val("Invalid birthday - Please try again!");
-          }
-          else {
-              if (year_age <= 0 && month_age < 0 && day_age < 0) {
-                  $("#exact_age").val("Invalid birthday - Please try again!");
-              }
-
-              else if (year_age < 1) {
-                  if (month_age <= 1) {
-                      $('#exact_age').val(+ day_age + " days")
-                  }
-                  else {
-                      $('#exact_age').val(+ month_age + " months")
-
-                  }
-              }
-              else if (year_age >= 1) {
-                  $("#exact_age").val(+ year_age + " years");
-              }
-
-          }
-
-
-
 
             $("#birth_date").change(function () {
               
@@ -307,5 +252,4 @@
 
 
             });
-        });
       {% endblock script %}

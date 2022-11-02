@@ -11,6 +11,7 @@ urlpatterns = [
     path('medicine_amount/', views.medicine_amount, name='inventory_medicine_amount'),
     path('previous_medicine/', views.previous_medicine, name='inventory_previous_medicine'),
     path('next_medicine/', views.next_medicine, name='inventory_next_medicine'),
+    path('patients/', views.patients, name='inventory_patients'),
   
     # path('register/', views.register, name='register'),  
 
