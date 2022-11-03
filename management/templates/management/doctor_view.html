@@ -23,18 +23,18 @@
                     </thead>
                     <tbody>
                         {% for i in x %}
-                        {% if i.is_active %}
-                        <tr class="active">
+                        {% if i.is_consulted %}
+                        <tr style="background-color: rgba(141, 141, 141, 0.678);">
                             <td>{{forloop.counter}}</td>
                             <td>{{i.patient.patient_id}}</td>
                             <td>{{i.patient.patient_name}}</td>
                             <td>{{i.patient.phone_number}}</td>
 
 
-                            <td>{% if i.is_active %}
-                                <strong>Active</strong>
+                            <td>{% if i.is_consulted %}
+                                <strong>Consulted</strong>
                                 {% else %}
-                                <strong>In-Active</strong>
+                                <strong>Active</strong>
                                 {% endif %}
                             </td>
 
@@ -56,7 +56,8 @@
 
                                      {% if user.is_admin %}
                                     
-                                     {% if i.is_active %}
+                                     {% if i.is_consulted %}
+                                     {% else %}
                                      <a href="{% url 'doctor_vie' i.id %}"><button type="button"
                                          class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button></a>
                                          
@@ -65,17 +66,17 @@
                             </td>
                         </tr>
                         {% else %}
-                        <tr style="background-color: rgba(141, 141, 141, 0.678);">
+                        <tr >
                             <td>{{forloop.counter}}</td>
                             <td>{{i.patient.patient_id}}</td>
                             <td>{{i.patient.patient_name}}</td>
                             <td>{{i.patient.phone_number}}</td>
 
 
-                            <td>{% if i.is_active %}
-                                <strong>Active</strong>
+                            <td>{% if i.is_consulted %}
+                                <strong>Consulted</strong>
                                 {% else %}
-                                <strong>In-Active</strong>
+                                <strong>Active</strong>
                                 {% endif %}
                             </td>
 
@@ -97,7 +98,8 @@
                                 {% endif %}
                                 
                                 {% if user.is_admin %}
-                                {% if i.is_active %}
+                                {% if i.is_consulted %}
+                                {% else %}
                                 <a href="{% url 'doctor_vie' i.id %}"><button type="button"
                                     class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button></a>
                                 

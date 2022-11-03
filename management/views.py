@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
-from .models import BillsModel, GeneralVitals, ProductDetails,PatientDetails,TodayPatients,PrescribedMedicine,HealthHistory,BillsModel,AddFees
-from .forms import RegisterForm, InputForm,ProductDetailsForm,PatientDetailsForm,HistoryForm,MedicineDetailForm,BillsModelForm,GeneralVitalsForm,AddFeesForm
+from .models import BillsModel, GeneralVitals_new, ProductDetails,PatientDetails,TodayPatients,PrescribedMedicine,HealthHistory,BillsModel,AddFees
+from .forms import RegisterForm, InputForm,ProductDetailsForm,PatientDetailsForm,HistoryForm,MedicineDetailForm,BillsModelForm,GeneralVitals_newForm,AddFeesForm
 from django.contrib.auth import login as log
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate,logout
@@ -10,7 +10,7 @@ from datetime import datetime
 from datetime import date
 from django.contrib.auth.decorators import login_required
 from dateutil import relativedelta
-from inventory.models import Medicine,Allergy_Medicine
+from inventory.models import Medicine,Allergy_Medicine,Patient_medicine,Symptom,Lab_test
 
 
 
@@ -328,7 +328,7 @@ def user_view(request):
     list=[]
     for i in x:
         try:
-            y=GeneralVitals.objects.get(patient_id=i.patient_id)   
+            y=GeneralVitals_new.objects.filter(patient_id=i.patient_id,created_at__contains=datetime.today().date()).last()   
         except:
             y=None
         list.append(y)
@@ -349,7 +349,7 @@ def doctor_view(request,id=None):
          messages.success(request, 'Details created successfully') 
     user=request.user
     if user.is_admin:
-        x=  [TodayPatients.objects.get(id=i.id) for i in TodayPatients.objects.filter(created_at__contains=datetime.today().date()) ]
+        x=  [TodayPatients.objects.get(id=i.id) for i in TodayPatients.objects.filter(created_at__contains=datetime.today().date(),is_active=True) ]
         x.reverse()
 
 
@@ -361,16 +361,49 @@ def doctor_view(request,id=None):
     
 def doctor_vie(request,id):  
     fees=AddFees.objects.all()
-    x=  TodayPatients.objects.get(id=id)
-    view=x.patient_id 
-    y=PatientDetails.objects.filter(id=x.patient_id).first()
-    z=GeneralVitals.objects.filter(patient_id=view).last()
+    today_patient=  TodayPatients.objects.get(id=id)
+    view=today_patient.patient_id
+    vitals_id= today_patient.vitals_id
+    y=PatientDetails.objects.filter(id=today_patient.patient_id).first()
+    z=GeneralVitals_new.objects.filter(id=vitals_id).first()
     medicines=Medicine.objects.all()
-    # return_allergy=[i.medicine_name for i in Allergy_Medicine.objects.filter(patient_id=y.id,vitals_id=z.id)]
-    return_allergy=[]
+    return_allergy=[i.medicine_name for i in Allergy_Medicine.objects.filter(patient_id=y.id,vitals_id=z.id)]
+    if today_patient.is_consulted:
+        total_vitals=GeneralVitals_new.objects.filter(patient_id=view).order_by('-id')
+    else:
+        total_vitals=GeneralVitals_new.objects.filter(patient_id=view).order_by('-id')
+        total_vitals=list(total_vitals)
+        total_vitals.pop(0)
+    if total_vitals:
+        recent=total_vitals[0].id
+    else:
+        recent=2
+    Patient_medicine_list=[]
+    symptom_list=[]
+    lab_list=[]
+    forward=[]
+    backward=[0] 
+    count=1
+    for i in total_vitals:
+        medicine=Patient_medicine.objects.filter(patient_id=view,vitals_id=i.id)
+        symptom=Symptom.objects.filter(patient_id=view,vitals_id=i.id)
+        lab=Lab_test.objects.filter(patient_id=view,vitals_id=i.id)
+        if count>1:
+            forward.append(i)
+
+        backward.append(i)
+        Patient_medicine_list.append(medicine)
+        symptom_list.append(symptom)
+        lab_list.append(lab)
+        count += 1
 
 
-    return render(request,"management/doctor_vie.html",{'x':y,'z':z,'fees':fees,'medicines':medicines,'return_allergy':return_allergy})
+    forward.append(0)
+    backward.pop(-1)
+
+    history=zip(total_vitals,lab_list,symptom_list,Patient_medicine_list,forward,backward) 
+
+    return render(request,"management/doctor_vie.html",{'recent':recent,'today_patient':today_patient,'history':history,'x':y,'z':z,'fees':fees,'medicines':medicines,'return_allergy':return_allergy})
     
 
 
@@ -399,14 +432,13 @@ def general_vitals(request):
         vitalsid=request.POST.get("vitals")  
         print(id)  
         general=TodayPatients.objects.get(id=id)
-        print(general)
         try:
-           vital=GeneralVitals.objects.get(id=vitalsid)
+           vital=GeneralVitals_new.objects.get(id=vitalsid)
         except:
             vital=[]
 
         if vital:
-            form=GeneralVitalsForm(request.POST)
+            form=GeneralVitals_newForm(request.POST)
             vital.temperature=request.POST.get("temperature")
             vital.pulse_rate=request.POST.get("pulse_rate")
             vital.blood_pressure_start=request.POST.get("blood_pressure_start")
@@ -415,7 +447,8 @@ def general_vitals(request):
             vital.weight=request.POST.get("weight")
             vital.others=request.POST.get("others")
             if form.is_valid():
-                vital.save()           
+                vital.save()
+                messages.success(request, 'Details created successfully')            
                 return redirect('user_view')
             else:
                 id=request.POST.get("object")
@@ -425,7 +458,7 @@ def general_vitals(request):
                 list=[]
                 for i in x:
                     try:
-                        y=GeneralVitals.objects.get(patient_id=i.patient_id)   
+                        y=GeneralVitals_new.objects.filter(patient_id=i.patient_id,created_at__contains=datetime.today().date()).last()   
                     except:
                         y=None
                     list.append(y)
@@ -439,7 +472,7 @@ def general_vitals(request):
             
             patient_id=general.patient_id
                     
-            form=GeneralVitalsForm(request.POST)
+            form=GeneralVitals_newForm(request.POST)
         
 
             # form_error = False
@@ -447,8 +480,11 @@ def general_vitals(request):
                 x=form.save()
                 x.patient_id=patient_id
                 x.save()
+                general.vitals_id=x.id
+                general.is_vital=True
+                general.save()
            
-        
+                messages.success(request, 'Details created successfully')  
                 return redirect('user_view')
             else:
                
@@ -457,7 +493,7 @@ def general_vitals(request):
                 list=[]
                 for i in x:
                     try:
-                        y=GeneralVitals.objects.get(patient_id=i.patient_id)   
+                        y=GeneralVitals_new.objects.filter(patient_id=i.patient_id,created_at__contains=datetime.today().date()).last()   
                     except:
                         y=None
                     list.append(y)
@@ -466,7 +502,7 @@ def general_vitals(request):
                 return render(request,"management/user_view.html",{'form':form,'patient_id':patient_id,'err':True,'x':x,'z':z,'object':id,'vital':vitalsid}) 
 
     else:
-        form=GeneralVitalsForm()
+        form=GeneralVitals_newForm()
         messages.success(request, 'Account created successfully') 
         x=  TodayPatients.objects.filter(created_at__contains=datetime.today().date())
         return render(request,"management/user_view.html",{'form':form,'x':x})

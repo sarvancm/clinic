@@ -93,14 +93,7 @@ class PatientDetails(models.Model):
             # return my_age 
 
 
-class TodayPatients(models.Model):
-    patient=models.ForeignKey(PatientDetails,on_delete=models.CASCADE)
-    created_at=models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    is_active=   models.BooleanField('Is active', default=False) 
 
-    def __str__(self):
-        return f'{self.patient.patient_name}'
 
 class HealthHistory(models.Model):
     patient = models.ForeignKey(PatientDetails, on_delete=models.CASCADE)
@@ -128,7 +121,16 @@ class BillsModel(models.Model):
     def __str__(self):
         return f'{self.patient.patient_name}'
 
-class GeneralVitals(models.Model):
+
+    
+
+
+class AddFees(models.Model):
+    fee_name=models.CharField(max_length=30,unique=True)
+    amount=models.DecimalField(max_digits=15, decimal_places=2)
+
+
+class GeneralVitals_new(models.Model):
     patient=models.ForeignKey(PatientDetails,on_delete=models.CASCADE,null=True,blank=True)
     temperature=models.FloatField()
     pulse_rate=models.IntegerField()
@@ -137,17 +139,22 @@ class GeneralVitals(models.Model):
     height=models.FloatField()
     weight=models.FloatField()
     others=models.TextField()
-
-class AddFees(models.Model):
-    fee_name=models.CharField(max_length=30,unique=True)
-    amount=models.DecimalField(max_digits=15, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 
+class TodayPatients(models.Model):
+    patient=models.ForeignKey(PatientDetails,on_delete=models.CASCADE)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_active=   models.BooleanField('Is active', default=False) 
+    is_vital=   models.BooleanField(default=False)
+    is_consulted=   models.BooleanField(default=False)
+    vitals=models.ForeignKey(GeneralVitals_new,on_delete=models.CASCADE,null=True,blank=True)
 
-
-
-
+    def __str__(self):
+        return f'{self.patient.patient_name}'
 
 
    

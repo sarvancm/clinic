@@ -3,7 +3,7 @@ from django import forms
 from msilib.schema import Class
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from.models import User,Items_saled,ProductDetails,PatientDetails,HealthHistory,PrescribedMedicine,BillsModel,GeneralVitals,AddFees 
+from.models import User,Items_saled,ProductDetails,PatientDetails,HealthHistory,PrescribedMedicine,BillsModel,GeneralVitals_new,AddFees 
 from django.core.exceptions import ValidationError
 
 
@@ -82,9 +82,9 @@ class BillsModelForm(forms.ModelForm):
 #       model=BirthField
 #       fields=['date_of_birth']
 
-class GeneralVitalsForm(forms.ModelForm):
+class GeneralVitals_newForm(forms.ModelForm):
    class Meta:
-      model= GeneralVitals 
+      model= GeneralVitals_new
       fields = '__all__'
 
 class AddFeesForm(forms.ModelForm):

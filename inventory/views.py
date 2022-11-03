@@ -1,14 +1,14 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from .forms import MedicineForm
-from .models import Medicine,Fees,Allergy_Medicine,Patient_medicine,Lab_test
+from .models import Medicine,Fees,Allergy_Medicine,Patient_medicine,Lab_test,Symptom
 import datetime
 from django.db.models import Q
 from django.http import JsonResponse
 import json
 from pprint import pprint
 from django.views.decorators.csrf import csrf_exempt
-from management.models import AddFees 
+from management.models import AddFees,TodayPatients
 
 
 # Create your views here.
@@ -134,11 +134,18 @@ def doctor(request):
             
         for i in prescription:
             Patient_medicine.objects.create(patient_id=patient_object,vitals_id=vital_object,medicine_name=i['Medicine\xa0Name'],morning=i['Morning'],noon=i['After\xa0Noon'],
-            evening=i['Evening'],night=i['Night'],days=i['Days'],total=i['Total'],symptom=data['patient_symptom'],diagnose=data['patient_diagnose'])
+            evening=i['Evening'],night=i['Night'],days=i['Days'],total=i['Total'])
 
         for i in labtesting:
             Lab_test.objects.create(patient_id=patient_object,vitals_id=vital_object,lab_test=i['Tests'])
-            
+
+        Symptom.objects.create(patient_id=patient_object,vitals_id=vital_object,symptom=data['patient_symptom'],diagnose=data['patient_diagnose'])
+
+
+        today_patient=data['today_patient']
+        today=TodayPatients.objects.get(id=today_patient)
+        today.is_consulted=True
+        today.save()
         data={}
         return JsonResponse(data)
    

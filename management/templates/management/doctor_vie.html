@@ -5,14 +5,13 @@
 
             <h1 class="mt-2">Doctor-view</h1>
             <hr>
-
-
+            
             <div class="row">
                 <div class="col-lg-6">
                     <div class="row">
                         <div class="col-md-12">
                             <form action="" class="mt-4">
-
+                                <input type="hidden" value="{{today_patient.id}}" id="today_patient">
                                 <div class="form-group row">
         
                                     <div class="col-lg-4 text-lg-center text-md-left text-sm-left">
@@ -183,22 +182,27 @@
                     </div>
                 </div>
             </div>
+            
             <div class="card p-3 mt-3 ">
                 <h4>REPORTS</h4>
                 
+          
                 <div class="card border_card  p-2 previous_reports_card" id="total_reports" >
-                    <div id="2">
+                    {% for i,j,k,l,m,n in history %} 
+                    <div id="{{i.id}}">
                     <div class="card my-2 p-2 bg-secondary text-light border_card">
                          <div class="row justify-content-between px-3">    
-                         <p class="m-0 my-auto">01/05/2021&nbsp;
-                            7.30&nbsp;PM</p>
+                         <p class="m-0 my-auto">{{i.created_at}}&nbsp;
+                            </p>
                             <div>
-                            <button class="btn btn-outline-light"><i class="fa-solid fa-arrow-up"></i></button>
-                            <a href="#1"><button class="btn btn-outline-light"><i class="fa-solid fa-arrow-down"></i></button></a>
+                            <a href="#{{n.id}}"><button class="btn btn-outline-light"><i class="fa-solid fa-arrow-up"></i></button></a>
+                            <a href="#{{m.id}}"><button class="btn btn-outline-light"><i class="fa-solid fa-arrow-down"></i></button></a>
                         </div>
                         </div>   
                     </div>
+                    
                     <div class="row m-0">
+                        
                         <div class="col-lg-6">
                             <div class="card h-100 p-2 border_card">
                                 <h4>VITALS</h4>
@@ -211,7 +215,7 @@
                                                 class="">Temperature&nbsp;&nbsp;:</label>
                                         </div>
                                         <div class="col-6">
-                                            <h4 class="vital_data">{{z.temperature}} &nbsp;<span class="" id="basic-addon2">  &nbsp;&#8457;</span></h4>
+                                            <h4 class="vital_data">{{i.temperature}} &nbsp;<span class="" id="basic-addon2">  &nbsp;&#8457;</span></h4>
                                         </div>
                                     </div>
                                     <div class="row mt-2">
@@ -220,7 +224,7 @@
                                                 class="">Pulse&nbsp;Rate&nbsp;&nbsp;:</label>
                                         </div>
                                         <div class="col-6">
-                                            <h4 class="vital_data">{{z.pulse_rate}} &nbsp;<span class="" id="basic-addon2">&nbsp; /&nbsp;min</span></h4>
+                                            <h4 class="vital_data">{{i.pulse_rate}} &nbsp;<span class="" id="basic-addon2">&nbsp; /&nbsp;min</span></h4>
                                         </div>
                                     </div>
                                     <div class="row mt-2">
@@ -229,8 +233,8 @@
                                                 class="">Blood&nbsp;Pressure&nbsp;&nbsp;:</label>
                                         </div>
                                         <div class="col-6">
-                                            <input type="hidden" id="vital_object" value="{{z.id}}">
-                                            <h4 class="vital_data">{{z.blood_pressure_start}} &nbsp; - &nbsp; {{z.blood_pressure_end}} &nbsp;<span class="" id="basic-addon2">&nbsp;mm&nbsp;/&nbsp;Hg</span></h4>
+                                            
+                                            <h4 class="vital_data">{{i.blood_pressure_start}} &nbsp; - &nbsp; {{i.blood_pressure_end}} &nbsp;<span class="" id="basic-addon2">&nbsp;mm&nbsp;/&nbsp;Hg</span></h4>
                                         </div>
                                     </div>
                                     <div class="row mt-2">
@@ -238,7 +242,7 @@
                                             <label for="temperature" class="">Height&nbsp;&nbsp;:</label>
                                         </div>
                                         <div class="col-6">
-                                            <h4 class="vital_data">{{z.height}} &nbsp;<span class="" id="basic-addon2">&nbsp; cm</span></h4>
+                                            <h4 class="vital_data">{{i.height}} &nbsp;<span class="" id="basic-addon2">&nbsp; cm</span></h4>
                                         </div>
                                     </div>
                                     <div class="row mt-2">
@@ -246,7 +250,7 @@
                                             <label for="temperature" class="">Weight&nbsp;&nbsp;:</label>
                                         </div>
                                         <div class="col-6">
-                                            <h4 class="vital_data">{{z.weight}} &nbsp;<span class="" id="basic-addon2">&nbsp; Kg</span></h4>
+                                            <h4 class="vital_data">{{i.weight}} &nbsp;<span class="" id="basic-addon2">&nbsp; Kg</span></h4>
                                         </div>
                                     </div>
                                     <div class="row mt-2">
@@ -255,26 +259,33 @@
                                         </div>
                                         <div class="col-6">
                                             <textarea class="mb-4 form-control vital_textarea" name="others" rows="5" value="" id="validationTextarea" placeholder=""
-                                                disabled>{{z.others}} </textarea>
+                                                disabled>{{i.others}} </textarea>
                                         </div>
                                     </div>
                                 </div>
                                 </form>
                             </div>
                         </div>
+                        
                         <div class="col-lg-6">
+                            
                             <div class="card border_card p-2 h-100">
                             <div class=" p-2 card border_card">
                                 <h4>PATIENT&nbsp;SYMPTOM</h4>
                                 <hr class="hr-center">
-                                <p class="previous_details_text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos temporibus nulla assumenda corrupti officiis pariatur accusamus delectus velit odio culpa modi in iusto error itaque alias cum, illum exercitationem reiciendis beatae ex tempora neque? Ducimus omnis, atque dicta velit maiores voluptatum repellat, amet recusandae beatae tenetur quaerat tempora eaque laudantium?</p>
+                                {% for sym in k %}
+                                <p class="previous_details_text">{{sym.symptom}}</p>
+                                {% endfor %}
                             </div>
                         
                             <div class=" mt-2 p-2 card border_card">
                                 <h4>DIAGNOSE</h4>
                                 <hr class="hr-center">
-                                <p class="previous_details_text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos temporibus nulla assumenda corrupti officiis pariatur accusamus delectus velit odio culpa modi in iusto error itaque alias cum, illum exercitationem reiciendis beatae ex tempora neque? Ducimus omnis, atque dicta velit maiores voluptatum repellat, amet recusandae beatae tenetur quaerat tempora eaque laudantium?</p>
+                                {% for sym in k %}
+                                <p class="previous_details_text">{{sym.diagnose}}</p>
+                                {% endfor %}
                             </div>
+                            
                         </div>
                         </div>
                         <div class="col-lg-6">
@@ -292,10 +303,12 @@
                                             </tr>
                                         </thead>
                                         <tbody >
+                                            {% for lab in j %}
                                             <tr>
-                                                <td>1</td>
-                                                <td>blood</td>
+                                                <td>{{forloop.counter}}</td>
+                                                <td>{{lab.lab_test}}</td>
                                              </tr>
+                                             {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
@@ -322,16 +335,18 @@
                                             </tr>
                                         </thead>
                                         <tbody >
+                                            {% for medi in l %}
                                          <tr>
-                                            <td>1</td>
-                                            <td>paracetamol</td>
-                                            <td>1</td>
-                                            <td>1.5</td>
-                                            <td>0.5</td>
-                                            <td>0</td>
-                                            <td>10</td>
-                                            <td>20</td>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{medi.medicine_name}}</td>
+                                            <td>{{medi.morning}}</td>
+                                            <td>{{medi.noon}}</td>
+                                            <td>{{medi.evening}}</td>
+                                            <td>{{medi.night}}</td>
+                                            <td>{{medi.days}}</td>
+                                            <td>{{medi.total}}</td>
                                          </tr>
+                                         {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
@@ -339,14 +354,15 @@
                         </div>
                     </div>
                 </div>
+                {% endfor %}
                     <div class="card mt-3" id="today_report">
                         <div id="1">
                         <div class="card-body">
                             <div class="card my-2 p-2 bg-secondary text-light border_card">
                                 <div class="row justify-content-between px-3">    
-                                <p class="m-0 my-auto">01/05/2021&nbsp;
-                                   7.30&nbsp;PM</p>
-                                <a href="#2"><button class="btn btn-outline-light"><i class="fa-solid fa-arrow-up"></i></button></a>
+                                <p class="m-0 my-auto">{% now "SHORT_DATETIME_FORMAT" %}&nbsp;
+                                   </p>
+                                <a href="#{{recent}}"><button class="btn btn-outline-light"><i class="fa-solid fa-arrow-up"></i></button></a>
                                </div>   
                            </div>
         
@@ -380,6 +396,7 @@
                                                         class="">Pulse&nbsp;Rate&nbsp;&nbsp;:</label>
                                                 </div>
                                                 <div class="col-6">
+                                                    <input type="hidden" id="vital_object" value="{{z.id}}">
                                                     <h4 class="vital_data">{{z.pulse_rate}} &nbsp;<span class="" id="basic-addon2">&nbsp; /&nbsp;min</span></h4>
                                                 </div>
                                             </div>
@@ -1366,7 +1383,10 @@
 		const patient_symptom = $('#patient-symptom').val();
 		const patient_object = $('#patient').val();
 		const vital_object = $('#vital_object').val();
+		const today_patient = $('#today_patient').val();
         
+        
+
 
         if(prescription_rowCount == 0){
             alert('Plz Fill the Prescription Form ');
@@ -1400,7 +1420,8 @@
                 'patient_diagnose':patient_diagnose,
                 'patient_symptom':patient_symptom,
                 'patient_object':patient_object,
-                'vital_object':vital_object
+                'vital_object':vital_object,
+                'today_patient':today_patient
             }),
 
 
