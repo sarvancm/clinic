@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from .forms import MedicineForm
-from .models import Medicine,Fees,Allergy_Medicine,Patient_medicine,Lab_test,Symptom
+from .models import Medicine,Fees,Allergy_Medicine,Patient_medicine,Lab_test,Symptom,Code_medicine
 import datetime
 from django.db.models import Q
 from django.http import JsonResponse
@@ -15,19 +15,22 @@ from management.models import AddFees,TodayPatients
 
 # add_medicine
 def add_medicine(request):
-
+    fees=Code_medicine.objects.all()
     if request.method == 'POST':
+        selected=request.POST.get('medicine_id')
+        selected_code=Code_medicine.objects.get(id=selected)
+
         form = MedicineForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'medicine added successfully')
             form = MedicineForm()
-            return render(request,'inventory/add_medicine.html', {'add':True,'form': form,'medicine':incrementid()})
+            return render(request,'inventory/add_medicine.html', {'fees':fees,'add':True,'form': form,'medicine':incrementid()})
         else:
-            return render(request,'inventory/add_medicine.html', {'add':True,'form': form,'medicine':incrementid()})
+            return render(request,'inventory/add_medicine.html', {'selected_code':selected_code,'fees':fees,'add':True,'form': form,'medicine':incrementid()})
     else:
         form = MedicineForm()
-        return render(request,'inventory/add_medicine.html', {'add':True,'form': form,'medicine':incrementid()})
+        return render(request,'inventory/add_medicine.html', {'fees':fees,'add':True,'form': form,'medicine':incrementid()})
 
 
 # search_medicine
@@ -168,18 +171,23 @@ def patients(request):
         x= [Patient_medicine.objects.get(vitals_id=j) for j in {i.vitals_id for i in Patient_medicine.objects.filter(created_at__contains=datetime.datetime.today().date())}]
         return render(request,'inventory/patients.html',{'x':x})
 
-def previous_medicine(request):
-    if request.method == "POST": 
-        id = request.POST.get('name')
-        data ={}
+def add_medicine_code(request):
+    if request.method == "POST":
+        id = request.POST.get('consultingName')
+        code=Code_medicine.objects.get(id=id)
+        data={
+            'medicine_brand':code.medicine_brand,
+            'medicine_name':code.medicine_name
+        } 
         return JsonResponse(data)
+    
 
-def next_medicine(request):
-    if request.method == "POST": 
-        id = request.POST.get('name')
-        data ={}
-        return JsonResponse(data)
+def lab_test(request):
+    return render(request,'inventory/lab_test.html')
 
+
+def prescription(request):
+    return render(request,'inventory/prescription.html')
 
 def incrementid():
     last = Medicine.objects.last()

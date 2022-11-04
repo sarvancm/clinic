@@ -1,0 +1,29 @@
+{% extends "management/navbar.html" %}
+{% block content %}
+<div class="container">
+<div class="mt-2 h-100 p-2 card border_card">
+    <h4>LAB&nbsp;TESTING</h4>
+    <hr class="hr-center">
+    <div class="table-responsive p-2 ">
+        <table class="table table-bordered table-striped text-center auto-index "
+            style="width:100%">
+            <thead>
+                <tr>
+                    <th class="text-center">S.No</th>
+                    <th class="text-center">Tests</th>
+                    
+                </tr>
+            </thead>
+            <tbody >
+                {% for lab in j %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{lab.lab_test}}</td>
+                 </tr>
+                 {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+{% endblock %}

@@ -14,7 +14,16 @@
                                 <label for="unique_id">Unique&nbsp;Id&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-lg-5">
-                                <input type="text" class="form-control mb-2" name='medicine_id' value="{{medicine}}" id="unique_id" readonly>
+                                <select class="js-example-basic-single" name='medicine_id' id="medicine_id">
+                                    {% if form.medicine_id.value %}
+                                    <option value="{{selected_code.id}}" selected >{{selected_code.medicine_id}}</option>
+                                    {% else %}
+                                    <option  disabled selected value>Select Medicine ID</option>
+                                {% endif %}
+                                    {% for i in fees %}
+                                        <option value="{{i.id}}" >{{i.medicine_id}}</option>
+                                    {% endfor %}
+                                  </select>
                             </div>
                         </div>
 
@@ -151,3 +160,37 @@
 
    
     {% endblock %}
+
+    {% block script %}
+    $(document).ready(function() {
+        $('.js-example-basic-single').select2();
+    });
+    $('#medicine_id').change(function(){
+        data1 = $(this).val();
+
+        $.ajax({
+            type: "POST",
+            url: "{% url 'inventory_add_medicine_code' %}",
+            dataType: "json",
+            headers: {
+                "X-CSRFToken": $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            data: {
+                'consultingName':$('#medicine_id').val()
+            },
+            success: function (response) {
+                
+                $('#brand_name').val(response.medicine_brand);
+                $('#medicine_name').val(response.medicine_name);
+                
+                
+                
+            },
+            error: function (response) {
+            alert('Error')
+            }
+            
+            });
+        });
+
+    {% endblock script %}

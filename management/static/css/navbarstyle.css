@@ -380,7 +380,7 @@ nav .profile-details i{
   }
   .home-content .sales-boxes .box{
     width: 100%;
-    overflow-x: scroll;
+    /* overflow-x: scroll; */
     margin-bottom: 30px;
   }
   .home-content .sales-boxes .top-sales{

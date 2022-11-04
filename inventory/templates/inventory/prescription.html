@@ -1,0 +1,41 @@
+{% extends "management/navbar.html" %}
+{% block content %}
+<div class="container-fluid">
+    <div class="mt-2 h-100 p-2 card border_card">
+        <h4>PRESCRIPTION</h4>
+        <hr class="hr-center">
+        <div class="table-responsive ">
+            <table class="table table-striped table-bordered text-center w-100" >
+                <thead>
+                    <tr>
+                        <th>select</th>
+                        <th>Medicine&nbsp;Name</th>
+                        <th>Morning</th>
+                        <th>After&nbsp;Noon</th>
+                        <th>Evening</th>
+                        <th>Night</th>
+                        <th>Days</th>
+                        <th>Total</th>
+                      
+                    </tr>
+                </thead>
+                <tbody >
+                    {% for medi in l %}
+                 <tr>
+                    <td><input type="checkbox" name="" id=""></td>
+                    <td>{{medi.medicine_name}}</td>
+                    <td>{{medi.morning}}</td>
+                    <td>{{medi.noon}}</td>
+                    <td>{{medi.evening}}</td>
+                    <td>{{medi.night}}</td>
+                    <td>{{medi.days}}</td>
+                    <td>{{medi.total}}</td>
+                 </tr>
+                 {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

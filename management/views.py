@@ -25,13 +25,6 @@ def navbar(request):
 def register(request):
     if request.method=="POST":
         form = RegisterForm(request.POST)
-        
-        # is_user=request.POST.get("is_user")
-        # if is_user==None:
-        #     is_user=0
-        # is_admin=request.POST.get("is_admin")
-        # if is_admin==None:
-        #     is_admin=0
         user_select=request.POST.get("user_select")
         if form.is_valid():  
             x=form.save() 
@@ -114,11 +107,8 @@ def list_product_details(request):
    
     if request.method=="POST": 
         selected_date=request.POST.get("date") 
-        # print(selected_date)
         date_time_obj = datetime.datetime.strptime( selected_date, '%Y-%m-%d').date()
-        # print( date_time_obj)
-        result= ProductDetails.objects.filter(created_at__date__gte= date_time_obj)
-        # print(result)        
+        result= ProductDetails.objects.filter(created_at__date__gte= date_time_obj)      
         return render(request,'management/list_product_details.html',{'x':result})
     else:
         
@@ -156,26 +146,8 @@ def edit_product_details(request,id):
     if request.user.is_admin:
         edit = ProductDetails.objects.get(id=id)
         if request.method=="POST":  
-
             form = ProductDetailsForm(instance =edit)
-            # edit.product_name = request.POST.get("product_name")
-            # edit.product_id = request.POST.get("product_id")
-            # edit.product_quantity= request.POST.get("product_quantity")
-            # edit.product_price = request.POST.get("product_price")
-            # date=request.POST.get("date")
-            # print('hi')
-            # print(str(date))
-            # if date=='':
-            #     edit.expiry_date=request.POST.get("expiry_date")
-            # else:
-            #     edit.expiry_date=date
-
-            # edit.save()    
-            # print(edit)
-        
             return render(request,"management/view_product_details.html",{'edit':edit, 'form':form})
-          
-
         else:
             form = ProductDetailsForm(instance =edit)
             return render(request,"management/edit_product_details.html",{'edit':edit, 'form':form})
@@ -222,13 +194,10 @@ def patients_register(request):
         form = PatientDetailsForm(request.POST)
        
         if form.is_valid(): 
-            form.save() 
-            # z.age=age
-            # z.save()            
-            messages.success(request, 'Details created successfully') 
+            form.save()           
+            messages.success(request, 'Details created successfully')
             return redirect('search_patient')
         else:   
-            print(form.errors) 
             messages.warning(request,'Patient Registration Failed')
             return render(request,'management/patient_register.html',{'age':age,'patient_id':increment_patient_id(),'form': form})     
     else:
@@ -255,10 +224,6 @@ def search_patient(request):
     x=  PatientDetails.objects.all()
     if request.method=="POST": 
         patient_id=request.POST.get("patient_id") 
-         
-        # phone_number=request.POST.get("phone_number")
-        # try:
-        # result=PatientDetails.objects.filter(Q(phone_number=patient_id)|Q(patient_id=patient_id))
         
         result1 = PatientDetails.objects.filter(phone_number__iexact = patient_id)
         result2 = PatientDetails.objects.filter(patient_id__iexact = patient_id)
@@ -272,12 +237,7 @@ def search_patient(request):
             result=[]
           
 
-        return render(request,'management/search_patient.html',{'x':result,'phone_number':patient_id}) 
-        # except:
-        #        result= PatientDetails.objects.filter(Q(phone_number=phone_number)|Q(patient_id=patient_id))
-               
-                
-        # return render(request,'management/search_patient.html',{'x':result,'patient_id':patient_id})             
+        return render(request,'management/search_patient.html',{'x':result,'phone_number':patient_id})              
         
     else:   
         y=  TodayPatients.objects.filter(created_at__contains=datetime.today().date())  
@@ -313,10 +273,9 @@ def update_patient_details(request):
 def add_patient(request):
     if request.method=="POST": 
         id=request.POST.get("patient_id")
-        print(id)
-        add_patient = PatientDetails.objects.filter(patient_id=id).last()
-        print(add_patient) 
+        add_patient = PatientDetails.objects.filter(patient_id=id).last() 
         TodayPatients.objects.create(patient=add_patient)
+        messages.success(request, f'{add_patient.patient_name} registered to out patient list successfully')
         return redirect('search_patient')
 
 
@@ -324,7 +283,6 @@ def add_patient(request):
 def user_view(request):
     user=request.user
     x=  TodayPatients.objects.filter(created_at__contains=datetime.today().date())
-    print(x)
     list=[]
     for i in x:
         try:
@@ -337,16 +295,11 @@ def user_view(request):
    
     return render(request,"management/user_view.html",{'x':x,'z':z,'user':user})
     
-    
-    
-
-
-
 
 def doctor_view(request,id=None):
     
     if id :
-         messages.success(request, 'Details created successfully') 
+         messages.success(request, 'consulting Details created successfully') 
     user=request.user
     if user.is_admin:
         x=  [TodayPatients.objects.get(id=i.id) for i in TodayPatients.objects.filter(created_at__contains=datetime.today().date(),is_active=True) ]
@@ -367,15 +320,16 @@ def doctor_vie(request,id):
     y=PatientDetails.objects.filter(id=today_patient.patient_id).first()
     z=GeneralVitals_new.objects.filter(id=vitals_id).first()
     medicines=Medicine.objects.all()
-    return_allergy=[i.medicine_name for i in Allergy_Medicine.objects.filter(patient_id=y.id,vitals_id=z.id)]
+    allergy_id=[i.id for i in GeneralVitals_new.objects.filter(patient_id=y.id)][-2]
+    return_allergy=[i.medicine_name for i in Allergy_Medicine.objects.filter(patient_id=y.id,vitals_id=allergy_id)]
     if today_patient.is_consulted:
-        total_vitals=GeneralVitals_new.objects.filter(patient_id=view).order_by('-id')
+        total_vitals=GeneralVitals_new.objects.filter(patient_id=view).order_by('id')
     else:
-        total_vitals=GeneralVitals_new.objects.filter(patient_id=view).order_by('-id')
+        total_vitals=GeneralVitals_new.objects.filter(patient_id=view).order_by('id')
         total_vitals=list(total_vitals)
-        total_vitals.pop(0)
+        total_vitals.pop(-1)
     if total_vitals:
-        recent=total_vitals[0].id
+        recent=total_vitals[-1].id
     else:
         recent=2
     Patient_medicine_list=[]
@@ -397,7 +351,6 @@ def doctor_vie(request,id):
         lab_list.append(lab)
         count += 1
 
-
     forward.append(0)
     backward.pop(-1)
 
@@ -409,11 +362,9 @@ def doctor_vie(request,id):
 
 def disable_view(request,id):
      disable=TodayPatients.objects.get(id=id)
-     
-     print(disable)
      disable.is_active=False
      disable.save()    
-
+     messages.success(request, f'{disable.patient.patient_name} removed from doctor view successfully') 
      return redirect('user_view')
 
 
@@ -422,15 +373,13 @@ def enable_view(request,id):
      enable=TodayPatients.objects.get(id=id)    
      enable.is_active=True
      enable.save()
+     messages.success(request, f'{enable.patient.patient_name} added to doctor view successfully') 
      return redirect('user_view')
 
 def general_vitals(request):   
-  
-   
     if request.method=="POST":
         id=request.POST.get("object")
         vitalsid=request.POST.get("vitals")  
-        print(id)  
         general=TodayPatients.objects.get(id=id)
         try:
            vital=GeneralVitals_new.objects.get(id=vitalsid)
@@ -448,7 +397,7 @@ def general_vitals(request):
             vital.others=request.POST.get("others")
             if form.is_valid():
                 vital.save()
-                messages.success(request, 'Details created successfully')            
+                messages.success(request, f'vitals for {general.patient.patient_name} updated successfully')            
                 return redirect('user_view')
             else:
                 id=request.POST.get("object")
@@ -470,24 +419,18 @@ def general_vitals(request):
 
         else:
             
-            patient_id=general.patient_id
-                    
+            patient_id=general.patient_id      
             form=GeneralVitals_newForm(request.POST)
-        
-
-            # form_error = False
             if form.is_valid():
                 x=form.save()
                 x.patient_id=patient_id
                 x.save()
                 general.vitals_id=x.id
                 general.is_vital=True
-                general.save()
-           
-                messages.success(request, 'Details created successfully')  
+                general.save()          
+                messages.success(request, f'vitals for {general.patient.patient_name} created successfully')            
                 return redirect('user_view')
             else:
-               
                 x=  TodayPatients.objects.filter(created_at__contains=datetime.today().date())
                 print(x)
                 list=[]
@@ -503,7 +446,6 @@ def general_vitals(request):
 
     else:
         form=GeneralVitals_newForm()
-        messages.success(request, 'Account created successfully') 
         x=  TodayPatients.objects.filter(created_at__contains=datetime.today().date())
         return render(request,"management/user_view.html",{'form':form,'x':x})
     
@@ -597,16 +539,13 @@ def add_fees(request):
     addfees= AddFees.objects.all()    
     if request.method=="POST":
         amount=request.POST.get('amount')
-        print(amount)
         form=AddFeesForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'created successfully')
             return redirect('add_fees') 
         else:
-            print(form.errors)
             return render(request,"management/add_fees.html",{'addfees':addfees,'form':form}) 
-
     else:
         form=AddFeesForm()
         return render(request,"management/add_fees.html",{'addfees':addfees,'form':form})
@@ -615,9 +554,7 @@ def fee_mode(request):
     if request.method=="POST":
         object=request.POST.get("ob")
         name=request.POST.get("fee_name")
-        print(name)
         amount=request.POST.get("amount")
-        print(amount)
         z=AddFees.objects.get(id=object)
         form1=AddFeesForm(request.POST,instance=z)          
         if form1.is_valid():
@@ -632,7 +569,6 @@ def fee_mode(request):
     else:
         form=AddFeesForm()
         return render(request,"management/add_fees.html",{'form':form})
-
 
 
 

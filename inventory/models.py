@@ -6,7 +6,7 @@ from management.models import PatientDetails,GeneralVitals_new
 class Code_medicine(models.Model):
     medicine_name= models.CharField(max_length=200)
     medicine_brand= models.CharField(max_length=200)
-    medicine_id= models.CharField(max_length=30)
+    medicine_id= models.CharField(max_length=30,unique=True)
 
 
 
