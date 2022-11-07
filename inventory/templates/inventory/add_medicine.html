@@ -16,12 +16,12 @@
                             <div class="col-lg-5">
                                 <select class="js-example-basic-single" name='medicine_id' id="medicine_id">
                                     {% if form.medicine_id.value %}
-                                    <option value="{{selected_code.id}}" selected >{{selected_code.medicine_id}}</option>
+                                    <option data-id="{{selected_code.id}}" value="{{selected_code.medicine_id}}" selected >{{selected_code.medicine_id}}</option>
                                     {% else %}
                                     <option  disabled selected value>Select Medicine ID</option>
                                 {% endif %}
                                     {% for i in fees %}
-                                        <option value="{{i.id}}" >{{i.medicine_id}}</option>
+                                        <option data-id="{{i.id}}" value="{{i.medicine_id}}" >{{i.medicine_id}}</option>
                                     {% endfor %}
                                   </select>
                             </div>
@@ -176,7 +176,7 @@
                 "X-CSRFToken": $('input[name=csrfmiddlewaretoken]').val(),
             },
             data: {
-                'consultingName':$('#medicine_id').val()
+                'consultingName':$('#medicine_id').find(':selected').data("id"),
             },
             success: function (response) {
                 

@@ -174,6 +174,7 @@ def patients(request):
 def add_medicine_code(request):
     if request.method == "POST":
         id = request.POST.get('consultingName')
+        print(id)
         code=Code_medicine.objects.get(id=id)
         data={
             'medicine_brand':code.medicine_brand,
@@ -182,12 +183,16 @@ def add_medicine_code(request):
         return JsonResponse(data)
     
 
-def lab_test(request):
-    return render(request,'inventory/lab_test.html')
+def lab_test(request,id):
+    prescription=Patient_medicine.objects.get(id=id)
+    lab=Lab_test.objects.filter(vitals_id=prescription.vitals_id)
+    return render(request,'inventory/lab_test.html',{'lab_test':lab})
 
 
-def prescription(request):
-    return render(request,'inventory/prescription.html')
+def prescription(request,id):
+    prescription=Patient_medicine.objects.get(id=id)
+    tablet=Patient_medicine.objects.filter(vitals_id=prescription.vitals_id)
+    return render(request,'inventory/prescription.html',{'tablet':tablet})
 
 def incrementid():
     last = Medicine.objects.last()

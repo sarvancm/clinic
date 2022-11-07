@@ -56,6 +56,25 @@
                     <tbody>
                         {% if medicines%}
                         {% for i in medicines %}
+                        {% if i.quantity < 10 %}
+                        <tr style="background-color: rgb(227, 119, 119);">
+                            <td>{{forloop.counter}}</td>
+                            <td>{{i.medicine_id}}</td>
+                            <td>{{i.medicine_brand}}</td>
+                            <td>{{i.medicine_name}}</td>
+                            <td>{{i.medicine_mg}}</td>
+                            <td>{{i.quantity}}</td>
+                            <td>{{i.expiry_date}}</td>
+                            <td>{{i.purchase_date}}</td>
+                            <td>{{i.stocked_date}}</td>
+                            <td>{{i.medicine_price}}</td>
+                            <td><i class="fa-solid fa-edit text-info" onclick="update('{{i.id}}')" id="update_medicine{{i.id}}"
+                                 object="{{i.id}}" medicine_id="{{i.medicine_id}}" medicine_name="{{i.medicine_name}}" medicine_brand="{{i.medicine_brand}}"
+                                 medicine_mg="{{i.medicine_mg}}" quantity="{{i.quantity}}" expiry_date="{{i.expiry_date|date:"Y-m-d"}}" purchase_date="{{i.purchase_date|date:"Y-m-d"}}" 
+                                 stocked_date="{{i.stocked_date|date:"Y-m-d"}}" medicine_price="{{i.medicine_price}}"
+                                 data-toggle="modal" data-target="#edit_inventory"></i></td>
+                        </tr>
+                        {% else %}
                         <tr>
                             <td>{{forloop.counter}}</td>
                             <td>{{i.medicine_id}}</td>
@@ -73,6 +92,7 @@
                                  stocked_date="{{i.stocked_date|date:"Y-m-d"}}" medicine_price="{{i.medicine_price}}"
                                  data-toggle="modal" data-target="#edit_inventory"></i></td>
                         </tr>
+                        {% endif %}
                         {% endfor %}
                         {% else %}
                         <tr>

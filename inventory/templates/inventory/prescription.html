@@ -20,7 +20,8 @@
                     </tr>
                 </thead>
                 <tbody >
-                    {% for medi in l %}
+                    {% if tablet %}
+                    {% for medi in tablet %}
                  <tr>
                     <td><input type="checkbox" name="" id=""></td>
                     <td>{{medi.medicine_name}}</td>
@@ -32,6 +33,11 @@
                     <td>{{medi.total}}</td>
                  </tr>
                  {% endfor %}
+                 {% else %}
+                        <tr>
+                            <td colspan="8" class="text-center">No Data Available</td>
+                        </tr>
+                        {% endif %}
                 </tbody>
             </table>
         </div>

@@ -41,11 +41,11 @@
                             <td> 
 
                                     
-                                     <a href="{% url 'doctor_vie' i.id %}"><button type="button"
+                                     {% comment %} <a href="{% url 'doctor_vie' i.id %}"><button type="button"
+                                         class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button></a> {% endcomment %}
+                                         <a href="{% url 'inventory_lab_test' i.id %}"><button type="button"
                                          class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button></a>
-                                         <a href="{% url 'inventory_lab_test' %}"><button type="button"
-                                         class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button></a>
-                                         <a href="{% url 'inventory_prescription' %}"><button type="button"
+                                         <a href="{% url 'inventory_prescription' i.id %}"><button type="button"
                                          class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button></a>
                                          
                                      

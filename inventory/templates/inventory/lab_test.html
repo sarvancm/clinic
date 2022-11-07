@@ -15,12 +15,18 @@
                 </tr>
             </thead>
             <tbody >
-                {% for lab in j %}
+                {% if lab %}
+                {% for lab in lab_test %}
                 <tr>
                     <td>{{forloop.counter}}</td>
                     <td>{{lab.lab_test}}</td>
                  </tr>
                  {% endfor %}
+                 {% else %}
+                        <tr>
+                            <td colspan="2" class="text-center">No Data Available</td>
+                        </tr>
+                        {% endif %}
             </tbody>
         </table>
     </div>
