@@ -17,11 +17,12 @@ from inventory.models import Medicine,Allergy_Medicine,Patient_medicine,Symptom,
 
 #navbar
 def navbar(request):
-    user=request.user
+    user=request.user                                        
   
     return render(request,"management/navbar.html",{'user':user})
 
 #user views
+@login_required(login_url='login_view')
 def register(request):
     if request.method=="POST":
         form = RegisterForm(request.POST)
@@ -40,7 +41,6 @@ def register(request):
             messages.success(request, 'Account created successfully') 
             return redirect('login_view')
         else:
-            messages.success(request, 'Account created successfully') 
             return render(request,'management/register.html', {'user_select':user_select,'form':form})             
     else:        
         
@@ -62,7 +62,7 @@ def login_view(request):
                 elif user.is_user:
                     log(request,user)
                     messages.success(request, 'login successfully') 
-                    return redirect('patients_register')
+                    return redirect('user_view')
                 else:
                     return HttpResponse("invalid")                  
             else:
@@ -187,7 +187,7 @@ def disable_product_details(request,id):
 
 # patient views
 
-
+@login_required(login_url='login_view')
 def patients_register(request):
     if request.method=="POST":
         age=request.POST.get("age")
@@ -219,7 +219,7 @@ def increment_patient_id():
     last+=1
     return ( "DB022" "%03d" % last)
 
-
+@login_required(login_url='login_view')
 def search_patient(request):
     x=  PatientDetails.objects.all()
     if request.method=="POST": 
@@ -242,17 +242,31 @@ def search_patient(request):
     else:   
         y=  TodayPatients.objects.filter(created_at__contains=datetime.today().date())  
         y =[i.patient.patient_id for i in y]   
-        print(y)
-        return render(request,'management/search_patient.html',{'x':x})  
+        return render(request,'management/search_patient.html',{})  
 
-def click_patient(request,id):
+
+@login_required(login_url='login_view')
+def click_patient(request,id,name=None):
+    patient_id=name
+    result1 = PatientDetails.objects.filter(phone_number__iexact = patient_id)
+    result2 = PatientDetails.objects.filter(patient_id__iexact = patient_id)
+    if result1:
+        result=result1
+        
+    elif result2:
+        result=result2
+        
+    else:
+        result=[]
     patient=PatientDetails.objects.get(id=id)
-    x=  PatientDetails.objects.filter(id=patient.id)
     
     
-    return render(request,"management/search_patient.html",{'patient':patient,'x':x})
+    
+    return render(request,"management/search_patient.html",{'patient':patient,'x':result,'phone_number':name})
 
 
+
+@login_required(login_url='login_view')
 def update_patient_details(request):
         
     if request.method=="POST": 
@@ -269,7 +283,7 @@ def update_patient_details(request):
 
 
 
-
+@login_required(login_url='login_view')
 def add_patient(request):
     if request.method=="POST": 
         id=request.POST.get("patient_id")
@@ -279,7 +293,7 @@ def add_patient(request):
         return redirect('search_patient')
 
 
-
+@login_required(login_url='login_view')
 def user_view(request):
     user=request.user
     x=  TodayPatients.objects.filter(created_at__contains=datetime.today().date())
@@ -294,8 +308,9 @@ def user_view(request):
     z=zip(list,x)    
    
     return render(request,"management/user_view.html",{'x':x,'z':z,'user':user})
-    
 
+
+@login_required(login_url='login_view')
 def doctor_view(request,id=None):
     
     if id :
@@ -311,7 +326,9 @@ def doctor_view(request,id=None):
         messages.success(request,"Not admin")
         return redirect('login_view')
 
-    
+
+
+@login_required(login_url='login_view') 
 def doctor_vie(request,id):  
     fees=AddFees.objects.all()
     today_patient=  TodayPatients.objects.get(id=id)
@@ -320,8 +337,12 @@ def doctor_vie(request,id):
     y=PatientDetails.objects.filter(id=today_patient.patient_id).first()
     z=GeneralVitals_new.objects.filter(id=vitals_id).first()
     medicines=Medicine.objects.all()
-    allergy_id=[i.id for i in GeneralVitals_new.objects.filter(patient_id=y.id)][-2]
-    return_allergy=[i.medicine_name for i in Allergy_Medicine.objects.filter(patient_id=y.id,vitals_id=allergy_id)]
+    allergy_id=[i.id for i in GeneralVitals_new.objects.filter(patient_id=y.id)]
+    try:
+        allergy_id=allergy_id[-2]
+        return_allergy=[i.medicine_name for i in Allergy_Medicine.objects.filter(patient_id=y.id,vitals_id=allergy_id)]
+    except:
+        return_allergy=[]
     if today_patient.is_consulted:
         total_vitals=GeneralVitals_new.objects.filter(patient_id=view).order_by('id')
     else:
@@ -359,7 +380,7 @@ def doctor_vie(request,id):
     return render(request,"management/doctor_vie.html",{'recent':recent,'today_patient':today_patient,'history':history,'x':y,'z':z,'fees':fees,'medicines':medicines,'return_allergy':return_allergy})
     
 
-
+@login_required(login_url='login_view')
 def disable_view(request,id):
      disable=TodayPatients.objects.get(id=id)
      disable.is_active=False
@@ -368,7 +389,7 @@ def disable_view(request,id):
      return redirect('user_view')
 
 
-
+@login_required(login_url='login_view')
 def enable_view(request,id):
      enable=TodayPatients.objects.get(id=id)    
      enable.is_active=True
@@ -376,6 +397,8 @@ def enable_view(request,id):
      messages.success(request, f'{enable.patient.patient_name} added to doctor view successfully') 
      return redirect('user_view')
 
+
+@login_required(login_url='login_view')
 def general_vitals(request):   
     if request.method=="POST":
         id=request.POST.get("object")
@@ -427,6 +450,7 @@ def general_vitals(request):
                 x.save()
                 general.vitals_id=x.id
                 general.is_vital=True
+                general.is_active=True
                 general.save()          
                 messages.success(request, f'vitals for {general.patient.patient_name} created successfully')            
                 return redirect('user_view')
@@ -535,6 +559,8 @@ def increment_bill_no():
     last+=1
     return ( "BBILL001" "%03d" % last)
 
+
+@login_required(login_url='login_view')
 def add_fees(request):
     addfees= AddFees.objects.all()    
     if request.method=="POST":
@@ -550,6 +576,8 @@ def add_fees(request):
         form=AddFeesForm()
         return render(request,"management/add_fees.html",{'addfees':addfees,'form':form})
 
+
+@login_required(login_url='login_view')
 def fee_mode(request):
     if request.method=="POST":
         object=request.POST.get("ob")
@@ -571,7 +599,7 @@ def fee_mode(request):
         return render(request,"management/add_fees.html",{'form':form})
 
 
-
+@login_required(login_url='login_view')
 def delete_fees(request):
     id= request.POST.get('newobid')
     x = AddFees.objects.get(id=id)

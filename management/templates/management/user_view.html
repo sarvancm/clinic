@@ -8,7 +8,7 @@
     {% comment %} <div class="container"> {% endcomment %}
         <div class="card mt-4 mx-5">
             <div class="card-body">
-                <h1 class="card-title text-center mt-4">REGISTERED OUT_PATIENT</h1><br>
+                <h1 class="card-title text-center mt-4">REGISTERED OUTPATIENT</h1><br>
                 <hr><br><br>
                 <div class="table-responsive">
                     <table id="example" class="table table-bordered text-center " style="width:100%">
@@ -47,7 +47,7 @@
     
                                 <td> 
                                     <div class="d-flex">
-                                        {% if user.is_admin %}
+                                        {% if user.is_user %}
                                     {% if i.is_active %}
                                     {% if i.is_vital%}
                                     <a href="{% url 'disable_view' i.id %}"><button type="submit"
@@ -84,7 +84,7 @@
     
                                 <td>
                                     <div class="d-flex">
-                                        {% if user.is_admin %}
+                                        {% if user.is_user %}
                                         {% if i.is_vital%}
                                         {% if i.is_active %}
                                         <a href="{% url 'disable_view' i.id %}"><button type="submit"
@@ -116,7 +116,6 @@
                 </div>
             </div>
         </div>
-    {% comment %} </div> {% endcomment %}
 </section>
 
 <!-- Modal -->
@@ -198,11 +197,21 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                           
                             <div class="col-md-6">
                                 <label for="temperature" class="">Height&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="height"  id="heig" >
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder=""
+                                        aria-label="Recipient's username"  name="height"  id="heig" 
+                                        aria-describedby="basic-addon3" >
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon3">cm</span>
+                                    </div>
+    
+                                </div>
+                               
                             </div>
                         </div>
                         <div class="form-group row">
@@ -210,7 +219,16 @@
                                 <label for="temperature" class="">Weight&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="weight"   id="weig" >
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder=""
+                                        aria-label="Recipient's username" name="weight"   id="weig"
+                                        aria-describedby="basic-addon3" >
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon3">kg</span>
+                                    </div>
+    
+                                </div>
+                              
                             </div>
                         </div>
                         <div class="form-group row">
@@ -218,8 +236,7 @@
                                 <label for="temperature" class="">Others&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-md-6">
-                                <textarea class="form-control mb-4" name="others" id="other"  placeholder=""
-                                    required></textarea>
+                                <textarea class="form-control mb-4" name="others" id="other"></textarea>
                             </div>
                         </div>
                 
@@ -227,13 +244,9 @@
 
                 <div class="modal-footer justify-content-center">
                     <button type="submit" class="btn btn-success">Save</button>
-                    <button type="reset" class="btn btn-danger ml-3">Cancel</button>
+                    <button type="reset" class="btn btn-danger ml-3" data-dismiss="modal">Cancel</button>
                 </div>
-                {% comment %} <!-- {% endfor %}
-
-{% else %} -->
                
-                <!-- {% endif %} --> {% endcomment %}
                 </form>
             </div>
 
@@ -262,8 +275,7 @@
                 <div class="modal-body">
                     <form action="{% url 'general_vitals' %}" method="POST">
                         {% csrf_token %}
-                        {% comment %} <!-- {% if z %}
-                        {% for i,j in z %} --> {% endcomment %}
+                        
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <label for="temperature" class="">Temperature&nbsp;&nbsp;:</label>
@@ -273,17 +285,14 @@
                                     <input type="text" class="form-control" placeholder="" 
                                         aria-label="Recipient's username" name="temperature" id="temp" value="{{form.temperature.value}}"
                                         aria-describedby="basic-addon2" >
-                                        
-
-                                        <!-- {% if form_error %}
-                                        $(#offerModalForm).modal("show");
-                                    {% endif %} -->
+                                    
                                     <div class="input-group-append">
                                         <span class="input-group-text" id="basic-addon2"> &#8457;</span>
                                         
                                     </div>
-                                    <span class="text-danger">{{form.temperature.errors}}</span>
+                                    
                                 </div>
+                                <span class="text-danger">{{form.temperature.errors}}</span>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -338,26 +347,43 @@
                                 <label for="temperature" class="">Height&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="height"  id="heig"  value="{{form.height.value}}" >
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder=""
+                                        aria-label="Recipient's username"  name="height"  id="heig" 
+                                        aria-describedby="basic-addon3"  value="{{form.height.value}}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon3">cm</span>
+                                    </div>
+    
+                                </div>
+                                <span class="text-danger">{{form.height.errors}}</span>
                             </div>
-                            <span class="text-danger">{{form.height.errors}}</span>
+                            
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <label for="temperature" class="">Weight&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="weight"   id="weig"  value="{{form.weight.value}}">
+                                <div class="input-group">
+                                <input type="text" class="form-control" placeholder=""
+                                aria-label="Recipient's username" name="weight" value="{{form.weight.value}}"  id="weig"
+                                aria-describedby="basic-addon3" >
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="basic-addon3">kg</span>
                             </div>
+                              
+                            </div>
+                              
                             <span class="text-danger">{{form.weight.errors}}</span>
                         </div>
+                    </div>
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <label for="temperature" class="">Others&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-md-6">
-                                <textarea class="form-control mb-4" name="others" id="other"  value="" placeholder=""
-                                    required>{{form.others.value}}</textarea>
+                                <textarea class="form-control mb-4" name="others" id="other"  value="">{{form.others.value}}</textarea>
                             </div>
                             <span class="text-danger">{{form.others.errors}}</span>
                         </div>
@@ -366,13 +392,8 @@
 
                 <div class="modal-footer justify-content-center">
                     <button type="submit" class="btn btn-success">Save</button>
-                    <button type="reset" class="btn btn-danger ml-3">Cancel</button>
+                    <button type="reset" class="btn btn-danger ml-3" data-dismiss="modal">Cancel</button>
                 </div>
-                {% comment %} <!-- {% endfor %}
-
-{% else %} -->
-               
-                <!-- {% endif %} --> {% endcomment %}
                 </form>
             </div>
 

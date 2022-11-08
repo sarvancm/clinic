@@ -76,9 +76,11 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        
+                                        {% if x %}
                                         {% for i in x %}
                                         
-                                       <tr data-href="{% url 'click_patient' i.id %}">
+                                       <tr data-href="{% url 'click_patient' id=i.id %}{{phone_number}}/">
                                             <td>{{i.id }}</td>
                                             <td>{{i.patient_id}}</td>
                                             <td>{{i.patient_name}}</td>
@@ -91,7 +93,11 @@
 
                                         </tr>
                                     {% endfor %}
-                                       
+                                    {% else %}
+                                    <tr>
+                                        <td colspan="4" class="text-center">No Data Available</td>
+                                    </tr>
+                                    {% endif %}
                                     </tbody>
                                 </table>
                             </div>

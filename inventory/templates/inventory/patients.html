@@ -41,12 +41,12 @@
                             <td> 
 
                                     
-                                     {% comment %} <a href="{% url 'doctor_vie' i.id %}"><button type="button"
-                                         class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button></a> {% endcomment %}
+                                     <a href=""><button type="button"
+                                         class="btn btn-outline-dark"  data-toggle="tooltip" data-placement="bottom" title="Bill"><i class="fa-solid fa-file-invoice"></i></button></a>
                                          <a href="{% url 'inventory_lab_test' i.id %}"><button type="button"
-                                         class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button></a>
+                                         class="btn btn-outline-dark" data-toggle="tooltip" data-placement="bottom" title="Lab Test"><i class="fa-solid fa-flask-vial"></i></button></a>
                                          <a href="{% url 'inventory_prescription' i.id %}"><button type="button"
-                                         class="btn btn-outline-dark"><i class="fa-solid fa-stethoscope"></i></button></a>
+                                         class="btn btn-outline-dark" data-toggle="tooltip" data-placement="bottom" title="Prescription"><i class="fa-solid fa-pills"></i></button></a>
                                          
                                      
                             </td>
@@ -185,5 +185,9 @@
         $('#object_id').val(newid)
 
     }
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+      })
     {% endblock script %}
 </script>

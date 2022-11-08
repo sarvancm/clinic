@@ -9,11 +9,14 @@ import json
 from pprint import pprint
 from django.views.decorators.csrf import csrf_exempt
 from management.models import AddFees,TodayPatients
+from django.contrib.auth.decorators import login_required
+
 
 
 # Create your views here.
 
 # add_medicine
+@login_required(login_url='login_view')
 def add_medicine(request):
     fees=Code_medicine.objects.all()
     if request.method == 'POST':
@@ -34,12 +37,13 @@ def add_medicine(request):
 
 
 # search_medicine
+@login_required(login_url='login_view')
 def search_medicine(request):
     if request.method == 'POST':
         name_id=request.POST.get('search')
         start_date=request.POST.get('start_date')
         end_date=request.POST.get('end_date')
-        medi=Medicine.objects.filter(Q(medicine_name=name_id)|Q(medicine_id=name_id))
+        medi=Medicine.objects.filter(Q(medicine_name__iexact=name_id)|Q(medicine_id__iexact=name_id))
         medi_id=[i.id for i in medi] 
         try:
             a = datetime.datetime.strptime( start_date, '%Y-%m-%d').date()
@@ -63,6 +67,7 @@ def search_medicine(request):
 
 
 # update_medicine
+@login_required(login_url='login_view')
 def update_medicine(request):
 
     if request.method == 'POST':
@@ -118,6 +123,7 @@ def update_medicine(request):
         return redirect('inventory_search_medicine')
 
 
+@login_required(login_url='login_view')
 def doctor(request):
     if request.method == "POST": 
         data = json.loads(request.body)
@@ -153,6 +159,7 @@ def doctor(request):
         return JsonResponse(data)
    
 
+@login_required(login_url='login_view')
 def medicine_amount(request):
     if request.method == "POST": 
         id = request.POST.get('consultingName')
@@ -162,6 +169,7 @@ def medicine_amount(request):
         return JsonResponse(data)
 
 
+@login_required(login_url='login_view')
 def patients(request):
     if request.method == "POST": 
         id = request.POST.get('name')
@@ -171,6 +179,7 @@ def patients(request):
         x= [Patient_medicine.objects.get(vitals_id=j) for j in {i.vitals_id for i in Patient_medicine.objects.filter(created_at__contains=datetime.datetime.today().date())}]
         return render(request,'inventory/patients.html',{'x':x})
 
+@login_required(login_url='login_view')
 def add_medicine_code(request):
     if request.method == "POST":
         id = request.POST.get('consultingName')
@@ -183,6 +192,7 @@ def add_medicine_code(request):
         return JsonResponse(data)
     
 
+@login_required(login_url='login_view')
 def lab_test(request,id):
     prescription=Patient_medicine.objects.get(id=id)
     lab=Lab_test.objects.filter(vitals_id=prescription.vitals_id)

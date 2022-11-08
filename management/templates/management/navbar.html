@@ -43,7 +43,7 @@
                     <span class="links_name">Dashboard</span>
                 </a>
             </li>
-           
+           {% if user.is_admin %}
             <li>
                
                     <a href="{% url 'register' %}" class="{% active_link 'register' %}">
@@ -52,54 +52,69 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{% url 'doctor_view' %}" class="{% active_link 'doctor_view || doctor_vie' %}">
+                        <i class='bx bx-pie-chart-alt-2'></i>
+                        <span class="links_name">Doctor view</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'add_fees' %}" class="{% active_link 'add_fees' %}">
+                        <i class='bx bx-box'></i>
+                        <span class="links_name">Add fees</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'inventory_add_medicine' %}" {% if add %}class="active"{% endif %}>
+                        <i class='bx bx-message'></i>
+                        <span class="links_name">Inventory</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'inventory_search_medicine' %}" {% if search %}class="active"{% endif %}>
+                        <i class="fa-regular fa-heart"></i>
+                        <span class="links_name">Search Inventory</span>
+                    </a>
+                </li>
+                {% endif %}
+                {% if user.is_user %}
+                <li>
+                    <a href="{% url 'user_view' %}" class="{% active_link 'user_view' %}">
+                        <i class='bx bx-pie-chart-alt-2'></i>
+                        <span class="links_name">User view</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'search_patient' %}" class="{% active_link 'search_patient' %}">
+                        <i class='bx bx-pie-chart-alt-2'></i>
+                        <span class="links_name">Search patient</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'patients_register' %}" class="{% active_link 'patients_register' %}">
+                        <i class='bx bx-pie-chart-alt-2'></i>
+                        <span class="links_name">Patient Registration</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'inventory_add_medicine' %}" {% if add %}class="active"{% endif %}>
+                        <i class='bx bx-message'></i>
+                        <span class="links_name">Inventory</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'inventory_search_medicine' %}" {% if search %}class="active"{% endif %}>
+                        <i class="fa-regular fa-heart"></i>
+                        <span class="links_name">Search Inventory</span>
+                    </a>
+                </li>
+
+
+                {% endif %}
+
+                <li>
                 <a href="{% url 'login_view' %}">
                     <i class='bx bx-list-ul'></i>
                     <span class="links_name">login</span>
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'user_view' %}" class="{% active_link 'user_view' %}">
-                    <i class='bx bx-pie-chart-alt-2'></i>
-                    <span class="links_name">User view</span>
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'doctor_view' %}" class="{% active_link 'doctor_view || doctor_vie' %}">
-                    <i class='bx bx-pie-chart-alt-2'></i>
-                    <span class="links_name">Doctor view</span>
-                </a>
-            </li>
-            
-            <li>
-                <a href="{% url 'search_patient' %}" class="{% active_link 'search_patient' %}">
-                    <i class='bx bx-pie-chart-alt-2'></i>
-                    <span class="links_name">Search patient</span>
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'patients_register' %}" class="{% active_link 'patients_register' %}">
-                    <i class='bx bx-pie-chart-alt-2'></i>
-                    <span class="links_name">Patient Registration</span>
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'add_fees' %}" class="{% active_link 'add_fees' %}">
-                    <i class='bx bx-box'></i>
-                    <span class="links_name">Add fees</span>
-                </a>
-            </li>
-            
-           
-            <li>
-                <a href="{% url 'inventory_add_medicine' %}" {% if add %}class="active"{% endif %}>
-                    <i class='bx bx-message'></i>
-                    <span class="links_name">Inventory</span>
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'inventory_search_medicine' %}" {% if search %}class="active"{% endif %}>
-                    <i class="fa-regular fa-heart"></i>
-                    <span class="links_name">Search Inventory</span>
                 </a>
             </li>
             <li>
@@ -111,7 +126,7 @@
             <li class="log_out" data-toggle="modal" data-target="#logoutModal">
                 <a href="#">
                     <i class='bx bx-log-out'></i>
-                    <span class="links_name">Log out</span>
+                    <span class="links_name">{{user.username}}</span>
 
                 </a>
             </li>
@@ -126,7 +141,7 @@
 
             <div>
             
-                <span class="links_name">{{user.username}}</span>
+                <span class="links_name"></span>
 
             </div>
         </nav>

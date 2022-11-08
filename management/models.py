@@ -55,7 +55,7 @@ class PatientDetails(models.Model):
             date_of_birth = self.date_of_birth
             birth=datetime.strptime(str(date_of_birth), '%Y-%m-%d')
             
-            current = date.today() # July 27th, 2020 at the time of writing
+            current = date.today()
             diff=relativedelta.relativedelta(current, birth)
             if diff.years > 0:
                 age=f'{diff.years} years'
@@ -65,33 +65,12 @@ class PatientDetails(models.Model):
                 age=f'{diff.days} days'
             elif diff.hours >0:
                 age=f'{diff.hours} hours'
+            else:
+                age= 'less than a hour'
 
             return age
             
            
-
-            # my_age = (today.year - dt.year) - int((today, today.day) < (dt.month, dt.day))
-            # if dt.month<today.month:
-            #     age=today.year-dt.year
-            #     print(age)
-            # elif dt.month>today.month:
-            #         age=today.year-dt.year+1
-            #         print(age)
-            # elif dt.month==today.month & dt.day<today.day:
-            #             age=today.year-dt.year
-            #             print(age)
-
-            # elif dt.year==today.year & dt.month==today.month:
-            #     age=dt.day-today.day
-
-
-
-            # else: 
-            #         age=today.year-dt.year-1
-            #         print(age)      
-
-            # return my_age 
-
 
 
 
@@ -138,7 +117,7 @@ class GeneralVitals_new(models.Model):
     blood_pressure_end=models.IntegerField()
     height=models.FloatField()
     weight=models.FloatField()
-    others=models.TextField()
+    others=models.TextField(null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

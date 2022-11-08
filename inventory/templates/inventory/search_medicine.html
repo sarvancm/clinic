@@ -14,7 +14,7 @@
                         <input type="text" name="search" value="{{name_id}}" class="form-control mb-2" id="search">
                     </div>
                 </div>
-                
+                {% if user.is_admin%}
                 <div class="row">
                     <div class="col-lg-6">
                         <label for="from">From</label>
@@ -25,6 +25,7 @@
                         <input type="date" name="end_date" value="{{end_date}}" class="form-control mb-2" id="to">
                     </div>
                 </div>
+                {% endif %}
 
 
                 <div class=" text-center mt-3">
@@ -204,7 +205,7 @@
                     <div class="col-lg-5 mb-2">
                         <input type="date" class="form-control mb-2" name="expiry_date" id="expiry_date">
 
-                        {% comment %} {{  form.expiry_date }} {% endcomment %}
+                        
                        
 
                     </div>
@@ -219,7 +220,7 @@
                     </div>
                     <div class="col-lg-5">
                         <input type="date" class="form-control mb-2" name="purchase_date" id="purchase_date">
-                        {% comment %} {{  form.purchase_date }} {% endcomment %}
+                        
                        
 
                     </div>
@@ -234,8 +235,7 @@
                     </div>
                     <div class="col-lg-5">
                         <input type="date" class="form-control mb-2" name="stocked_date" id="stocked_date">
-                        {% comment %} {{  form.stocked_date }} {% endcomment %}
-                        
+                    
 
                     </div>
                 </div>
@@ -246,10 +246,7 @@
                     </div>
                     <div class="col-lg-5">
                         <input type="text" class="form-control" id="medicine_price" name="medicine_price" value="{{form.medicine_price.value|default_if_none:''}}" required maxlength="10">
-                        
-                       
-
-
+                
                     </div>
                 </div>
         </div>

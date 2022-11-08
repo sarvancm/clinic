@@ -440,3 +440,9 @@ nav .profile-details i{
     width: calc(100% - 60px);
   }
 }
+
+
+.bg-color{
+  background-color: #B5EAAA;
+  color: black;
+}
