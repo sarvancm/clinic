@@ -366,10 +366,14 @@
                         <div class="card-body">
                             <div class="card my-2 p-2 bg-color text-dark border_card">
                                 <div class="row justify-content-between px-3">    
-                                    <div id="txt"></div>
-                                <p class="m-0 my-auto" ><strong>{% now "SHORT_DATETIME_FORMAT" %}&nbsp;</strong>
-                                   </p>
+                                    <div class="d-flex ">
+                                        <p class="my-auto"><strong>{% now "jS b Y " %}</strong>&nbsp;/&nbsp;</p>
+                                       <p class="my-auto" id="txt"></p>
+                                        
+                                    </div>
+                                  
                                 <a href="#{{recent}}"><button class="btn btn-outline-dark"><i class="fa-solid fa-arrow-up"></i></button></a>
+                                
                                </div>   
                            </div>
         
@@ -558,7 +562,7 @@
         
                                                                 <datalist id="medicine_names">
                                                                     {% for i in medicines %}
-                                                                    <option>{{i.medicine_name}}</option>
+                                                                    <option>{{i.medicine_name}}-{{i.medicine_brand}}</option>
                                                                     {% endfor %}
                                                 
                                                                 </datalist>
@@ -705,7 +709,7 @@ function updateClock() {
     // display first 24h clock and after line break 12h version
     var currentTimeString =  + currentHoursAP + ":" + currentMinutes + ":" + currentSeconds + " " + timeOfDay;
     // print clock js in div #clock.
-
+   
 
 
     

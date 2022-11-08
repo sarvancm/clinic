@@ -46,7 +46,20 @@
 # elif diff.hours >0:
 #     return f'{diff.hours} hours'
 
-x=[3,4]
-y=[4,6]
-t=zip(x,y)
-print(t)
+# x=[3,4]
+# y=[4,6]
+# t=zip(x,y)
+# print(t)
+
+from datetime import datetime ,date
+import calendar
+
+
+# month=datetime.now().month
+# year=datetime.now().year
+# first_date = date(year, month, 1)
+# last_date =date(year, month, calendar.monthrange(year, month)[1])
+# print_last_date=last_date.strftime("%Y-%m-%d")
+# print(last_date)
+
+# monthly_expence_objects=SalesExpense.objects.filter(created_at__date__gte=print_first_date,created_at__date__lte=print_last_date)

@@ -38,7 +38,7 @@
         </div>
         <ul class="nav-links">
             <li>
-                <a href="#" class="">
+                <a href="{% url 'dashboard' %}" class="{% active_link 'dashboard' %}">
                     <i class='bx bx-grid-alt'></i>
                     <span class="links_name">Dashboard</span>
                 </a>
@@ -61,12 +61,6 @@
                     <a href="{% url 'add_fees' %}" class="{% active_link 'add_fees' %}">
                         <i class='bx bx-box'></i>
                         <span class="links_name">Add fees</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'inventory_add_medicine' %}" {% if add %}class="active"{% endif %}>
-                        <i class='bx bx-message'></i>
-                        <span class="links_name">Inventory</span>
                     </a>
                 </li>
                 <li>
@@ -111,12 +105,7 @@
 
                 {% endif %}
 
-                <li>
-                <a href="{% url 'login_view' %}">
-                    <i class='bx bx-list-ul'></i>
-                    <span class="links_name">login</span>
-                </a>
-            </li>
+                
             <li>
                 <a href="{% url 'inventory_patients' %}"  class="{% active_link 'inventory_patients' %}">
                     <i class='bx bx-cog'></i>

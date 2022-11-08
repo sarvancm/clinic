@@ -14,7 +14,7 @@
                         <input type="text" name="search" value="{{name_id}}" class="form-control mb-2" id="search">
                     </div>
                 </div>
-                {% if user.is_admin%}
+                {% if user.is_admin %}
                 <div class="row">
                     <div class="col-lg-6">
                         <label for="from">From</label>
@@ -51,7 +51,9 @@
                             <th>Purchase&nbsp;Date</th>
                             <th>Stocked&nbsp;Date</th>
                             <th>Price</th>
+                            {% if user.is_admin %}
                             <th>Action</th>
+                            {% endif %}
                         </tr>
                     </thead>
                     <tbody>
@@ -69,11 +71,14 @@
                             <td>{{i.purchase_date}}</td>
                             <td>{{i.stocked_date}}</td>
                             <td>{{i.medicine_price}}</td>
+                            {% if user.is_admin %}
+
                             <td><i class="fa-solid fa-edit text-info" onclick="update('{{i.id}}')" id="update_medicine{{i.id}}"
                                  object="{{i.id}}" medicine_id="{{i.medicine_id}}" medicine_name="{{i.medicine_name}}" medicine_brand="{{i.medicine_brand}}"
                                  medicine_mg="{{i.medicine_mg}}" quantity="{{i.quantity}}" expiry_date="{{i.expiry_date|date:"Y-m-d"}}" purchase_date="{{i.purchase_date|date:"Y-m-d"}}" 
                                  stocked_date="{{i.stocked_date|date:"Y-m-d"}}" medicine_price="{{i.medicine_price}}"
                                  data-toggle="modal" data-target="#edit_inventory"></i></td>
+                                 {% endif %}
                         </tr>
                         {% else %}
                         <tr>
@@ -87,11 +92,13 @@
                             <td>{{i.purchase_date}}</td>
                             <td>{{i.stocked_date}}</td>
                             <td>{{i.medicine_price}}</td>
+                            {% if user.is_admin %}
                             <td><i class="fa-solid fa-edit text-info" onclick="update('{{i.id}}')" id="update_medicine{{i.id}}"
                                  object="{{i.id}}" medicine_id="{{i.medicine_id}}" medicine_name="{{i.medicine_name}}" medicine_brand="{{i.medicine_brand}}"
                                  medicine_mg="{{i.medicine_mg}}" quantity="{{i.quantity}}" expiry_date="{{i.expiry_date|date:"Y-m-d"}}" purchase_date="{{i.purchase_date|date:"Y-m-d"}}" 
                                  stocked_date="{{i.stocked_date|date:"Y-m-d"}}" medicine_price="{{i.medicine_price}}"
                                  data-toggle="modal" data-target="#edit_inventory"></i></td>
+                                 {% endif %}
                         </tr>
                         {% endif %}
                         {% endfor %}
@@ -380,7 +387,7 @@
                     </div>
                     <div class="col-lg-5">
                         <input type="date" class="form-control mb-2" name="purchase_date" value="{{form.purchase_date.value}}" id="purchase_date">
-                        {% comment %} {{  form.purchase_date }} {% endcomment %}
+                        
                         {% if form.purchase_date.errors %}
                         <span class="text-danger">{{form.purchase_date.errors}} </span>
                         {% endif %}

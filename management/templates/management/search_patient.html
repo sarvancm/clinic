@@ -5,48 +5,10 @@
 
 
     <section id="search_patient">
-        <div class="container-fluid">
-            <h1 class="text-center pt-2">SEARCH PATIENT</h1><br>
-             {% comment %} <div class="card">
-                <div class="card-body text_size">
-                    <form method="POST" action="{% url 'search_patient' %}">
-                        {% csrf_token %}
-                        <div class="form-group row">
-
-                            <div class="col-md-6 text-lg-center text-md-left text-sm-left">
-                                <label for="colFormLabel" class="col-form-label" 
-                                    >Patient ID&nbsp;&nbsp;:</label>
-                            </div>
-                            <div class="col-lg-6">
-                                <input type="text" class="form-control" name="patient_id" value="{{patient.patient_id}}" id="colFormLabel" placeholder="">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-6 text-lg-center text-md-left text-sm-left">
-                                <label for="colFormLabel"  class="col-form-label">Patient Name&nbsp;&nbsp;:</label>
-                            </div>
-                            <div class="col-lg-6">
-                                <input type="text" class="form-control" name="patient_name" value="{{patient.patient_name}}" id="colFormLabel" placeholder="">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-6 text-lg-center text-md-left text-sm-left">
-                                <label for="colFormLabel" class="col-form-label">Phone Number&nbsp;&nbsp;:</label>
-                            </div>
-                            <div class="col-lg-6">
-                                <input type="text" name="phone_number" class="form-control" value="{{patient.phone_number}}" id="colFormLabel" placeholder="" minlength="10">
-                            </div>
-                        </div>
-                    
-                    <div class="col-lg-12 d-flex justify-content-center mb-5">
-                        <button type="submit" class="btn btn-outline-success">Search</button>
-                        <button type="reset" class="btn btn-outline-danger ml-4">Cancel</button>
-                    </div>
-                </div>
-            </form>
-            </div><br> {% endcomment %}
+        <div class="container-fluid">    
             <div class="card">
                 <div class="card-body text_size">
+                    <h1 class="text-center pt-2">SEARCH PATIENT</h1><br>
                     <form action="{% url 'search_patient' %}" method="POST">
                         {% csrf_token %}
                         <div class="form-group row">

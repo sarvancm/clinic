@@ -6,13 +6,25 @@ from django.contrib.auth import login as log
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate,logout
 from django.contrib import messages
-from datetime import datetime
-from datetime import date
+from datetime import datetime,timedelta,date,time
 from django.contrib.auth.decorators import login_required
 from dateutil import relativedelta
 from inventory.models import Medicine,Allergy_Medicine,Patient_medicine,Symptom,Lab_test
+import calendar
 
 
+
+#dashboard
+@login_required(login_url='login_view')
+def dashboard(request):
+     
+    month=datetime.now().month
+    year=datetime.now().year
+    month_start = date(year, month, 1)
+    month_end =date(year, month, calendar.monthrange(year, month)[1])
+    momthly_patient = len(TodayPatients.objects.filter(created_at__date__gte=month_start,created_at__date__lte=month_end,is_consulted=True))
+    today_patient=  len( TodayPatients.objects.filter(created_at__contains=datetime.today().date(),is_consulted=True))
+    return render(request,'management/dashboard.html', {'momthly_patient':momthly_patient,'today_patient':today_patient})
 
 
 #navbar
@@ -57,11 +69,11 @@ def login_view(request):
             if user:    
                 if user.is_admin :
                     log(request,user)
-                    messages.success(request, 'login successfully') 
+                    messages.success(request, f'Welcome {username}') 
                     return redirect('doctor_view')
                 elif user.is_user:
                     log(request,user)
-                    messages.success(request, 'login successfully') 
+                    messages.success(request, f'Welcome {username}') 
                     return redirect('user_view')
                 else:
                     return HttpResponse("invalid")                  
@@ -78,6 +90,7 @@ def login_view(request):
 
 def user_logout(request):
     logout(request)
+    messages.success(request, 'logout successfully') 
     return redirect('login_view')
 
 
@@ -343,13 +356,11 @@ def doctor_vie(request,id):
         return_allergy=[i.medicine_name for i in Allergy_Medicine.objects.filter(patient_id=y.id,vitals_id=allergy_id)]
     except:
         return_allergy=[]
-    if today_patient.is_consulted:
-        total_vitals=GeneralVitals_new.objects.filter(patient_id=view).order_by('id')
-    else:
-        total_vitals=GeneralVitals_new.objects.filter(patient_id=view).order_by('id')
-        total_vitals=list(total_vitals)
-        total_vitals.pop(-1)
+
+    total_vitals=GeneralVitals_new.objects.filter(patient_id=view,is_consulted=True).order_by('id')
+
     if total_vitals:
+        total_vitals=list(total_vitals)
         recent=total_vitals[-1].id
     else:
         recent=2
