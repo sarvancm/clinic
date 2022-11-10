@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
-from .forms import MedicineForm
+from .forms import MedicineForm,CodeForm
 from .models import Medicine,Fees,Allergy_Medicine,Patient_medicine,Lab_test,Symptom,Code_medicine
 import datetime
 from django.db.models import Q
@@ -14,6 +14,23 @@ from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+
+@login_required(login_url='login_view')
+def add_fees(request):
+    addfees= AddFees.objects.all()    
+    if request.method=="POST":
+        amount=request.POST.get('amount')
+        form=CodeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'created successfully')
+            return redirect('add_fees') 
+        else:
+            return render(request,"management/add_fees.html",{'addfees':addfees,'form':form}) 
+    else:
+        form=CodeForm()
+        return render(request,"management/add_fees.html",{'addfees':addfees,'form':form})
+
 
 # add_medicine
 @login_required(login_url='login_view')
