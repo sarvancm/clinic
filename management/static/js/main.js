@@ -49,6 +49,7 @@ $(".empty_Zero").keyup(function () {
 
 });
 
+
 // Numbers Only Checking end
 
 
@@ -65,9 +66,3 @@ $(".empty_Zero").keyup(function () {
 //     scrollElement.scrollLeft =  (scrollElement.scrollWidth - scrollElement.clientWidth ) / 2;
 //   });
 
-function scrollToElement(){
-    var parentElement = document.querySelector('#total_reports')
-    var childElement = document.querySelector('#today_report')
-    parentElement.scrollTop = childElement.offsetTop - parentElement.offsetTop;
-}
-document.addEventListener('DOMContentLoaded',scrollToElement())

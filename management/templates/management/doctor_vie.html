@@ -553,71 +553,106 @@
                                             <div class="col-md-12 mt-3">
                                                 <form action="" autocomplete="off" >
                                                     <div class="row text-left text-md-center">
-                                                        <div class="col-md-6 col-lg-4 col-sm-4 mt-2">
+                                                        <div class="offset-md-8"></div>
+                                                        <div class="col-md-4 mb-3">
+                                                            <div class="toggle__center">
+                                                                <span>TAB</span>
+                                                                <input class="check" type="checkbox"
+                                                                    name="medicine_type"
+                                                                    id="medicine_type">
+                                                                <span>SYR</span>
+                                                            </div>
+                                                            <input type="hidden" id="checked-val" value="1">
+                                                        </div>
+                                                        <div class="col-md-6 mt-2">
                                                             <label for="medicine_name">Medicine Name</label>
-                                                            <input list="medicine_names" class="form-control data-list"
+                                                            <input list="medicine_names" class="form-control data-list " type="text"
                                                                 name="medicine_name"
                                                                 id="medicine_name">
+                                                                <div id="result"></div>
                                                             <div class="datalist__show">
         
                                                                 <datalist id="medicine_names">
                                                                     {% for i in medicines %}
-                                                                    <option>{{i.medicine_name}}-{{i.medicine_brand}}</option>
+                                                                    <option value="{{i.medicine_name}}-{{i.medicine_brand}}">{{i.medicine_name}}-{{i.medicine_brand}}</option>
                                                                     {% endfor %}
+
+                                                                    <!-- <option value="Edge">
+                                                                        <option value="Firefox">
+                                                                        <option value="Chrome">
+                                                                        <option value="Opera">
+                                                                        <option value="Safari"> -->
                                                 
                                                                 </datalist>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-3 col-lg-1 col-sm-4 mt-2">
+                                                        <div class="col-md-3 mt-2">
                                                             <label for="morning">Morning</label>
-                                                            <select name="" id="morning"
-                                                                class="form-control">
-                                                                <option value="0">0</option>
-                                                                <option value="0.5">0.5</option>
-                                                                <option value="1">1</option>
-                                                                <option value="1.5">1.5</option>
-                                                                <option value="2">2</option>
-                                                            </select>
+                                                            
+                                                            <div class="checked__view" id="checked__show1">
+                                                                <div class="checked__select1" id="checked__select1">
+                                                                    <select name="" id="morning"
+                                                                        class="form-control morning">
+                                                                        <option value="0">0</option>
+                                                                        <option value="0.5">0.5</option>
+                                                                        <option value="1">1</option>
+                                                                        <option value="1.5">1.5</option>
+                                                                        <option value="2">2</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="col-md-3 col-lg-1 col-sm-4 mt-2">
+                                                        <div class="col-md-3 mt-2">
                                                             <label for="after_noon">Noon</label>
-                                                            <select name="" id="after_noon"
-                                                                class="form-control">
-                                                                <option value="0">0</option>
-                                                                <option value="0.5">0.5</option>
-                                                                <option value="1">1</option>
-                                                                <option value="1.5">1.5</option>
-                                                                <option value="2">2</option>
-                                                            </select>
+                                                            <div class="checked__view" id="checked__show2">
+                                                                <div class="checked__select2" id="checked__select2">
+                                                                    <select name="" id="after_noon"
+                                                                    class="form-control">
+                                                                    <option value="0">0</option>
+                                                                    <option value="0.5">0.5</option>
+                                                                    <option value="1">1</option>
+                                                                    <option value="1.5">1.5</option>
+                                                                    <option value="2">2</option>
+                                                                </select>
+                                                                </div>
+                                                            </div>
+
                                                         </div>
-                                                        <div class="col-md-3 col-lg-1 col-sm-4 mt-2">
+                                                        <div class="col-md-3 mt-2">
                                                             <label for="evening">Evening</label>
-                                                            <select name="" id="evening"
-                                                                class="form-control">
-                                                                <option value="0">0</option>
-                                                                <option value="0.5">0.5</option>
-                                                                <option value="1">1</option>
-                                                                <option value="1.5">1.5</option>
-                                                                <option value="2">2</option>
-                                                            </select>
+                                                            <div class="checked__view" id="checked__show3">
+                                                                <div class="checked__select3" id="checked__select3">
+                                                                    <select name="" id="evening" class="form-control">
+                                                                    <option value="0">0</option>
+                                                                    <option value="0.5">0.5</option>
+                                                                    <option value="1">1</option>
+                                                                    <option value="1.5">1.5</option>
+                                                                    <option value="2">2</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="col-md-3 col-lg-1 col-sm-4 mt-2">
+                                                        <div class="col-md-3 mt-2">
                                                             <label for="night">Night</label>
-                                                            <select name="" id="night"
-                                                                class="form-control">
-                                                                <option value="0">0</option>
-                                                                <option value="0.5">0.5</option>
-                                                                <option value="1">1</option>
-                                                                <option value="1.5">1.5</option>
-                                                                <option value="2">2</option>
-                                                            </select>
+                                                            <div class="checked__view" id="checked__show4">
+                                                                <div class="checked__select4" id="checked__select4">
+                                                                    <select name="" id="night"
+                                                                        class="form-control">
+                                                                        <option value="0">0</option>
+                                                                        <option value="0.5">0.5</option>
+                                                                        <option value="1">1</option>
+                                                                        <option value="1.5">1.5</option>
+                                                                        <option value="2">2</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="col-md-3 col-lg-2 col-sm-4 mt-2">
+                                                        <div class="col-md-3 mt-2">
                                                             <label for="days">Days</label>
                                                             <input type="text" class="form-control plan_eff noZero" name=""
                                                                 id="days" maxlength="3">
                                                         </div>
-                                                        <div class="col-md-3 col-lg-2 col-sm-4 mt-2">
+                                                        <div class="col-md-3 mt-2">
                                                             <label for="total_tablets">Total&nbsp;Tablets</label>
                                                             <input type="text" class="form-control" name="" disabled
                                                                 id="total_tablets">
@@ -626,6 +661,7 @@
                                                     <hr class="hr-center">
                                                     <div class="text-center my-3">
                                                         <button type="button" id="Precreption-add" class="btn btn-outline-success">Add</button>
+                                                        <button type="button" id="Precreption-update" class="btn btn-outline-info">Update</button>
                                                         <button type="button" id="Precreption-clear" class="btn btn-outline-danger" >cancel</button>
                                                     </div>
                                                 </form>
@@ -662,16 +698,6 @@
                     </div>
                 </div>
             </div>
-           
-
-
-           
-
-           
-
-
-
-
             <div class="d-flex justify-content-center mt-4 mb-3">
                 <button type="button" class="btn btn-success" id="doctor-submit">save</button>
                 <button type="reset" class="btn btn-danger ml-4">Cancel</button>
@@ -714,16 +740,30 @@ function updateClock() {
 
     
     $("#txt").html(currentTimeString);}
-    $(document).ready(function () {
+   
+    var result='';
+    $(document).ready(function(){  
+      $('#medicine_name').focus(function(){
+        $('#medicine_names option').each(function(){
+            result=result+" "+$(this).val();
+        });
         
-    setInterval(updateClock, 1000);
-});
-
+        <!-- $('#result').show().html(result); -->
+        $('#medicine_name').unbind('focus');
+      });
+      $('#medicine_name').blur(function(){
+        <!-- $('#result').hide();   -->
+        $('#medicine_name').focus(function(){
+          <!-- $('#result').show(); -->
+        });
+     
+      });  
+    });
 
 
     $(document).ready(function() {
         $('.js-example-basic-single').select2();
-       
+        setInterval(updateClock, 1000);
     });
 
     function view(event) {
@@ -983,7 +1023,6 @@ function updateClock() {
         
         function clear_input_lab() {
             current_row_lab = null;
-            <!-- $("#lab-test").text('volvo'); -->
             let long_name = 'Volvo';
             let $element = $('#lab-test')
             let val = $element.find("option:contains('"+long_name+"')").val()
@@ -1005,65 +1044,261 @@ function updateClock() {
     
     
     $('#total_tablets').val(total);
-    
-    $('#evening').change(function () {
-        
-        var morning = parseFloat($('#morning').val() || 0);
-        var after_noon = parseFloat($('#after_noon').val() || 0);
-        var evening = parseFloat( $('#evening').val() || 0);
-        var night = parseFloat($('#night').val() || 0);
-        var days = parseFloat($('#days').val() || 1);
-        var total = (morning + after_noon + evening + night) * days;
-    
-    
-        $('#total_tablets').val(total);
+
+
+    /////    =======  Calculation  ========
+
+    $('#medicine_type').on('click', function(){
+
+        if($("#medicine_type").is(':checked')){
+            appendInputMorning();
+            appendInputAfterNoon();
+            appendInputEvening();
+            appendInputNight();
+            $('#checked-val').val('2');
+        }
+        else{
+            appendSelectMorning();
+            appendSelectAfterNoon();
+            appendSelectEvening();
+            appendSelectNight();
+            $('#checked-val').val('1');
+
+            }
     });
+
+// =========   Morning Append ========
+    function appendInputMorning() {
+            let row ='<div class="checked__input1" id="checked__input1"><div class="input-group"> <input type="text" class="form-control" name="morning" id="morning" aria-describedby="basic-addon2"><div class="input-group-append"><span class="input-group-text" id="basic-addon2">ml</span></div></div></div>'; 
+              $('#checked__show1').append(row);
+              $('#checked__select1').remove();
+              $("#morning").val('0');
+                $("#after_noon").val('0');
+                $("#evening").val('0');
+                $("#night").val('0');
+                $("#days").val('');
+                $("#total_tablets").val('0');
+      }
+
+      function appendSelectMorning() {
+        let row ='<div class="checked__select1" id="checked__select1"><select name="" id="morning"class="form-control "><option value="0">0</option><option value="0.5">0.5</option><option value="1">1</option><option value="1.5">1.5</option><option value="2">2</option></select></div>'; 
+              $('#checked__show1').append(row);
+              $('#checked__input1').remove();
+              $(".morning").val('0');
+                $("#after_noon").val('0');
+                $("#evening").val('0');
+                $("#night").val('0');
+                $("#days").val('');
+                $("#total_tablets").val('0');
+      }
+
+// =========   AfterNoon Append ========
+    function appendInputAfterNoon() {
+            let row ='<div class="checked__input2" id="checked__input2"><div class="input-group"> <input type="text" class="form-control" name="after_noon" id="after_noon" aria-describedby="basic-addon2"><div class="input-group-append"><span class="input-group-text" id="basic-addon2">ml</span></div></div></div>'; 
+              $('#checked__show2').append(row);
+              $('#checked__select2').remove();
+              $("#morning").val('0');
+                $("#after_noon").val('0');
+                $("#evening").val('0');
+                $("#night").val('0');
+                $("#days").val('');
+                $("#total_tablets").val('0');
+      }
+
+      function appendSelectAfterNoon() {
+        let row ='<div class="checked__select2" id="checked__select2"><select name="after_noon" id="after_noon"class="form-control "><option value="0">0</option><option value="0.5">0.5</option><option value="1">1</option><option value="1.5">1.5</option><option value="2">2</option></select></div>'; 
+              $('#checked__show2').append(row);
+              $('#checked__input2').remove();
+              $(".morning").val('0');
+                $("#after_noon").val('0');
+                $("#evening").val('0');
+                $("#night").val('0');
+                $("#days").val('');
+                $("#total_tablets").val('0');
+      }
+
+// =========   Evening Append ========
+      function appendInputEvening() {
+              let row ='<div class="checked__input3" id="checked__input3"><div class="input-group"> <input type="text" class="form-control" name="evening" id="evening" aria-describedby="basic-addon2"><div class="input-group-append"><span class="input-group-text" id="basic-addon2">ml</span></div></div></div>'; 
+                $('#checked__show3').append(row);
+                $('#checked__select3').remove();
+                $("#morning").val('0');
+                  $("#after_noon").val('0');
+                  $("#evening").val('0');
+                  $("#night").val('0');
+                  $("#days").val('');
+                  $("#total_tablets").val('0');
+        }
+  
+        function appendSelectEvening() {
+          let row ='<div class="checked__select3" id="checked__select3"><select name="evening" id="evening"class="form-control "><option value="0">0</option><option value="0.5">0.5</option><option value="1">1</option><option value="1.5">1.5</option><option value="2">2</option></select></div>'; 
+                $('#checked__show3').append(row);
+                $('#checked__input3').remove();
+                $(".morning").val('0');
+                  $("#after_noon").val('0');
+                  $("#evening").val('0');
+                  $("#night").val('0');
+                  $("#days").val('');
+                  $("#total_tablets").val('0');
+        }
+
+// =========   Night Append ========
+      function appendInputNight() {
+              let row ='<div class="checked__input4" id="checked__input4"><div class="input-group"> <input type="text" class="form-control" name="night" id="night" aria-describedby="basic-addon2"><div class="input-group-append"><span class="input-group-text" id="basic-addon2">ml</span></div></div></div>'; 
+                $('#checked__show4').append(row);
+                $('#checked__select4').remove();
+                $("#morning").val('0');
+                  $("#after_noon").val('0');
+                  $("#evening").val('0');
+                  $("#night").val('0');
+                  $("#days").val('');
+                  $("#total_tablets").val('0');
+        }
+  
+        function appendSelectNight() {
+          let row ='<div class="checked__select4" id="checked__select4"><select name="night" id="night"class="form-control "><option value="0">0</option><option value="0.5">0.5</option><option value="1">1</option><option value="1.5">1.5</option><option value="2">2</option></select></div>'; 
+                $('#checked__show4').append(row);
+                $('#checked__input4').remove();
+                $(".morning").val('0');
+                  $("#after_noon").val('0');
+                  $("#evening").val('0');
+                  $("#night").val('0');
+                  $("#days").val('');
+                  $("#total_tablets").val('0');
+        }
+
+      // ======= Morning 
+        $('#checked__show1').on('keyup','#morning', function(){
+                NoZeroMorning();
+                OnlyNumberMorning();
+        });
+        $('#checked__show1').on('change','#morning', function(){
+            MorningCal();
+            });
+
+    // ======= AfterNoon 
+        $('#checked__show2').on('keyup','#after_noon', function(){
+                NoZeroAfternoon();
+                OnlyNumberAfternoon();
+        });
+        $('#checked__show2').on('change','#after_noon', function(){
+            AfterNoonCal();
+        });
+
+    // ======= Evening 
+        $('#checked__show3').on('keyup','#evening', function(){
+                NoZeroEvening();
+                OnlyNumberEvening();
+        });
+        $('#checked__show3').on('change','#evening', function(){
+            EveningCal();
+        });
+
+    // ======= Night 
+        $('#checked__show4').on('keyup','#night', function(){
+                NoZeroNight();
+                OnlyNumberNight();
+        });
+        $('#checked__show4').on('change','#night', function(){
+            NightCal();
+        });
     
-    $('#morning').change(function () {
-        
-        var morning = parseFloat($('#morning').val() || 0);
-        var after_noon = parseFloat($('#after_noon').val() || 0);
-        var evening = parseFloat( $('#evening').val() || 0);
-        var night = parseFloat($('#night').val() || 0);
-        var days = parseFloat($('#days').val() || 1);
-        var total = (morning + after_noon + evening + night) * days;
+
+
+        $('#morning').change(function () {
+            MorningCal();
+        });
+        $('#evening').change(function () {
+            EveningCal();
+        });
+        $('#after_noon').change(function () {
+            AfterNoonCal();
+        });
+        $('#night').change(function () {
+            NightCal();
+        });
+
+    function MorningCal(){
+        var checked = $('#checked-val').val();
+        if(checked == '1'){
+            var morning = parseFloat($('#morning').val() || 0);
+            var after_noon = parseFloat($('#after_noon').val() || 0);
+            var evening = parseFloat( $('#evening').val() || 0);
+            var night = parseFloat($('#night').val() || 0);
+            var days = parseFloat($('#days').val() || 1);
+            var total = (morning + after_noon + evening + night) * days;
     
-        $('#total_tablets').val(total);
-    });
-    $('#after_noon').change(function () {
-        
-        var morning = parseFloat($('#morning').val() || 0);
-        var after_noon = parseFloat($('#after_noon').val() || 0);
-        var evening = parseFloat( $('#evening').val() || 0);
-        var night = parseFloat($('#night').val() || 0); 
-        var days = parseFloat($('#days').val() || 1);
-        var total = (morning + after_noon + evening + night) * days;
+            $('#total_tablets').val(total);
+        }
+        else{
+            $('#total_tablets').val('0');
+        }
+    }
+    function EveningCal(){
+        var checked = $('#checked-val').val();
+        if(checked == '1'){
+            var morning = parseFloat($('#morning').val() || 0);
+            var after_noon = parseFloat($('#after_noon').val() || 0);
+            var evening = parseFloat( $('#evening').val() || 0);
+            var night = parseFloat($('#night').val() || 0);
+            var days = parseFloat($('#days').val() || 1);
+            var total = (morning + after_noon + evening + night) * days;
+    
+            $('#total_tablets').val(total);
+        }
+        else{
+            $('#total_tablets').val('0');
+        }
+    }
+    function AfterNoonCal(){
+        var checked = $('#checked-val').val();
+        if(checked == '1'){
+            var morning = parseFloat($('#morning').val() || 0);
+            var after_noon = parseFloat($('#after_noon').val() || 0);
+            var evening = parseFloat( $('#evening').val() || 0);
+            var night = parseFloat($('#night').val() || 0);
+            var days = parseFloat($('#days').val() || 1);
+            var total = (morning + after_noon + evening + night) * days;
+    
+            $('#total_tablets').val(total);
+        }
+        else{
+            $('#total_tablets').val('0');
+        }
+    }
+    function NightCal(){
+        var checked = $('#checked-val').val();
+        if(checked == '1'){
+            var morning = parseFloat($('#morning').val() || 0);
+            var after_noon = parseFloat($('#after_noon').val() || 0);
+            var evening = parseFloat( $('#evening').val() || 0);
+            var night = parseFloat($('#night').val() || 0);
+            var days = parseFloat($('#days').val() || 1);
+            var total = (morning + after_noon + evening + night) * days;
+    
+            $('#total_tablets').val(total);
+        }
+        else{
+            $('#total_tablets').val('0');
+        }
+    }
     
     
-        $('#total_tablets').val(total);
-    });
-    $('#night').change(function () {
-        
-        var morning = parseFloat($('#morning').val() || 0);
-        var after_noon = parseFloat($('#after_noon').val() || 0);
-        var evening = parseFloat( $('#evening').val() || 0);
-        var night = parseFloat($('#night').val() || 0);
-        var days = parseFloat($('#days').val() || 1);
-        var total = (morning + after_noon + evening + night) * days;
-    
-    
-        $('#total_tablets').val(total);
-    });
     $('#days').keyup(function () {
+        if($("#medicine_type").is(':checked')){
+            $('#total_tablets').val('0');
+        }
+        else{
+            var morning = parseFloat($('#morning').val() || 0);
+            var after_noon = parseFloat($('#after_noon').val() || 0);
+            var evening = parseFloat( $('#evening').val() || 0);    
+            var night = parseFloat($('#night').val() || 0);
+            var days = parseFloat($('#days').val() || 1);
+            var total = (morning + after_noon + evening + night) * days;
         
-        var morning = parseFloat($('#morning').val() || 0);
-        var after_noon = parseFloat($('#after_noon').val() || 0);
-        var evening = parseFloat( $('#evening').val() || 0);    
-        var night = parseFloat($('#night').val() || 0);
-        var days = parseFloat($('#days').val() || 1);
-        var total = (morning + after_noon + evening + night) * days;
-    
-        $('#total_tablets').val(total);
+            $('#total_tablets').val(total);
+        }
+        
     });
     });
 
@@ -1076,6 +1311,7 @@ function updateClock() {
 
    $("#Precreption-add").on('click', function() {
         var medicineName = $("#medicine_name").val();
+        var checkedValue = $("#checked-val").val();
         var morning = $("#morning").val();
         var afterNoon = $("#after_noon").val();
         var evening = $("#evening").val();
@@ -1105,9 +1341,16 @@ function updateClock() {
         }
    });
 
+   $("#Precreption-update").on('click', function() {
+    alert('updated')
+    addPrecreption();
+
+   });
+
 
    function addPrecreption(){
         var medicineName = $("#medicine_name").val();
+        var checkedValue = $("#checked-val").val();
         var morning = $("#morning").val();
         var afterNoon = $("#after_noon").val();
         var evening = $("#evening").val();
@@ -1116,16 +1359,23 @@ function updateClock() {
         var totalTablets = $("#total_tablets").val();
 
         var count2 = $('#prescription-table tbody tr').length +1;
-        if(medicineName != '' && days != '' && totalTablets != 0){
+        if(medicineName != '' && days != ''){
             if (current_row2 == null) {
                 if ( $("#medicine_name").val().length && $("#days").val().length ) {
-                let row = '<tr data-row="'+counter2+'"> <td>'+ count2+'</td> <td class="medicine_compare">' + $("#medicine_name").val() + '</td> <td>' + $("#morning").val() + '</td> <td>' + $("#after_noon").val() + '</td> <td>' + $("#evening").val() + '</td> <td>' + $("#night").val() + '</td> <td>' + $("#days").val() + '</td><td>' + $("#total_tablets").val() + '</td> <td><button type="button" class="btn" id="Pres_update"><i class="fa-solid fa-file-pen"></i></button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn" id="pres-delete" onclick="prescriptionDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
-                $('#prescription-body').append(row);
-                counter2++;
+                    if(checkedValue == '2'){
+                        let row = '<tr data-row="'+counter2+'" data-value=' + $("#checked-val").val() + '> <td>'+ count2+'</td> <td class="medicine_compare">' + $("#medicine_name").val() + '</td><td>' + $("#morning").val() + '&nbsp;ml</td> <td>' + $("#after_noon").val() + '&nbsp;ml</td> <td>' + $("#evening").val() + '&nbsp;ml</td> <td>' + $("#night").val() + '&nbsp;ml</td> <td>' + $("#days").val() + '</td><td>' + $("#total_tablets").val() + '</td> <td><button type="button" class="btn" id="pres-delete" onclick="prescriptionDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
+                        $('#prescription-body').append(row);
+                        counter2++;
+                    }
+                    else{
+                        let row = '<tr data-row="'+counter2+'" data-value=' + $("#checked-val").val() + '> <td>'+ count2+'</td> <td class="medicine_compare">' + $("#medicine_name").val() + '</td><td>' + $("#morning").val() + '</td> <td>' + $("#after_noon").val() + '</td> <td>' + $("#evening").val() + '</td> <td>' + $("#night").val() + '</td> <td>' + $("#days").val() + '</td><td>' + $("#total_tablets").val() + '</td> <td><button type="button" class="btn" id="pres-delete" onclick="prescriptionDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
+                        $('#prescription-body').append(row);
+                        counter2++;
+                    }
                 }
                 } else {
         
-                var select_row = $('tr[data-row='+current_row2+']');
+                var select_row = $('tr[data-row='+current_row2+'][data-value='+$("#checked-val").val()+']');
                 let cells = $(select_row).find('td');
                 $(cells[1]).text($("#medicine_name").val());
                 $(cells[2]).text($("#morning").val());
@@ -1139,7 +1389,8 @@ function updateClock() {
                     currentRow1.removeClass('selected');
 
                     // Icon Change
-                    $('#Precreption-add').html('Add');
+                    $('#Precreption-add').css("display", "inline-block");
+                    $('#Precreption-update').css("display", "none");
         
                 }
         clear_input2();
@@ -1153,17 +1404,18 @@ function updateClock() {
             var tableRow = $('#prescription-table tbody tr');
             tableRow.removeClass('selected');
 
-        let cells = $(this).parents('tr').find('td');
+            let cells = $(this).parents('tr').find('td');
 
-        var currentRow = $(this).closest("tr");
-        currentRow.addClass('selected');
+            var currentRow = $(this).closest("tr");
+            currentRow.addClass('selected');
 
-        // Icon Change
-        $('#Precreption-add').html('Update');
+            // Icon Change
+            $('#Precreption-add').css("display", "none");
+            $('#Precreption-update').css("display", "inline-block");
 
 
-        $("#medicine_name").val($(cells[1]).text());
-        $("#morning").val($(cells[2]).text());
+            $("#medicine_name").val($(cells[1]).text());
+            $("#morning").val($(cells[2]).text());
             $("#after_noon").val($(cells[3]).text());
             $("#evening").val($(cells[4]).text());
             $("#night").val($(cells[5]).text());
@@ -1489,15 +1741,60 @@ function updateClock() {
 	});
 
 
-    jQuery('.plan_eff').keyup(function () {     
-        this.value = this.value.replace(/[^0-9]/g,'');
-      });
-
-      $(".noZero").keyup(function(){
-        var value = $(this).val();
+// Morning
+    function NoZeroMorning(){
+        var value = $('#morning').val();
         value = value.replace(/^(0*)/,"");
-        $(this).val(value);
-    });
+        $('#morning').val(value);
+    }
 
+    function OnlyNumberMorning(){
+        var value = $('#morning').val();
+        value = value.replace(/[^0-9]/g,'');
+        $('#morning').val(value);
+    }
+// Afternoon
+    function NoZeroAfternoon(){
+        var value = $('#after_noon').val();
+        value = value.replace(/^(0*)/,"");
+        $('#after_noon').val(value);
+    }
+
+    function OnlyNumberAfternoon(){
+        var value = $('#after_noon').val();
+        value = value.replace(/[^0-9]/g,'');
+        $('#after_noon').val(value);
+    }
+// Evening
+    function NoZeroEvening(){
+        var value = $('#evening').val();
+        value = value.replace(/^(0*)/,"");
+        $('#evening').val(value);
+    }
+
+    function OnlyNumberEvening(){
+        var value = $('#evening').val();
+        value = value.replace(/[^0-9]/g,'');
+        $('#evening').val(value);
+    }
+// Night
+    function NoZeroNight(){
+        var value = $('#night').val();
+        value = value.replace(/^(0*)/,"");
+        $('#night').val(value);
+    }
+
+    function OnlyNumberNight(){
+        var value = $('#night').val();
+        value = value.replace(/[^0-9]/g,'');
+        $('#night').val(value);
+    }
+
+    function scrollToElement(){
+        var parentElement = document.querySelector('#total_reports')
+        var childElement = document.querySelector('#today_report')
+        parentElement.scrollTop = childElement.offsetTop - parentElement.offsetTop;
+    }
+    document.addEventListener('DOMContentLoaded',scrollToElement())
     {% endblock script %}
 

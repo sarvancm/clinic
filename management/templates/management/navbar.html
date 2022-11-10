@@ -142,9 +142,6 @@
                     {% for message in messages %}
                     <div {% if message.tags %} class="alert alert-{{ message.tags }} alert-dismissible fade show" {% endif %} role="alert">
                        <h5>{{ message }}</h5>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
                       </div>
                     {% endfor %}
                 </ul>
@@ -254,6 +251,12 @@
             } else
                 sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
         }
+
+        const myTimeout = setTimeout(fadeOut, 2000);
+        function fadeOut(){
+            $('.err_msg').hide(); 
+            $('.errorholder').fadeOut().empty();
+          }
         {% block script %}
         
 
@@ -263,7 +266,8 @@
                 return false;
             return true;
         } 
-{% endblock script %}
+        
+    {% endblock script %}
     </script>
     </body>
 </html>
