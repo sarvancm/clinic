@@ -62,7 +62,7 @@ class Patient_medicine(models.Model):
     night= models.CharField(max_length=200,null=True, blank=True)
     days= models.CharField(max_length=200,null=True, blank=True)
     total= models.CharField(max_length=200,null=True, blank=True)
-    
+    is_delivered=models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

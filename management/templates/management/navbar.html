@@ -90,6 +90,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{% url 'inventory_add_code' %}" class="{% active_link 'inventory_add_code' %}">
+                        <i class='bx bx-box'></i>
+                        <span class="links_name">Add Code</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{% url 'inventory_add_medicine' %}" {% if add %}class="active"{% endif %}>
                         <i class='bx bx-message'></i>
                         <span class="links_name">Inventory</span>
@@ -105,7 +111,7 @@
 
                 {% endif %}
 
-                
+                    
             <li>
                 <a href="{% url 'inventory_patients' %}"  class="{% active_link 'inventory_patients' %}">
                     <i class='bx bx-cog'></i>
@@ -150,7 +156,7 @@
           {% block content %}
 
             {% endblock %}
-            {% comment %} <!-- <div class="overview-boxes">
+            {% comment %} <div class="overview-boxes">
                 <div class="box">
                     <div class="right-side">
                         <div class="box-topic">Doctor</div>
@@ -195,10 +201,10 @@
                         </div>
                     </div>
                     <i class='bx bxs-cart-download cart four'></i>
-                </div> --> {% endcomment %}
+                </div>
             </div>
         </div>
-        
+         {% endcomment %}
 
   
   <!-- Modal -->

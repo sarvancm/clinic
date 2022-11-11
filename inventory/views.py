@@ -16,20 +16,54 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 @login_required(login_url='login_view')
-def add_fees(request):
-    addfees= AddFees.objects.all()    
+def add_code(request):
+    addfees= Code_medicine.objects.all()    
     if request.method=="POST":
         amount=request.POST.get('amount')
         form=CodeForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'created successfully')
-            return redirect('add_fees') 
+            return redirect('inventory_add_code') 
         else:
-            return render(request,"management/add_fees.html",{'addfees':addfees,'form':form}) 
+            return render(request,"inventory/add_code.html",{'addfees':addfees,'form':form}) 
     else:
         form=CodeForm()
-        return render(request,"management/add_fees.html",{'addfees':addfees,'form':form})
+        return render(request,"inventory/add_code.html",{'addfees':addfees,'form':form})
+
+
+@login_required(login_url='login_view')
+def update_code(request):
+    if request.method=="POST":
+        object=request.POST.get("ob")
+        name=request.POST.get("medicine_id")
+        amount=request.POST.get("medicine_name")
+        brand=request.POST.get("medicine_brand")
+        z=Code_medicine.objects.get(id=object)
+        form1=CodeForm(request.POST,instance=z)          
+        if form1.is_valid():
+            z.medicine_id= name
+            z.medicine_name=  amount 
+            z.medicine_brand=  brand 
+            z.save()   
+            messages.success(request, f'{z.medicine_id} Updated successfully')
+            return redirect('inventory_add_code')
+        else:
+            addfees= Code_medicine.objects.all()
+            return render(request,"management/add_fees.html",{'form1':form1,'err':True,'object':object,'addfees':addfees})
+    else:
+        form=CodeForm()
+        return render(request,"management/add_fees.html",{'form':form})
+
+
+@login_required(login_url='login_view')
+def delete_code(request):
+    id= request.POST.get('newobid')
+    x = Code_medicine.objects.get(id=id)
+    name=x.medicine_id
+    x.delete()
+    messages.success(request, f'{name} deleted successfully')
+    return redirect('inventory_add_code')
 
 
 # add_medicine
@@ -60,18 +94,19 @@ def search_medicine(request):
         name_id=request.POST.get('search')
         start_date=request.POST.get('start_date')
         end_date=request.POST.get('end_date')
-        medi=Medicine.objects.filter(Q(medicine_name__iexact=name_id)|Q(medicine_id__iexact=name_id))
+        medi=[i for i in Medicine.objects.filter(Q(medicine_name__iexact=name_id)|Q(medicine_id__iexact=name_id)) if i.quantity >0]
         medi_id=[i.id for i in medi] 
         try:
             a = datetime.datetime.strptime( start_date, '%Y-%m-%d').date()
             b = datetime.datetime.strptime( end_date, '%Y-%m-%d').date()
             medicines=Medicine.objects.filter(created_at__date__gte=a,created_at__date__lte=b)
+            # medicines=[i for i in medicines if i.quantity > 0]
         except:
             a=start_date
             b=end_date
             medicines=[]
         if medi_id and medicines:
-            medicines=[i for i in medicines if i.id in medi_id]
+            medicines=[i for i in medicines if i.id in medi_id and i.quantity > 0 ]
         elif medi:
             medicines=medi
         else:
@@ -193,18 +228,19 @@ def patients(request):
         data ={}
         return JsonResponse(data)
     else:
-        x= [Patient_medicine.objects.get(vitals_id=j) for j in {i.vitals_id for i in Patient_medicine.objects.filter(created_at__contains=datetime.datetime.today().date())}]
+        x= [Patient_medicine.objects.filter(vitals_id=j).first() for j in {i.vitals_id for i in Patient_medicine.objects.filter(created_at__contains=datetime.datetime.today().date())}]
         return render(request,'inventory/patients.html',{'x':x})
 
+
+
 @login_required(login_url='login_view')
-def add_medicine_code(request):
+def medicine_quantity(request):
     if request.method == "POST":
-        id = request.POST.get('consultingName')
+        id = request.POST.get('quantity_id')
         print(id)
-        code=Code_medicine.objects.get(id=id)
+        code=Medicine.objects.get(id=id)
         data={
-            'medicine_brand':code.medicine_brand,
-            'medicine_name':code.medicine_name
+            'quantity':code.quantity
         } 
         return JsonResponse(data)
     
@@ -220,6 +256,17 @@ def prescription(request,id):
     prescription=Patient_medicine.objects.get(id=id)
     tablet=Patient_medicine.objects.filter(vitals_id=prescription.vitals_id)
     return render(request,'inventory/prescription.html',{'tablet':tablet})
+
+
+
+
+def medicine_bill(request):
+    
+
+
+    return render(request,'inventory/prescription.html')
+
+
 
 def incrementid():
     last = Medicine.objects.last()

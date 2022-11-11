@@ -28,6 +28,7 @@ def dashboard(request):
 
 
 #navbar
+@login_required(login_url='login_view')
 def navbar(request):
     user=request.user                                        
   
