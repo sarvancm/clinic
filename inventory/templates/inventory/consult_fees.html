@@ -2,7 +2,7 @@
 {% block content %}
 <div class="container">
 <div class="mt-2 h-100 p-2 card border_card">
-    <h4>LAB&nbsp;TESTING</h4>
+    <h4>FEES</h4>
     <hr class="hr-center">
     <div class="table-responsive p-2 ">
         <table class="table table-bordered table-striped text-center auto-index "
@@ -10,7 +10,8 @@
             <thead>
                 <tr>
                     <th class="text-center">S.No</th>
-                    <th class="text-center">Tests</th>
+                    <th class="text-center">name</th>
+                    <th class="text-center">amount</th>
                     
                 </tr>
             </thead>
@@ -19,12 +20,13 @@
                 {% for lab in lab_test %}
                 <tr>
                     <td>{{forloop.counter}}</td>
-                    <td>{{lab.lab_test}}</td>
+                    <td>{{lab.fees_type}}</td>
+                    <td>{{lab.fees_amount}}</td>
                  </tr>
                  {% endfor %}
                  {% else %}
                         <tr>
-                            <td colspan="2" class="text-center">No Data Available</td>
+                            <td colspan="3" class="text-center">No Data Available</td>
                         </tr>
                         {% endif %}
             </tbody>

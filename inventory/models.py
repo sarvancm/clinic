@@ -14,7 +14,7 @@ class Medicine(models.Model):
     code=models.ForeignKey(Code_medicine,on_delete=models.CASCADE,null=True,blank=True)
     medicine_name= models.CharField(max_length=200)
     medicine_brand= models.CharField(max_length=200)
-    medicine_id= models.CharField(max_length=30)
+    medicine_id= models.CharField(max_length=30,null=True,blank=True)
     quantity= models.IntegerField()
     medicine_mg= models.DecimalField(max_digits = 16, decimal_places = 2)
     medicine_price= models.DecimalField(max_digits = 16, decimal_places = 2)

@@ -170,7 +170,7 @@
                         <label for="medicine_name" class="text-center">Medicine&nbsp;Name&nbsp;&nbsp;:</label>
                     </div>
                     <div class="col-lg-5">
-                        <input type="text" name="medicine_name" class="form-control mb-2" value="{{form.medicine_name.value|default_if_none:''}}" id="medicine_name" required>
+                        <input type="text" name="medicine_name" class="form-control mb-2" value="{{form.medicine_name.value|default_if_none:''}}" id="medicine_name" required readonly>
                        
                     </div>
                 </div>
@@ -322,7 +322,7 @@
                         <label for="medicine_name" class="text-center">Medicine&nbsp;Name&nbsp;&nbsp;:</label>
                     </div>
                     <div class="col-lg-5">
-                        <input type="text" name="medicine_name" class="form-control mb-2" value="{{form.medicine_name.value|default_if_none:''}}" id="medicine_name" required>
+                        <input type="text" name="medicine_name" class="form-control mb-2" value="{{form.medicine_name.value|default_if_none:''}}" id="medicine_name" required readonly>
                         {% if form.medicine_name.errors %}
                         <span class="text-danger">{{form.medicine_name.errors}} </span>
                         {% endif %}

@@ -9,7 +9,7 @@ from django.contrib import messages
 from datetime import datetime,timedelta,date,time
 from django.contrib.auth.decorators import login_required
 from dateutil import relativedelta
-from inventory.models import Medicine,Allergy_Medicine,Patient_medicine,Symptom,Lab_test
+from inventory.models import Medicine,Allergy_Medicine,Patient_medicine,Symptom,Lab_test,Code_medicine
 import calendar
 
 
@@ -24,7 +24,7 @@ def dashboard(request):
     month_end =date(year, month, calendar.monthrange(year, month)[1])
     momthly_patient = len(TodayPatients.objects.filter(created_at__date__gte=month_start,created_at__date__lte=month_end,is_consulted=True))
     today_patient=  len( TodayPatients.objects.filter(created_at__contains=datetime.today().date(),is_consulted=True))
-    return render(request,'management/dashboard.html', {'momthly_patient':momthly_patient,'today_patient':today_patient})
+    return render(request,'management/dashboard.html', {'momthly_patient':momthly_patient,'today_patient':today_patient,'dash':True})
 
 
 #navbar
@@ -302,9 +302,14 @@ def add_patient(request):
     if request.method=="POST": 
         id=request.POST.get("patient_id")
         add_patient = PatientDetails.objects.filter(patient_id=id).last() 
-        TodayPatients.objects.create(patient=add_patient)
-        messages.success(request, f'{add_patient.patient_name} registered to out patient list successfully')
-        return redirect('search_patient')
+        if add_patient:
+            TodayPatients.objects.create(patient=add_patient)
+            messages.success(request, f'{add_patient.patient_name} registered to out patient list successfully')
+            return redirect('search_patient')
+        else:
+            messages.warning(request, f'select the patient first')
+            return redirect('search_patient')
+
 
 
 @login_required(login_url='login_view')
@@ -350,7 +355,7 @@ def doctor_vie(request,id):
     vitals_id= today_patient.vitals_id
     y=PatientDetails.objects.filter(id=today_patient.patient_id).first()
     z=GeneralVitals_new.objects.filter(id=vitals_id).first()
-    medicines=Medicine.objects.all()
+    medicines=Code_medicine.objects.all()
     allergy_id=[i.id for i in GeneralVitals_new.objects.filter(patient_id=y.id)]
     try:
         allergy_id=allergy_id[-2]

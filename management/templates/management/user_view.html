@@ -5,7 +5,6 @@
 
 
 <section id="out_patient">
-    {% comment %} <div class="container"> {% endcomment %}
         <div class="card mt-4 mx-5">
             <div class="card-body">
                 <h1 class="card-title text-center mt-4">REGISTERED OUTPATIENT</h1><br>
@@ -39,10 +38,14 @@
                                 <td>{{i.patient.phone_number}}</td>
     
     
-                                <td>{% if i.is_active %}
+                                <td>{% if i.is_consulted %}
+                                    <strong>Consulted</strong>
+                                    {% else %}
+                                    {% if i.is_active %}
                                     <strong>Active</strong>
                                     {% else %}
                                     <strong>In-Active</strong>{% endif %}
+                                    {% endif %}
                                 </td>
     
                                 <td> 

@@ -16,14 +16,14 @@
                                 <label for="unique_id">Unique&nbsp;Id&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-lg-5">
-                                <select class="js-example-basic-single" name='medicine_id' id="medicine_id">
+                                <select class="js-example-basic-single" name='code' id="medicine_id">
                                     {% if form.medicine_id.value %}
-                                    <option data-id="{{selected_code.id}}" value="{{selected_code.medicine_id}}" selected >{{selected_code.medicine_id}}</option>
+                                    <option data-id="{{selected_code.id}}" value="{{selected_code.id}}" selected >{{selected_code.medicine_id}}</option>
                                     {% else %}
                                     <option  disabled selected value>Select Medicine ID</option>
                                 {% endif %}
                                     {% for i in fees %}
-                                        <option data-id="{{i.id}}" value="{{i.medicine_id}}" >{{i.medicine_id}}</option>
+                                        <option data-id="{{i.id}}" value="{{i.id}}" >{{i.medicine_id}}</option>
                                     {% endfor %}
                                   </select>
                             </div>
@@ -47,7 +47,7 @@
                                 <label for="medicine_name" class="text-center">Medicine&nbsp;Name&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-lg-5">
-                                <input type="text" name="medicine_name" class="form-control mb-2" value="{{form.medicine_name.value|default_if_none:''}}" id="medicine_name" required>
+                                <input type="text" name="medicine_name" class="form-control mb-2" value="{{form.medicine_name.value|default_if_none:''}}" id="medicine_name" required readonly>
                                 {% if form.medicine_name.errors %}
                                 <span class="text-danger">{{form.medicine_name.errors}} </span>
                                 {% endif %}

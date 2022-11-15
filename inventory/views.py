@@ -71,12 +71,14 @@ def delete_code(request):
 def add_medicine(request):
     fees=Code_medicine.objects.all()
     if request.method == 'POST':
-        selected=request.POST.get('medicine_id')
+        selected=request.POST.get('code')
         selected_code=Code_medicine.objects.get(id=selected)
 
         form = MedicineForm(request.POST)
         if form.is_valid():
-            form.save()
+            x=form.save()
+            x.medicine_id=selected_code.medicine_id
+            x.save()
             messages.success(request, 'medicine added successfully')
             form = MedicineForm()
             return render(request,'inventory/add_medicine.html', {'fees':fees,'add':True,'form': form,'medicine':incrementid()})
@@ -228,7 +230,7 @@ def patients(request):
         data ={}
         return JsonResponse(data)
     else:
-        x= [Patient_medicine.objects.filter(vitals_id=j).first() for j in {i.vitals_id for i in Patient_medicine.objects.filter(created_at__contains=datetime.datetime.today().date())}]
+        x= TodayPatients.objects.filter(created_at__contains=datetime.datetime.today().date(),is_consulted=True)
         return render(request,'inventory/patients.html',{'x':x})
 
 
@@ -247,25 +249,78 @@ def medicine_quantity(request):
 
 @login_required(login_url='login_view')
 def lab_test(request,id):
-    prescription=Patient_medicine.objects.get(id=id)
+    prescription=TodayPatients.objects.get(id=id)
+    print(prescription.vitals_id)
     lab=Lab_test.objects.filter(vitals_id=prescription.vitals_id)
     return render(request,'inventory/lab_test.html',{'lab_test':lab})
 
 
+@login_required(login_url='login_view')
+def consult_fees(request,id):
+    prescription=TodayPatients.objects.get(id=id)
+    print(prescription.vitals_id)
+    lab=Fees.objects.filter(vitals_id=prescription.vitals_id)
+    return render(request,'inventory/consult_fees.html',{'lab_test':lab})
+
+
+@login_required(login_url='login_view')
+def out_medicine(request,id):
+    prescription=TodayPatients.objects.get(id=id)
+    tablet= Patient_medicine.objects.filter(vitals_id=prescription.vitals_id,is_delivered=False)
+    return render(request,'inventory/out_medicine.html',{'tablet':tablet})
+
 def prescription(request,id):
-    prescription=Patient_medicine.objects.get(id=id)
+    prescription=TodayPatients.objects.get(id=id)
     tablet=Patient_medicine.objects.filter(vitals_id=prescription.vitals_id)
+    if request.method == "POST": 
+        id_list = request.POST.get('id')
+        x = id_list.split(",")
+        for i in x:
+            try:
+                patients=Patient_medicine.objects.get(id=i)
+                prescription.is_seperated=True
+                patients.is_delivered=True
+                patients.save()
+                prescription.save()
+            except:
+                print("hi")
+        return redirect('inventory_patients')        
     return render(request,'inventory/prescription.html',{'tablet':tablet})
 
 
 
 
-def medicine_bill(request):
+def medicine_bill(request,id):
     
+    prescription=TodayPatients.objects.get(id=id)
+    table=Patient_medicine.objects.filter(vitals_id=prescription.vitals_id,is_delivered=True)
+    # amount=[k.medicine_price for k in Medicine.objects.filter(medicine_name=i) for i in  [i.medicine_name for i in tablet]]
+    name=[i.medicine_name for i in table]
+
+    amount=[]
+    for i in name:
+        medi=Medicine.objects.filter(medicine_name=i)
+        price=[]
+        for j in medi:
+            price.append(j.medicine_price)
+        amount.append(max(price))
+    print(amount)
+            
+    tablet=zip(table,amount)
+
+    return render(request,'inventory/medicine_bill.html',{'tablet':tablet})
 
 
-    return render(request,'inventory/prescription.html')
-
+def add_medicine_code(request):
+    if request.method == "POST":
+        id = request.POST.get('consultingName')
+        print(id)
+        code=Code_medicine.objects.get(id=id)
+        data={
+            'medicine_name':code.medicine_name,
+            'medicine_brand':code.medicine_brand
+        } 
+        return JsonResponse(data)
 
 
 def incrementid():

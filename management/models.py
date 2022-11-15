@@ -131,6 +131,7 @@ class TodayPatients(models.Model):
     is_active=   models.BooleanField('Is active', default=False) 
     is_vital=   models.BooleanField(default=False)
     is_consulted=   models.BooleanField(default=False)
+    is_seperated=models.BooleanField(default=False)
     vitals=models.ForeignKey(GeneralVitals_new,on_delete=models.CASCADE,null=True,blank=True)
 
     def __str__(self):

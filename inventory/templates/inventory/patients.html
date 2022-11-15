@@ -38,12 +38,20 @@
                             <td> 
 
                                     
-                                     <a href=""><button type="button"
-                                         class="btn btn-outline-dark"  data-toggle="tooltip" data-placement="bottom" title="Bill"><i class="fa-solid fa-file-invoice"></i></button></a>
+                                     <a href="{% url 'inventory_consult_fees' i.id %}"><button type="button"
+                                         class="btn btn-outline-dark"  data-toggle="tooltip" data-placement="bottom" title="Fees"><i class="fa-solid fa-file-invoice"></i></button></a>
                                          <a href="{% url 'inventory_lab_test' i.id %}"><button type="button"
                                          class="btn btn-outline-dark" data-toggle="tooltip" data-placement="bottom" title="Lab Test"><i class="fa-solid fa-flask-vial"></i></button></a>
+                                         {% if i.is_seperated %}
+                                         <a href="{% url 'inventory_medicine_bill' i.id %}"><button type="button"
+                                            class="btn btn-outline-dark"  data-toggle="tooltip" data-placement="bottom" title="Bill"><i class="fa-solid fa-file-invoice"></i></button></a>
+                                            <a href="{% url 'inventory_out_medicine' i.id %}"><button type="button"
+                                                class="btn btn-outline-dark"  data-toggle="tooltip" data-placement="bottom" title="Out_list"><i class="fa-solid fa-file-invoice"></i></button></a>
+                                                
+                                         {% else %}
                                          <a href="{% url 'inventory_prescription' i.id %}"><button type="button"
                                          class="btn btn-outline-dark" data-toggle="tooltip" data-placement="bottom" title="Prescription"><i class="fa-solid fa-pills"></i></button></a>
+                                         {% endif %}
                                          
                                      
                             </td>
