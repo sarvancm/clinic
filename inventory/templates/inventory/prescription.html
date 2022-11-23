@@ -41,6 +41,7 @@
                 </tbody>
             </table>
         </div>
+        {% if user.is_user %}
        <div class="d-flex justify-content-center">
         <form action="" method="post">
             {% csrf_token %}
@@ -49,6 +50,7 @@
             <button type="button" id="print_btn" class="btn btn-outline-success" >Print</button>
         </form>
        </div>
+       {% endif %}
     </div>
 </div>
 
