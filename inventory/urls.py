@@ -14,11 +14,15 @@ urlpatterns = [
     path('medicine_quantity/', views.medicine_quantity, name='inventory_medicine_quantity'),
     path('patients/', views.patients, name='inventory_patients'),
     path('lab_test/<int:id>/', views.lab_test, name='inventory_lab_test'),
+    path('lab_test/<int:id>/<str:printer>/', views.lab_test, name='inventory_lab_test'),
     path('out_medicine/<int:id>/', views.out_medicine, name='inventory_out_medicine'),
+    path('out_medicine/<int:id>/<str:printer>/', views.out_medicine, name='inventory_out_medicine'),
     path('consult_fees/<int:id>/', views.consult_fees, name='inventory_consult_fees'),
+    path('consult_fees/<int:id>/<str:printer>/', views.consult_fees, name='inventory_consult_fees'),
     path('prescription/<int:id>/', views.prescription, name='inventory_prescription'),
     path('update_code/',views.update_code, name='inventory_update_code'),
     path('delete_code/',views.delete_code, name='inventory_delete_code'),
     path('medicine_bill/<int:id>/',views.medicine_bill, name='inventory_medicine_bill'),
+    path('medicine_bill/<int:id>/<str:printer>/',views.medicine_bill, name='inventory_medicine_bill'),
     
 ]

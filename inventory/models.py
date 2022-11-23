@@ -85,4 +85,9 @@ class Symptom(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-    
+class medicine_total_amount(models.Model):
+    patient=models.ForeignKey(PatientDetails,on_delete=models.CASCADE,null=True,blank=True)
+    vitals=models.ForeignKey(GeneralVitals_new,on_delete=models.CASCADE,null=True,blank=True)
+    medicine_total_amount=models.DecimalField(max_digits = 16, decimal_places = 2,null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

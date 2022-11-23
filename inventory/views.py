@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from .forms import MedicineForm,CodeForm
-from .models import Medicine,Fees,Allergy_Medicine,Patient_medicine,Lab_test,Symptom,Code_medicine
+from .models import Medicine,Fees,Allergy_Medicine,Patient_medicine,Lab_test,Symptom,Code_medicine,medicine_total_amount
 import datetime
 from django.db.models import Q
 from django.http import JsonResponse
@@ -10,6 +10,8 @@ from pprint import pprint
 from django.views.decorators.csrf import csrf_exempt
 from management.models import AddFees,TodayPatients,GeneralVitals_new
 from django.contrib.auth.decorators import login_required
+from django.db.models import Sum
+
 
 
 
@@ -95,20 +97,21 @@ def search_medicine(request):
     if request.method == 'POST':
         name_id=request.POST.get('search')
         start_date=request.POST.get('start_date')
+        print(start_date)
         end_date=request.POST.get('end_date')
         medi=[i for i in Medicine.objects.filter(Q(medicine_name__iexact=name_id)|Q(medicine_id__iexact=name_id)) if i.quantity >0]
         medi_id=[i.id for i in medi] 
         try:
             a = datetime.datetime.strptime( start_date, '%Y-%m-%d').date()
             b = datetime.datetime.strptime( end_date, '%Y-%m-%d').date()
-            medicines=Medicine.objects.filter(created_at__date__gte=a,created_at__date__lte=b)
+            medicines=Medicine.objects.filter(created_at__date__gte=a,created_at__date__lte=b,is_active=False)
             # medicines=[i for i in medicines if i.quantity > 0]
         except:
             a=start_date
             b=end_date
             medicines=[]
         if medi_id and medicines:
-            medicines=[i for i in medicines if i.id in medi_id and i.quantity > 0 ]
+            medicines=[i for i in medicines if i.id in medi_id and i.quantity > 0 and i.is_active==False ]
         elif medi:
             medicines=medi
         else:
@@ -140,13 +143,13 @@ def update_medicine(request):
             try:
                 a = datetime.datetime.strptime( start_date, '%Y-%m-%d').date()
                 b = datetime.datetime.strptime( end_date, '%Y-%m-%d').date()
-                medicines=Medicine.objects.filter(created_at__date__gte=a,created_at__date__lte=b)
+                medicines=Medicine.objects.filter(created_at__date__gte=a,created_at__date__lte=b,is_active=False)
             except:
                 a=start_date
                 b=end_date
                 medicines=[]
             if medi_id and medicines:
-                medicines=[i for i in medicines if i.id in medi_id]
+                medicines=[i for i in medicines if i.id in medi_id  and i.is_active==False ]
             elif medi:
                 medicines=medi
             else:
@@ -159,13 +162,13 @@ def update_medicine(request):
             try:
                 a = datetime.datetime.strptime( start_date, '%Y-%m-%d').date()
                 b = datetime.datetime.strptime( end_date, '%Y-%m-%d').date()
-                medicines=Medicine.objects.filter(created_at__date__gte=a,created_at__date__lte=b)
+                medicines=Medicine.objects.filter(created_at__date__gte=a,created_at__date__lte=b,is_active=False)
             except:
                 a=start_date
                 b=end_date
                 medicines=[]
             if medi_id and medicines:
-                medicines=[i for i in medicines if i.id in medi_id]
+                medicines=[i for i in medicines if i.id in medi_id and i.is_active==False ]
             elif medi:
                 medicines=medi
             else:
@@ -181,6 +184,7 @@ def update_medicine(request):
 def doctor(request):
     if request.method == "POST": 
         data = json.loads(request.body)
+        print(data)
         patient_object=data['patient_object']
         vital_object=data['vital_object']
         fees=data['consulting']['consulting']
@@ -202,6 +206,9 @@ def doctor(request):
         for i in labtesting:
             Lab_test.objects.create(patient_id=patient_object,vitals_id=vital_object,lab_test=i['Tests'])
 
+
+        Symptom.objects.create(patient_id=patient_object,vitals_id=vital_object,symptom=data['patient_symptom'] ,diagnose=data['patient_diagnose'])
+
         today_patient=data['today_patient']
         today=TodayPatients.objects.get(id=today_patient)
         today.is_consulted=True
@@ -209,6 +216,7 @@ def doctor(request):
         current_vital=GeneralVitals_new.objects.get(id=vital_object)
         current_vital.is_consulted=True
         current_vital.save()
+        
         data={}
         return JsonResponse(data)
    
@@ -238,36 +246,50 @@ def patients(request):
 @login_required(login_url='login_view')
 def medicine_quantity(request):
     if request.method == "POST":
-        id = request.POST.get('quantity_id')
+        medicine_name = request.POST.get('quantity_id')
         print(id)
-        code=Medicine.objects.get(id=id)
+        # code=Medicine.objects.filter(medicine_name=medicine_name,is_active=False)
+        code=  Medicine.objects.filter(medicine_name=medicine_name,is_active=False).aggregate(Sum('quantity')).get('quantity__sum')
+
         data={
-            'quantity':code.quantity
+            'quantity':code
         } 
         return JsonResponse(data)
     
 
 @login_required(login_url='login_view')
-def lab_test(request,id):
+def lab_test(request,id,printer=None):
     prescription=TodayPatients.objects.get(id=id)
-    print(prescription.vitals_id)
     lab=Lab_test.objects.filter(vitals_id=prescription.vitals_id)
-    return render(request,'inventory/lab_test.html',{'lab_test':lab})
+    if printer:
+        return render(request,'inventory/lab_test_print.html',{'prescription':prescription,'lab_test':lab})
+
+    else:
+        return render(request,'inventory/lab_test.html',{'prescription':prescription,'lab_test':lab})
 
 
 @login_required(login_url='login_view')
-def consult_fees(request,id):
+def consult_fees(request,id,printer=None):
+    
     prescription=TodayPatients.objects.get(id=id)
-    print(prescription.vitals_id)
+    
     lab=Fees.objects.filter(vitals_id=prescription.vitals_id)
-    return render(request,'inventory/consult_fees.html',{'lab_test':lab})
+    if printer:
+        return render(request,'inventory/consult_fees_print.html',{'prescription':prescription,'lab_test':lab})
+
+    else:
+        return render(request,'inventory/consult_fees.html',{'prescription':prescription,'lab_test':lab})
 
 
 @login_required(login_url='login_view')
-def out_medicine(request,id):
+def out_medicine(request,id,printer=None):
     prescription=TodayPatients.objects.get(id=id)
     tablet= Patient_medicine.objects.filter(vitals_id=prescription.vitals_id,is_delivered=False)
-    return render(request,'inventory/out_medicine.html',{'tablet':tablet})
+    if printer:
+        return render(request,'inventory/out_medicine_print.html',{'prescription':prescription,'tablet':tablet})
+
+    else:
+        return render(request,'inventory/out_medicine.html',{'prescription':prescription,'tablet':tablet})
 
 def prescription(request,id):
     prescription=TodayPatients.objects.get(id=id)
@@ -282,33 +304,82 @@ def prescription(request,id):
                 patients.is_delivered=True
                 patients.save()
                 prescription.save()
+                count=int(patients.total)
+                name=patients.medicine_name
+                if count:
+                    stock(name,count)
+               
+
+
             except:
                 print("hi")
-        return redirect('inventory_patients')        
-    return render(request,'inventory/prescription.html',{'tablet':tablet})
+
+
+        table=Patient_medicine.objects.filter(vitals_id=prescription.vitals_id,is_delivered=True)
+        name=[i.medicine_name for i in table]
+
+        amount=[]
+        for i in name:
+            medi=Medicine.objects.filter(medicine_name=i,is_active=False)
+            price=[]
+            for j in medi:
+                price.append(j.medicine_price)
+            amount.append(max(price))
+        
+                
+        tablet=zip(table,amount)
+        total=[]
+        for i,j in tablet:
+            if float(i.total) > 0:
+                total.append(float(i.total)*float(j))
+            else:
+                total.append(j)
+
+        
+        total_amount=sum(total)
+        print(total_amount)
+        medicine_total_amount.objects.create(patient_id=prescription.patient_id,vitals_id=prescription.vitals_id,medicine_total_amount=total_amount)
+        return redirect('inventory_patients') 
+    else:       
+        return render(request,'inventory/prescription.html',{'tablet':tablet})
 
 
 
 
-def medicine_bill(request,id):
+def medicine_bill(request,id,printer=None):
     
     prescription=TodayPatients.objects.get(id=id)
     table=Patient_medicine.objects.filter(vitals_id=prescription.vitals_id,is_delivered=True)
-    # amount=[k.medicine_price for k in Medicine.objects.filter(medicine_name=i) for i in  [i.medicine_name for i in tablet]]
     name=[i.medicine_name for i in table]
 
     amount=[]
     for i in name:
-        medi=Medicine.objects.filter(medicine_name=i)
+        medi=Medicine.objects.filter(medicine_name=i,is_active=False)
         price=[]
         for j in medi:
             price.append(j.medicine_price)
         amount.append(max(price))
-    print(amount)
+    
             
     tablet=zip(table,amount)
+    total=[]
+    for i,j in tablet:
+        if float(i.total) > 0:
+            total.append(float(i.total)*float(j))
+        else:
+            total.append(j)
 
-    return render(request,'inventory/medicine_bill.html',{'tablet':tablet})
+    total_tablet= zip(table,amount,total)
+    total_amount=sum(total)
+    print(total_amount)
+    # medicine_total_amount.objects.create(patient_id=prescription.patient_id,vitals_id=prescription.vitals_id,medicine_total_amount=total_amount)
+
+    if printer:
+        return render(request,'inventory/medicine_bill_print.html',{'total_amount':total_amount,'prescription':prescription,'tablet':total_tablet})
+
+    else:
+
+        return render(request,'inventory/medicine_bill.html',{'total_amount':total_amount,'prescription':prescription,'tablet':total_tablet})
 
 
 def add_medicine_code(request):
@@ -332,4 +403,30 @@ def incrementid():
     last+=1
     return ( "MD022" "%04d" % last)
 
+def stock(name,count):
+    medicine=Medicine.objects.filter(medicine_name=name,is_active=False).first()
+    medicine_count=medicine.quantity
+    diff=medicine_count - count
+    if diff > 0:
+        medicine.quantity=medicine.quantity - count 
+        medicine.save()
+    elif diff == 0:
+        medicine.quantity=medicine.quantity - count 
+        medicine.is_active=True
+        medicine.save()
+    else:
+        medicine_count=medicine.quantity
+        neg_diff=count - medicine_count
+        medicine.quantity=medicine.quantity - medicine_count
+        medicine.is_active=True
+        medicine.save()
+        if neg_diff > 0:
+            stock(medicine.medicine_name,neg_diff)
 
+
+
+def code(medicine_name):
+    code=  Medicine.objects.filter(medicine_name=medicine_name,is_active=False).aggregate(Sum('quantity')).get('quantity__sum')
+    return code 
+
+print(code('Tablet'))

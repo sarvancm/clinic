@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="mt-2 h-100 p-2 card border_card">
+            <h4>FEES</h4>
+            <hr class="hr-center">
+            <div class="table-responsive p-2 ">
+                <table class="table table-bordered table-striped text-center auto-index "
+                    style="width:100%">
+                    <thead>
+                        <tr>
+                            <th class="text-center">S.No</th>
+                            <th class="text-center">name</th>
+                            <th class="text-center">amount</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody >
+                        {% if lab_test %}
+                        {% for lab in lab_test %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{lab.fees_type}}</td>
+                            <td>{{lab.fees_amount}}</td>
+                         </tr>
+                         {% endfor %}
+                         {% else %}
+                                <tr>
+                                    <td colspan="3" class="text-center">No Data Available</td>
+                                </tr>
+                                {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="d-flex justify-content-center">
+                
+                <button type="button" id="print_btn" class="btn btn-outline-success" >Print</button>
+           
+           </div>
+        </div>
+        </div>
+</body>
+</html>

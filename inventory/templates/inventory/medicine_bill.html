@@ -20,12 +20,13 @@
                         <th>Days</th>
                         <th>Total</th>
                         <th>Amount per medicine</th>
+                        <th>Amount </th>
                       
                     </tr>
                 </thead>
                 <tbody >
                     {% if tablet %}
-                    {% for medi,am in tablet %}
+                    {% for medi,am,tot in tablet %}
                  <tr>
                    
                     <td>{{medi.medicine_name}}</td>
@@ -36,6 +37,7 @@
                     <td>{{medi.days}}</td>
                     <td>{{medi.total}}</td>
                     <td>{{am}}</td>
+                    <td>{{tot}}</td>
                  </tr>
                  {% endfor %}
                  {% else %}
@@ -48,7 +50,7 @@
         </div>
        <div class="d-flex justify-content-center">
         
-            <button type="button" id="print_btn" class="btn btn-outline-success" >Print</button>
+        <a href="{% url 'inventory_medicine_bill' prescription.id 'print' %}"><button type="button" id="print_btn" class="btn btn-outline-success" >Print</button></a>
        
        </div>
     </div>

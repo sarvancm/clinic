@@ -9,8 +9,9 @@ from django.contrib import messages
 from datetime import datetime,timedelta,date,time
 from django.contrib.auth.decorators import login_required
 from dateutil import relativedelta
-from inventory.models import Medicine,Allergy_Medicine,Patient_medicine,Symptom,Lab_test,Code_medicine
+from inventory.models import Medicine,Allergy_Medicine,Patient_medicine,Symptom,Lab_test,Code_medicine,medicine_total_amount,Fees
 import calendar
+from django.db.models import Sum
 
 
 
@@ -22,9 +23,23 @@ def dashboard(request):
     year=datetime.now().year
     month_start = date(year, month, 1)
     month_end =date(year, month, calendar.monthrange(year, month)[1])
-    momthly_patient = len(TodayPatients.objects.filter(created_at__date__gte=month_start,created_at__date__lte=month_end,is_consulted=True))
+    monthly_patient = len(TodayPatients.objects.filter(created_at__date__gte=month_start,created_at__date__lte=month_end,is_consulted=True))
     today_patient=  len( TodayPatients.objects.filter(created_at__contains=datetime.today().date(),is_consulted=True))
-    return render(request,'management/dashboard.html', {'momthly_patient':momthly_patient,'today_patient':today_patient,'dash':True})
+    monthly_medicine_amount = medicine_total_amount.objects.filter(created_at__date__gte=month_start,created_at__date__lte=month_end).aggregate(Sum('medicine_total_amount')).get('medicine_total_amount__sum')
+    today_medicine_amount=  medicine_total_amount.objects.filter(created_at__contains=datetime.today().date()).aggregate(Sum('medicine_total_amount')).get('medicine_total_amount__sum')
+    if today_medicine_amount==None:
+        today_medicine_amount=0
+    if monthly_medicine_amount==None:
+        monthly_medicine_amount=0
+    print(today_medicine_amount)
+    monthly_fees = Fees.objects.filter(created_at__date__gte=month_start,created_at__date__lte=month_end).aggregate(Sum('fees_amount')).get('fees_amount__sum')
+    today_fees=  Fees.objects.filter(created_at__contains=datetime.today().date()).aggregate(Sum('fees_amount')).get('fees_amount__sum')
+    if monthly_fees==None:
+        monthly_fees=0
+    if today_fees==None:
+        today_fees=0
+    print(monthly_fees)
+    return render(request,'management/dashboard.html', {'monthly_income':monthly_fees+monthly_medicine_amount,'daily_income':today_medicine_amount+today_fees,'monthly_patient':monthly_patient,'today_patient':today_patient,'dash':True})
 
 
 #navbar
