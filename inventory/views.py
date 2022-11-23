@@ -306,8 +306,12 @@ def prescription(request,id):
                 prescription.save()
                 count=int(patients.total)
                 name=patients.medicine_name
-                if count:
+                if count == 0:
+                    count=1
                     stock(name,count)
+                else:
+                    stock(name,count)
+
                
 
 
@@ -333,7 +337,7 @@ def prescription(request,id):
             if float(i.total) > 0:
                 total.append(float(i.total)*float(j))
             else:
-                total.append(j)
+                total.append(float(j))
 
         
         total_amount=sum(total)
@@ -367,7 +371,7 @@ def medicine_bill(request,id,printer=None):
         if float(i.total) > 0:
             total.append(float(i.total)*float(j))
         else:
-            total.append(j)
+            total.append(float(j))
 
     total_tablet= zip(table,amount,total)
     total_amount=sum(total)
