@@ -1,6 +1,5 @@
 from dataclasses import fields
 from django import forms
-from msilib.schema import Class
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from.models import User,Items_saled,ProductDetails,PatientDetails,HealthHistory,PrescribedMedicine,BillsModel,GeneralVitals_new,AddFees 
