@@ -246,15 +246,30 @@ def patients(request):
 @login_required(login_url='login_view')
 def medicine_quantity(request):
     if request.method == "POST":
-        medicine_name = request.POST.get('quantity_id')
-        print(id)
+        medicine_name = request.POST.get('medicineName')
+        print(medicine_name)
         # code=Medicine.objects.filter(medicine_name=medicine_name,is_active=False)
         code=  Medicine.objects.filter(medicine_name=medicine_name,is_active=False).aggregate(Sum('quantity')).get('quantity__sum')
-
-        data={
-            'quantity':code
-        } 
-        return JsonResponse(data)
+        
+        print(code)
+        if code:
+            if code < 5000:
+                
+                data={
+                    'quantity':code
+                } 
+                return JsonResponse(data)
+            else:
+                data = {
+                    'value':'none'
+                }
+                return JsonResponse(data)
+        else:
+                data = {
+                    'value':'none'
+                }
+                return JsonResponse(data)
+            
     
 
 @login_required(login_url='login_view')

@@ -647,10 +647,11 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-3 mt-2">
+                                                        <div class="col-md-3 mt-2 notify__msg" id="notify__msg">
                                                             <label for="days">Days</label>
                                                             <input type="text" class="form-control plan_eff noZero" name=""
                                                                 id="days" maxlength="3">
+                                                                <span class="h5" ><strong><h6 id="notify__data" style="margin-bottom: 0;"></h6></strong></span>
                                                         </div>
                                                         <div class="col-md-3 mt-2">
                                                             <label for="total_tablets">Total&nbsp;Tablets</label>
@@ -658,6 +659,7 @@
                                                                 id="total_tablets">
                                                         </div>
                                                     </div>
+
                                                     <hr class="hr-center">
                                                     <div class="text-center my-3">
                                                         <button type="button" id="Precreption-add" class="btn btn-outline-success">Add</button>
@@ -1366,11 +1368,15 @@ function updateClock() {
                         let row = '<tr data-row="'+counter2+'" data-value=' + $("#checked-val").val() + '> <td>'+ count2+'</td> <td class="medicine_compare">' + $("#medicine_name").val() + '</td><td>' + $("#morning").val() + '&nbsp;ml</td> <td>' + $("#after_noon").val() + '&nbsp;ml</td> <td>' + $("#evening").val() + '&nbsp;ml</td> <td>' + $("#night").val() + '&nbsp;ml</td> <td>' + $("#days").val() + '</td><td>' + $("#total_tablets").val() + '</td> <td><button type="button" class="btn" id="pres-delete" onclick="prescriptionDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
                         $('#prescription-body').append(row);
                         counter2++;
+        $('#notify__msg').removeClass("active");
+
                     }
                     else{
                         let row = '<tr data-row="'+counter2+'" data-value=' + $("#checked-val").val() + '> <td>'+ count2+'</td> <td class="medicine_compare">' + $("#medicine_name").val() + '</td><td>' + $("#morning").val() + '</td> <td>' + $("#after_noon").val() + '</td> <td>' + $("#evening").val() + '</td> <td>' + $("#night").val() + '</td> <td>' + $("#days").val() + '</td><td>' + $("#total_tablets").val() + '</td> <td><button type="button" class="btn" id="pres-delete" onclick="prescriptionDelete(this);"><i class="fa-solid fa-xmark"></i></button></td> </tr>'
                         $('#prescription-body').append(row);
                         counter2++;
+        $('#notify__msg').removeClass("active");
+
                     }
                 }
                 } else {
@@ -1796,5 +1802,52 @@ function updateClock() {
         parentElement.scrollTop = childElement.offsetTop - parentElement.offsetTop;
     }
     document.addEventListener('DOMContentLoaded',scrollToElement())
+
+
+    $('#notify__msg').removeClass("active");
+
+    $("#days").keyup(function(){
+        var medicine_name = $('#medicine_name').val();
+        $('#notify__msg').removeClass("active");
+        var days = $('#days').val();
+        if(days !=''){
+            $.ajax({
+                type: "POST",
+            url: "{% url 'inventory_medicine_quantity' %}",
+            dataType: "json",
+                    headers: {
+                        "X-CSRFToken": $('input[name=csrfmiddlewaretoken]').val(),
+                    },
+                    data: {
+                        'medicineName':medicine_name,
+                    },
+            success: function (response) {
+                if(response.value == 'none'){
+                }
+                else{
+                    $('#notify__data').text(response.quantity);
+                    $('#notify__msg').addClass("active");
+                }
+                
+            },
+            error: function (response) {
+                $('#notify__msg').removeClass("active");
+            alert('Error')
+            }
+            
+        });
+        }
+        else{
+        $('#notify__msg').removeClass("active");
+        }
+            
+	});
+    $("#medicine_name").change(function(){
+        $('#notify__msg').removeClass("active");
+        $('#days').val("");
+
+	});
+
+
     {% endblock script %}
 
