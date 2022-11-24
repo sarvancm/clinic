@@ -35,6 +35,15 @@
                         <span class="text-danger">{{form.medicine_brand.errors}} </span>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-4 my-2 text-left text-md-right">
+                        <label for="amount">Minimum Quantity&nbsp;:</label>
+                    </div>
+                    <div class="col-md-6 my-2">
+                        <input type="text" class="form-control"  name="min_quantity" value="{{form.min_quantity.value|default_if_none:''}}" id="min_quan">
+                        <span class="text-danger">{{form.min_quantity.errors}} </span>
+                    </div>
+                </div>
                 <hr class="hr-center">
                 <div>
                     <button type="submit" class="btn btn-outline-success">Save</button>
@@ -52,6 +61,7 @@
                             <th>Medicine&nbsp;Id</th>
                             <th>medicine_name</th>
                             <th>medicine_brand</th>
+                            <th>Minimum Quantity</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -63,7 +73,8 @@
                             <td>{{i.medicine_id}}</td>
                             <td>{{i.medicine_name}}</td>
                             <td>{{i.medicine_brand}}</td>
-                            <td><i class="fa-solid fa-edit px-2 text-info" onclick="view('{{i.id}}')" ob_id="{{i.id}}" id="add_fees{{i.id}}" fee_name="{{i.medicine_id}}" brand="{{i.medicine_brand}}" amount="{{i.medicine_name}}" data-toggle="modal" data-target="#edit_fees"></i></a>
+                            <td>{{i.min_quantity}}</td>
+                            <td><i class="fa-solid fa-edit px-2 text-info" onclick="view('{{i.id}}')" ob_id="{{i.id}}" id="add_fees{{i.id}}" fee_name="{{i.medicine_id}}" brand="{{i.medicine_brand}}" quantity="{{i.min_quantity}}" amount="{{i.medicine_name}}" data-toggle="modal" data-target="#edit_fees"></i></a>
                                 <a data-toggle="modal" data-target="#delete" onclick="remove('{{i.id}}')"  ob_id="{{i.id}}"><i class="fa-solid fa-trash px-2 text-danger"></i></a></td>
                                     
                         </tr>
@@ -115,6 +126,15 @@
                     </div>
                     <div class="col-md-6 my-2">
                         <input type="text" class="form-control" name="medicine_brand"  id="medicine_brand">
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-4 my-2 text-left text-md-right">
+                        <label for="amount">min_quantity&nbsp;:</label>
+                    </div>
+                    <div class="col-md-6 my-2">
+                        <input type="text" class="form-control" name="min_quantity"  id="min_quantity">
                     </div>
                 </div>
                 <hr class="hr-center">
@@ -170,6 +190,15 @@
                     <div class="col-md-6 my-2">
                         <input type="text" class="form-control" name="medicine_brand" value="{{form1.medicine_brand.value|default_if_none:''}}" id="fee_amount">
                         <span class="text-danger">{{form1.medicine_brand.errors}} </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 my-2 text-left text-md-right">
+                        <label for="amount">min_quantity&nbsp;:</label>
+                    </div>
+                    <div class="col-md-6 my-2">
+                        <input type="text" class="form-control" name="min_quantity" value="{{form1.min_quantity.value|default_if_none:''}}" id="fee_amount">
+                        <span class="text-danger">{{form1.min_quantity.errors}} </span>
                     </div>
                 </div>
                 <hr class="hr-center">
@@ -252,6 +281,7 @@ $('#del_name').append(newfeename)
         var newfeename = $('#add_fees' + event).attr("fee_name")
         var newamount = $('#add_fees' + event).attr("amount")
         var newobid=$('#add_fees'+event).attr("ob_id")
+        var newquantity=$('#add_fees'+event).attr("quantity")
         var newbrand=$('#add_fees'+event).attr("brand")
 
 
@@ -259,7 +289,9 @@ $('#del_name').append(newfeename)
         $('#fee_name_id').val(newfeename)
         $('#fee_amount').val(newamount)
         $('#ob_id').val(newobid)
-    $('#medicine_brand').val(newbrand)
+        $('#min_quantity').val(newquantity)
+
+        $('#medicine_brand').val(newbrand)
 
 
 

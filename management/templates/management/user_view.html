@@ -51,6 +51,10 @@
                                 <td> 
                                     <div class="d-flex">
                                         {% if user.is_user %}
+                                        {% if i.is_consulted %}
+
+                                        {% else %}
+
                                     {% if i.is_active %}
                                     {% if i.is_vital%}
                                     <a href="{% url 'disable_view' i.id %}"><button type="submit"
@@ -66,6 +70,7 @@
                                         data-toggle="modal" data-target="#exampleModal">
                                         <i object_id="{{i.id}}" vitals_id="{{i.vitals.id}}" id="general_vitals{{i.id}}" temp="{{i.vitals.temperature}}" pulserate="{{i.vitals.pulse_rate}}" bloodstart="{{i.vitals.blood_pressure_start}}" bloodend="{{i.vitals.blood_pressure_end}}" heig="{{i.vitals.height}}" weig="{{i.vitals.weight}}" other="{{i.vitals.others}}"
                                             class="fa-solid fa-temperature-three-quarters"></i>
+                                            {% endif %}
                                             {% endif %}
                                        
                                     </div>
@@ -88,6 +93,9 @@
                                 <td>
                                     <div class="d-flex">
                                         {% if user.is_user %}
+                                        {% if i.is_consulted %}
+
+                                        {% else %}
                                         {% if i.is_vital%}
                                         {% if i.is_active %}
                                         <a href="{% url 'disable_view' i.id %}"><button type="submit"
@@ -103,6 +111,7 @@
                                             data-toggle="modal" data-target="#exampleModal">
                                             <i object_id="{{i.id}}" id="general_vitals{{i.id}}" vitals_id="{{i.vitals.id}}" temp="{{i.vitals.temperature}}" pulserate="{{i.vitals.pulse_rate}}" bloodstart="{{i.vitals.blood_pressure_start}}" bloodend="{{i.vitals.blood_pressure_end}}" heig="{{i.vitals.height}}" weig="{{i.vitals.weight}}" other="{{i.vitals.others}}"
                                                 class="fa-solid fa-temperature-three-quarters"></i>
+                                        {% endif %}
                                         {% endif %}
                                            
                                        

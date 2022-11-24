@@ -330,7 +330,7 @@ def add_patient(request):
 @login_required(login_url='login_view')
 def user_view(request):
     user=request.user
-    x=  TodayPatients.objects.filter(created_at__contains=datetime.today().date())
+    x=  TodayPatients.objects.filter(created_at__contains=datetime.today().date()).order_by('-id')
     list=[]
     for i in x:
         try:

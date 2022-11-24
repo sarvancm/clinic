@@ -52,10 +52,10 @@ def update_code(request):
             return redirect('inventory_add_code')
         else:
             addfees= Code_medicine.objects.all()
-            return render(request,"management/add_fees.html",{'form1':form1,'err':True,'object':object,'addfees':addfees})
+            return render(request,"inventory/add_code.html",{'form1':form1,'err':True,'object':object,'addfees':addfees})
     else:
         form=CodeForm()
-        return render(request,"management/add_fees.html",{'form':form})
+        return render(request,"inventory/add_code.html",{'form':form})
 
 
 @login_required(login_url='login_view')
@@ -238,7 +238,7 @@ def patients(request):
         data ={}
         return JsonResponse(data)
     else:
-        x= TodayPatients.objects.filter(created_at__contains=datetime.datetime.today().date(),is_consulted=True)
+        x= TodayPatients.objects.filter(created_at__contains=datetime.datetime.today().date(),is_consulted=True).order_by('-id')
         return render(request,'inventory/patients.html',{'x':x})
 
 
@@ -248,12 +248,17 @@ def medicine_quantity(request):
     if request.method == "POST":
         medicine_name = request.POST.get('medicineName')
         print(medicine_name)
-        # code=Medicine.objects.filter(medicine_name=medicine_name,is_active=False)
+        code=Medicine.objects.filter(medicine_name=medicine_name,is_active=False)
+        try:
+            min_quantity=code.last().code.min_quantity
+        except:
+            min_quantity=20
+            
         code=  Medicine.objects.filter(medicine_name=medicine_name,is_active=False).aggregate(Sum('quantity')).get('quantity__sum')
         
         print(code)
         if code:
-            if code < 5000:
+            if code < min_quantity:
                 
                 data={
                     'quantity':code
