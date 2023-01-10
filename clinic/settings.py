@@ -137,3 +137,17 @@ AUTH_USER_MODEL ='management.User'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_CREDENTIALS = True
+
+
+CSRF_TRUSTED_ORIGINS = ['https://bethclinic.co.in/']
+
+CORS_REPLACE_HTTPS_REFERER = True
+
