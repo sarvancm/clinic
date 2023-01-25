@@ -280,7 +280,7 @@
                                 <h4>PATIENT&nbsp;SYMPTOM</h4>
                                 <hr class="hr-center">
                                 {% for sym in k %}
-                                <p class="previous_details_text">{{sym.symptom}}</p>
+                                <pre class="previous_details_text">{{sym.symptom}}</pre>
                                 {% endfor %}
                             </div>
                         
@@ -288,7 +288,7 @@
                                 <h4>DIAGNOSE</h4>
                                 <hr class="hr-center">
                                 {% for sym in k %}
-                                <p class="previous_details_text">{{sym.diagnose}}</p>
+                                <pre class="previous_details_text">{{sym.diagnose}}</pre>
                                 {% endfor %}
                             </div>
                             
@@ -463,7 +463,10 @@
                                         </div>
                                         <hr>
                                         <div class="col-md-12 mt-3 height_card">
-                                            <textarea name="patient-symptom" id="patient-symptom" cols="40" rows="15" class="form-control"></textarea>
+                                            <pre id="Pree"> <textarea name="patient-symptom" id="patient-symptom" cols="40" rows="15" class="form-control">
+                                           
+
+                                            </textarea></pre>
                                         </div>
                                     </div>
                                 </div>
@@ -713,8 +716,7 @@
     {% endblock %}
 
 {% block script %}
-
-
+$
 function updateClock() {
     var currentTime = new Date();
     // Operating System Clock Hours for 12h clock
@@ -1732,9 +1734,7 @@ function updateClock() {
 
 
             success: function (data) {
-                alert('success')
                 window.location.href = '/doctor_view/1/';
-                alert('success')
 
             },
             error: function (response) {
