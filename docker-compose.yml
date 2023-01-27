@@ -1,0 +1,27 @@
+version: '3'
+
+networks:
+    elyon-backend-network:
+      external:
+        name: elyon-backend-network
+
+services:
+
+  web:
+    build: .
+    command: python /code/manage.py runserver 0.0.0.0:8000
+    container_name: elyon-backend
+    volumes:
+      - .:/elyon-backend
+    env_file:
+
+      - ./network/.env
+    ports:
+      - "8000:8000"
+
+    restart: 'always'
+    networks:
+      - elyon-backend-network
+      - elyon-generic-network
+
+

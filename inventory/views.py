@@ -449,8 +449,3 @@ def stock(name,count):
 
 
 
-def code(medicine_name):
-    code=  Medicine.objects.filter(medicine_name=medicine_name,is_active=False).aggregate(Sum('quantity')).get('quantity__sum')
-    return code 
-
-print(code('Tablet'))

@@ -54,7 +54,7 @@
                             <div class="form-group">
                                 <label for="phone_number"><span><i
                                             class="fa-solid fa-phone"></i></span>&nbsp;Phone&nbsp;Number*</label>
-                                <input type="text" class="form-control" name="phone_number" value="{{form.phone_number.value}}" id="phone_number" minlength="10" maxlength="10">
+                                <input type="text" class="form-control" name="phone_number" value="{{form.phone_number.value}}" id="phone_number" minlength="10" maxlength="10" required>
                                 <span class="text-danger">{{form.phone_number.errors}}</span>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                             <div class="form-group">
                                 <label for="aadhar_number"><span><i
                                             class="fa-solid fa-address-card"></i></span>&nbsp;Aadhar&nbsp;Number</label>
-                                <input type="text" class="form-control" name="aadhar_number" value="{{form.aadhar_number.value}}" id="aadhar_number" minlength="12" maxlength="12">
+                                <input type="text" class="form-control" name="aadhar_number" value="{{form.aadhar_number.value}}" id="aadhar_number" minlength="12" maxlength="12" required>
                                 <span class="text-danger">{{form.aadhar_number.errors}}</span>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                             <div class="form-group">
                                 <label for="email_id"><span><i
                                             class="fa-solid fa-envelope"></i></span>&nbsp;Email&nbsp;Id</label>
-                                <input type="email" class="form-control" name="email" value="{{form.email.value}}" id="email_id">
+                                <input type="email" class="form-control" name="email" value="{{form.email.value}}" id="email_id" required>
                                 <span class="text-danger">{{form.email.errors}}</span>
                             </div>
                         </div>
@@ -88,7 +88,7 @@
                         <div class="col-lg-12 mt-2">
                             <label for="address"><span><i
                                         class="fa-solid fa-location-dot"></i></span>&nbsp;Address*</label>
-                            <textarea class="form-control" name="address" id="address" rows="5" value="" >{{form.address.value}}</textarea required>
+                            <textarea class="form-control" name="address" id="address" rows="5" value="" required >{{form.address.value}}</textarea >
                                 <span class="text-danger">{{form.address.errors}}</span>
                         </div>
                         <div class="col-lg-12 mt-2">

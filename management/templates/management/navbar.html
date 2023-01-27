@@ -43,6 +43,34 @@
                     <span class="links_name">Dashboard</span>
                 </a>
             </li>
+            {% if user.is_staff %}
+
+<li>
+               
+                    <a href="{% url 'register' %}" class="{% active_link 'register' %}">
+                        <i class='bx bx-pie-chart-alt-2'></i>
+                        <span class="links_name">Register</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'doctor_view' %}" class="{% active_link 'doctor_view || doctor_vie' %}">
+                        <i class='bx bx-pie-chart-alt-2'></i>
+                        <span class="links_name">Doctor view</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'add_fees' %}" class="{% active_link 'add_fees' %}">
+                        <i class='bx bx-box'></i>
+                        <span class="links_name">Add fees</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'inventory_search_medicine' %}" {% if search %}class="active"{% endif %}>
+                        <i class="fa-regular fa-heart"></i>
+                        <span class="links_name">Search Inventory</span>
+                    </a>
+                </li>
+            {% endif %}
            {% if user.is_admin %}
             <li>
                

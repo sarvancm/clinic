@@ -4,3 +4,5 @@ django-active-link == 0.1.8
 django-crispy-forms == 1.14.0
 python-dateutil == 2.8.2
 whitenoise==6.3.0
+psycopg2-binary==2.9.3
+django-environ==0.9.0

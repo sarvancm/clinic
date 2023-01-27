@@ -9,10 +9,10 @@ from datetime import date
 
 
 class User(AbstractUser):
-    address=models.TextField()
-    aadhar_number=models.IntegerField()
+    address=models.TextField(null=True,blank=True)
+    aadhar_number=models.BigIntegerField(null=True,blank=True)
     pan_number=models.CharField(max_length=30,null=True,blank=True)
-    phone_number=models.IntegerField()
+    phone_number=models.IntegerField(null=True,blank=True)
     is_admin = models.BooleanField('Is admin', default=False)
     is_user = models.BooleanField('Is_customer', default=False)
 

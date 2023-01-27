@@ -92,7 +92,9 @@ def login_view(request):
                     messages.success(request, f'Welcome {username}') 
                     return redirect('user_view')
                 else:
-                    return HttpResponse("invalid")                  
+                    log(request,user)
+                    messages.success(request, f'Welcome {username}') 
+                    return redirect('dashboard')                  
             else:
                 messages.error(request,'Not user')    
                 return render(request,'management/login.html',{'form':form})          
