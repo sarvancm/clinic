@@ -173,8 +173,16 @@
                                             <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="consulting-table">
+                                   <tbody id="consulting-table">
+  {% for con in Consultation %}                                 
+    <tr> 
 
+    <td>1</td> 
+    <td class="consulting_compare">{{con.fee_name}}</td> 
+    <td class="consulting-amount">{{con.amount}}</td> 
+    <td><button type="button" class="btn"><i class="fa-solid fa-xmark"></i></button></td> 
+    </tr>
+    {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
@@ -654,7 +662,7 @@
                                                             <label for="days">Days</label>
                                                             <input type="text" class="form-control plan_eff noZero" name=""
                                                                 id="days" maxlength="3">
-                                                                <span class="h5" ><strong><h6 id="notify__data" style="margin-bottom: 0;"></h6></strong></span>
+                                                                <span class="h5" id="notify__quantity" ><strong><h6 id="notify__data" style="margin-bottom: 0;"></h6></strong></span>
                                                         </div>
                                                         <div class="col-md-3 mt-2">
                                                             <label for="total_tablets">Total&nbsp;Tablets</label>
@@ -1827,6 +1835,8 @@ function updateClock() {
                 else{
                     $('#notify__data').text(response.quantity);
                     $('#notify__msg').addClass("active");
+                    
+                    $('#notify__quantity').delay(3000).fadeOut('slow');
                 }
                 
             },

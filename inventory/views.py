@@ -191,7 +191,6 @@ def doctor(request):
         allergy=data['allergy']['Allergy']
         prescription=data['prescription']['Prescription']
         labtesting=data['lab_testing']['LabTesting']
-   
         
         for i in fees:
             Fees.objects.create(patient_id=patient_object,vitals_id=vital_object,fees_type=i['Consulting'],fees_amount=i['Amount'])
@@ -247,7 +246,6 @@ def patients(request):
 def medicine_quantity(request):
     if request.method == "POST":
         medicine_name = request.POST.get('medicineName')
-        print(medicine_name)
         code=Medicine.objects.filter(medicine_name=medicine_name,is_active=False)
         try:
             min_quantity=code.last().code.min_quantity
@@ -256,7 +254,6 @@ def medicine_quantity(request):
             
         code=  Medicine.objects.filter(medicine_name=medicine_name,is_active=False).aggregate(Sum('quantity')).get('quantity__sum')
         
-        print(code)
         if code:
             if code < min_quantity:
                 
@@ -271,7 +268,7 @@ def medicine_quantity(request):
                 return JsonResponse(data)
         else:
                 data = {
-                    'value':'none'
+                    'quantity': 'Not available'
                 }
                 return JsonResponse(data)
             
@@ -361,7 +358,6 @@ def prescription(request,id):
 
         
         total_amount=sum(total)
-        print(total_amount)
         medicine_total_amount.objects.create(patient_id=prescription.patient_id,vitals_id=prescription.vitals_id,medicine_total_amount=total_amount)
         return redirect('inventory_patients') 
     else:       

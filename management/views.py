@@ -366,13 +366,14 @@ def doctor_view(request,id=None):
 
 @login_required(login_url='login_view') 
 def doctor_vie(request,id):  
-    fees=AddFees.objects.all()
+    fees= [i for i in AddFees.objects.all() if i.fee_name != 'Consultation Fee']
+    Consultation = AddFees.objects.filter(fee_name='Consultation Fee')
     today_patient=  TodayPatients.objects.get(id=id)
     view=today_patient.patient_id
     vitals_id= today_patient.vitals_id
     y=PatientDetails.objects.filter(id=today_patient.patient_id).first()
     z=GeneralVitals_new.objects.filter(id=vitals_id).first()
-    medicines=Code_medicine.objects.all()
+    medicines= Code_medicine.objects.all() 
     allergy_id=[i.id for i in GeneralVitals_new.objects.filter(patient_id=y.id)]
     try:
         allergy_id=allergy_id[-2]
@@ -411,7 +412,7 @@ def doctor_vie(request,id):
 
     history=zip(total_vitals,lab_list,symptom_list,Patient_medicine_list,forward,backward) 
 
-    return render(request,"management/doctor_vie.html",{'recent':recent,'today_patient':today_patient,'history':history,'x':y,'z':z,'fees':fees,'medicines':medicines,'return_allergy':return_allergy})
+    return render(request,"management/doctor_vie.html",{'Consultation':Consultation,'recent':recent,'today_patient':today_patient,'history':history,'x':y,'z':z,'fees':fees,'medicines':medicines,'return_allergy':return_allergy})
     
 
 @login_required(login_url='login_view')
