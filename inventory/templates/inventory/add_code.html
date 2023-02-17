@@ -10,7 +10,7 @@
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-md-4 my-2 text-left text-md-right">
-                        <label for="fee_name">Enter&nbsp;medicine_id&nbsp;Name&nbsp;:</label>
+                        <label for="fee_name">Enter&nbsp;medicine_id&nbsp;:</label>
                     </div>
                     <div class="col-md-6 my-2">
                         <input type="text" class="form-control" name="medicine_id" value="{{form.medicine_id.value|default_if_none:''}}" id="medicine_id">

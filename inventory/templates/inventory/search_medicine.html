@@ -59,7 +59,7 @@
                     <tbody>
                         {% if medicines%}
                         {% for i in medicines %}
-                        {% if i.quantity < 10 %}
+                        {% if i.code.total_quantity < i.code.min_quantity %}
                         <tr style="background-color: rgb(227, 119, 119);">
                             <td>{{forloop.counter}}</td>
                             <td>{{i.medicine_id}}</td>
@@ -67,7 +67,11 @@
                             <td>{{i.medicine_name}}</td>
                             <td>{{i.medicine_mg}}</td>
                             <td>{{i.quantity}}</td>
+                            {% if i.remaining < 7 %}
+                            <td style="background-color: yellow;">{{i.expiry_date}}</td>
+                            {% else %}
                             <td>{{i.expiry_date}}</td>
+                            {% endif %}
                             <td>{{i.purchase_date}}</td>
                             <td>{{i.stocked_date}}</td>
                             <td>{{i.medicine_price}}</td>
@@ -88,7 +92,11 @@
                             <td>{{i.medicine_name}}</td>
                             <td>{{i.medicine_mg}}</td>
                             <td>{{i.quantity}}</td>
+                            {% if i.remaining < 7 %}
+                            <td style="background-color: yellow;">{{i.expiry_date}}</td>
+                            {% else %}
                             <td>{{i.expiry_date}}</td>
+                            {% endif %}
                             <td>{{i.purchase_date}}</td>
                             <td>{{i.stocked_date}}</td>
                             <td>{{i.medicine_price}}</td>

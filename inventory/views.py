@@ -97,7 +97,6 @@ def search_medicine(request):
     if request.method == 'POST':
         name_id=request.POST.get('search')
         start_date=request.POST.get('start_date')
-        print(start_date)
         end_date=request.POST.get('end_date')
         medi=[i for i in Medicine.objects.filter(Q(medicine_name__iexact=name_id)|Q(medicine_id__iexact=name_id)) if i.quantity >0]
         medi_id=[i.id for i in medi] 

@@ -35,7 +35,7 @@
                                 <label for="brand_name" class="text-center">Brand Name&nbsp;&nbsp;:</label>
                             </div>
                             <div class="col-lg-5">
-                                <input type="text" class="form-control mb-2" name="medicine_brand" value="{{form.medicine_brand.value|default_if_none:''}}" id="brand_name" required>
+                                <input type="text" class="form-control mb-2" name="medicine_brand" value="{{form.medicine_brand.value|default_if_none:''}}" id="brand_name" required readonly>
                                 {% if form.medicine_brand.errors %}
                                 <span class="text-danger">{{form.medicine_brand.errors}} </span>
                                 {% endif %}

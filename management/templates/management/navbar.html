@@ -37,13 +37,14 @@
             <span class="logo_name">Clinic</span>
         </div>
         <ul class="nav-links">
+            
+            {% if user.is_staff %}
             <li>
                 <a href="{% url 'dashboard' %}" {% if dash %}class="active"{% endif %}>
                     <i class='bx bx-grid-alt'></i>
                     <span class="links_name">Dashboard</span>
                 </a>
             </li>
-            {% if user.is_staff %}
 
 <li>
                
@@ -72,6 +73,13 @@
                 </li>
             {% endif %}
            {% if user.is_admin %}
+           <li>
+            <a href="{% url 'dashboard' %}" {% if dash %}class="active"{% endif %}>
+                <i class='bx bx-grid-alt'></i>
+                <span class="links_name">Dashboard</span>
+            </a>
+        </li>
+
             <li>
                
                     <a href="{% url 'register' %}" class="{% active_link 'register' %}">

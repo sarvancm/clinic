@@ -1,6 +1,8 @@
 from django.db import models
 from management.models import PatientDetails,GeneralVitals_new
-
+from django.db.models import Sum
+from dateutil import relativedelta
+import datetime
 # Create your models here.
 
 class Code_medicine(models.Model):
@@ -8,6 +10,18 @@ class Code_medicine(models.Model):
     medicine_brand= models.CharField(max_length=200)
     medicine_id= models.CharField(max_length=30,unique=True)
     min_quantity= models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def total_quantity(self):
+        try: 
+            x= self.medicine_set.filter(is_active=False).aggregate(Sum('quantity')).get('quantity__sum')
+            if x:
+                return x
+            else:
+                return 0
+        except:
+            return 0
 
 
 
@@ -25,6 +39,10 @@ class Medicine(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_active=models.BooleanField('Is active', default=False)  
+
+    def remaining(self):
+        x=relativedelta.relativedelta(self.expiry_date, datetime.datetime.today())
+        return x.days
 
     def __str__(self):
         return f" {self.medicine_brand} brand {self.medicine_name}  details"
