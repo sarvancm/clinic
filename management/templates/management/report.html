@@ -1,0 +1,87 @@
+{% extends "management/navbar.html" %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+    <h1>today_patient:</h1>
+
+
+<table>
+  <tr>
+    <th>S.I</th>
+    <th>Patient_name</th>
+    <th>mobile</th>
+    <th>action</th>
+  </tr>
+  <tr>
+    {% for patient in today_patient %}
+    <td>{{forloop.counter}}</td>
+    <td>{{patient.patient.patient_name}}</td>
+    <td>{{patient.patient.phone_number}}</td>
+    <td></td>
+    {% endfor %}
+  </tr>
+ 
+</table>
+<br>
+<h1>monthly_patient:</h1>
+
+<table>
+    <tr>
+      <th>S.I</th>
+      <th>date</th>
+      <th>Patient_name</th>
+      <th>mobile</th>
+      <th>action</th>
+    </tr>
+    <tr>
+      {% for patient in monthly_patient %}
+      <td>{{forloop.counter}}</td>
+      <td>{{patient.created_at}}</td>
+      <td>{{patient.patient.patient_name}}</td>
+      <td>{{patient.patient.phone_number}}</td>
+      <td></td>
+      {% endfor %}
+    </tr>
+   
+  </table>
+
+  <br>
+
+
+<h1>daily_income:</h1>
+
+<h1>{{today_income}}</h1><br>
+
+<h1>monthly_income:</h1>
+
+<h1>{{monthly_income}}</h1>
+</body>
+</html>
+
+
+
+
+{% endblock %}
+

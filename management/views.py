@@ -666,6 +666,30 @@ def delete_fees(request):
     return redirect('add_fees')
 
     
+@login_required(login_url='login_view')
+def report(request):
+    month=datetime.now().month-1
+    year=datetime.now().year
+    month_start = date(year, month, 1)
+    month_end =date(year, month, calendar.monthrange(year, month)[1])
+    monthly_patient = TodayPatients.objects.filter(created_at__date__gte=month_start,created_at__date__lte=month_end,is_consulted=True)
+    today_patient=  TodayPatients.objects.filter(created_at__contains=datetime.today().date(),is_consulted=True)
+    monthly_medicine_amount = medicine_total_amount.objects.filter(created_at__date__gte=month_start,created_at__date__lte=month_end).aggregate(Sum('medicine_total_amount')).get('medicine_total_amount__sum')
+    today_medicine_amount=  medicine_total_amount.objects.filter(created_at__contains=datetime.today().date()).aggregate(Sum('medicine_total_amount')).get('medicine_total_amount__sum')
+    if today_medicine_amount==None:
+        today_medicine_amount=0
+    if monthly_medicine_amount==None:
+        monthly_medicine_amount=0
+    
+    monthly_fees = Fees.objects.filter(created_at__date__gte=month_start,created_at__date__lte=month_end).aggregate(Sum('fees_amount')).get('fees_amount__sum')
+    today_fees=  Fees.objects.filter(created_at__contains=datetime.today().date()).aggregate(Sum('fees_amount')).get('fees_amount__sum')
+    if monthly_fees==None:
+        monthly_fees=0
+    if today_fees==None:
+        today_fees=0
+    today_income= today_fees +today_medicine_amount
+    monthly_income= monthly_fees +monthly_medicine_amount
+    return render(request,"management/report.html",locals())
 
 
 
