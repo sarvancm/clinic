@@ -71,6 +71,12 @@
                         <span class="links_name">Search Inventory</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{% url 'report' %}" class="{% active_link 'report' %}">
+                        <i class='bx bx-box'></i>
+                        <span class="links_name">Report</span>
+                    </a>
+                </li>
             {% endif %}
            {% if user.is_admin %}
            <li>
@@ -103,6 +109,12 @@
                     <a href="{% url 'inventory_search_medicine' %}" {% if search %}class="active"{% endif %}>
                         <i class="fa-regular fa-heart"></i>
                         <span class="links_name">Search Inventory</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'report' %}" class="{% active_link 'report' %}">
+                        <i class='bx bx-box'></i>
+                        <span class="links_name">Report</span>
                     </a>
                 </li>
                 {% endif %}
