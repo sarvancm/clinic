@@ -5,6 +5,9 @@ from django.contrib.auth.models import AbstractUser
 from datetime import datetime
 from dateutil import relativedelta
 from datetime import date
+from django.db.models import Sum
+
+
 
 
 
@@ -133,6 +136,8 @@ class TodayPatients(models.Model):
     is_consulted=   models.BooleanField(default=False)
     is_seperated=models.BooleanField(default=False)
     vitals=models.ForeignKey(GeneralVitals_new,on_delete=models.CASCADE,null=True,blank=True)
+
+    
 
     def __str__(self):
         return f'{self.patient.patient_name}'

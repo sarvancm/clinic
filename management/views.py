@@ -673,6 +673,9 @@ def report(request):
     month_start = date(year, month, 1)
     month_end =date(year, month, calendar.monthrange(year, month)[1])
     monthly_patient = TodayPatients.objects.filter(created_at__date__gte=month_start,created_at__date__lte=month_end,is_consulted=True)
+    monthly_patient_fees=[sum(i.fees_amount for i in Fees.objects.filter(vitals=j.vitals)) for j in monthly_patient]
+    monthly_patient_medicine=[sum(i.medicine_total_amount for i in medicine_total_amount.objects.filter(vitals=j.vitals)) for j in monthly_patient]
+    total=[i+j for i,j in zip(monthly_patient_fees,monthly_patient_medicine)]
     today_patient=  TodayPatients.objects.filter(created_at__contains=datetime.today().date(),is_consulted=True)
     monthly_medicine_amount = medicine_total_amount.objects.filter(created_at__date__gte=month_start,created_at__date__lte=month_end).aggregate(Sum('medicine_total_amount')).get('medicine_total_amount__sum')
     today_medicine_amount=  medicine_total_amount.objects.filter(created_at__contains=datetime.today().date()).aggregate(Sum('medicine_total_amount')).get('medicine_total_amount__sum')
@@ -689,6 +692,7 @@ def report(request):
         today_fees=0
     today_income= today_fees +today_medicine_amount
     monthly_income= monthly_fees +monthly_medicine_amount
+    monthly_patient_zip=zip(monthly_patient,monthly_patient_fees,monthly_patient_medicine,total)
     return render(request,"management/report.html",locals())
 
 
