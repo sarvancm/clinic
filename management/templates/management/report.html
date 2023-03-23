@@ -88,6 +88,8 @@ tr:nth-child(even) {
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous"> 
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css">
         <style>
@@ -106,7 +108,33 @@ tr:nth-child(even) {
         
     </head>
     <body> 
-        <div class="container">
+        <div class="card p-2 p-lg-5 mx-5">
+            <form method="POST" action="">
+                {% csrf_token %}
+                
+               
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label for="from">From</label>
+                        <input type="date" name="start_date" value="{{start_date}}" class="form-control mb-2" id="from" required>
+                    </div>
+                    <div class=" col-lg-6">
+                        <label for="to">To</label>
+                        <input type="date" name="end_date" value="{{end_date}}" class="form-control mb-2" id="to" required>
+                    </div>
+                </div>
+                
+
+
+                <div class=" text-center mt-3">
+                    <button type="submit" class="btn btn-outline-primary"><i
+                            class="fa-solid fa-search"></i>&nbsp;Search</button>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="container mt-5">
             <table id="example" class="datatables display nowrap" style="width:100%">
                 <thead>
                     <tr>

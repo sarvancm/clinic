@@ -668,11 +668,18 @@ def delete_fees(request):
     
 @login_required(login_url='login_view')
 def report(request):
-    month=datetime.now().month-1
-    year=datetime.now().year
-    month_start = date(year, month, 1)
-    month_end =date(year, month, calendar.monthrange(year, month)[1])
-    monthly_patient = TodayPatients.objects.filter(created_at__date__gte=month_start,created_at__date__lte=month_end,is_consulted=True)
+    if request.method == 'POST':
+        start_date=request.POST.get('start_date')
+        end_date=request.POST.get('end_date')
+        month_start= datetime.strptime( start_date, '%Y-%m-%d').date()
+        month_end = datetime.strptime( end_date, '%Y-%m-%d').date()
+        monthly_patient = TodayPatients.objects.filter(created_at__date__gte=month_start,created_at__date__lte=month_end,is_consulted=True)
+    else:
+        month=datetime.now().month
+        year=datetime.now().year
+        month_start = date(year, month, 1)
+        month_end =date(year, month, calendar.monthrange(year, month)[1])
+        monthly_patient = TodayPatients.objects.filter(created_at__date__gte=month_start,created_at__date__lte=month_end,is_consulted=True)
     monthly_patient_fees=[sum(i.fees_amount for i in Fees.objects.filter(vitals=j.vitals)) for j in monthly_patient]
     monthly_patient_medicine=[sum(i.medicine_total_amount for i in medicine_total_amount.objects.filter(vitals=j.vitals)) for j in monthly_patient]
     total=[i+j for i,j in zip(monthly_patient_fees,monthly_patient_medicine)]
