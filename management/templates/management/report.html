@@ -155,15 +155,10 @@ tr:nth-child(even) {
                 </thead>
                 <tbody>
                     <tr>
-                        {% comment %} <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                        <td>2011/04/25</td>
-                        <td>$320,800</td> {% endcomment %}
+                        
                         {% for patient,fees,medi,tot in monthly_patient_zip %}
                         <td>{{forloop.counter}}</td>
-                        <td>{{patient.created_at}}</td>
+                        <td>{{patient.created_at|date:'d-M-Y'}}</td>
                         <td>{{patient.patient.patient_name}}</td>
                         <td>{{patient.patient.phone_number}}</td>
                         <td>{{fees}}</td>
