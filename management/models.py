@@ -73,7 +73,8 @@ class PatientDetails(models.Model):
 
             return age
             
-           
+    def __str__(self):
+        return f'{self.patient_name}'   
 
 
 

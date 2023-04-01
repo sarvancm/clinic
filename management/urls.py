@@ -48,31 +48,7 @@ urlpatterns = [
      path('add_fees/',views.add_fees, name='add_fees'),
      path('delete_fees/',views.delete_fees, name='delete_fees'),
      path('report/',views.report, name='report'),
-
-
-
-
-   
-
-
-
-    
-
-
-
-
-
-
-
-   
-
-
-
-
-
-    
-    
-
+     path('medicine_report/',views.medicine_report, name='medicine_report'),
 
 
 ]

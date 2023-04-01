@@ -706,7 +706,35 @@ def report(request):
 
 
 
+def medicine_report(request):
+    if request.method == 'POST':
+        start_date=request.POST.get('start_date')
+        end_date=request.POST.get('end_date')
+        month_start= datetime.strptime( start_date, '%Y-%m-%d').date()
+        month_end = datetime.strptime( end_date, '%Y-%m-%d').date()
+        monthly_patient = Patient_medicine.objects.filter(created_at__date__gte=month_start,created_at__date__lte=month_end,is_delivered=True).distinct('medicine_name')
+        
+    else:
+        month=datetime.now().month
+        year=datetime.now().year
+        month_start = date(year, month, 1)
+        month_end =date(year, month, calendar.monthrange(year, month)[1])
+        monthly_patient = Patient_medicine.objects.filter(created_at__date__gte=month_start,created_at__date__lte=month_end,is_delivered=True).distinct('medicine_name')
+        print(monthly_patient)
+        medicine_list=[Patient_medicine.objects.filter(medicine_name=i.medicine_name) for i in monthly_patient]
+        medicine_list_quantity=[]
+        for i in medicine_list:
+            quan=[]
+            for j in i:
+                quan.append(int(j.total))
+            medicine_list_quantity.append(sum(quan))
+
+        print(medicine_list)
+        print(medicine_list_quantity)
+
     
+    
+    return render(request,"management/medicine_report.html",locals())
 
 
 
